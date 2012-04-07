@@ -1,0 +1,158 @@
+# How this file works:
+# Lines beginning with a hash are considered comments.
+# Parenthesis-enclosed lines delineate the beginning and end of sections.
+# Section names must appear to be one word. If more than one word, use underscores to tie words together.
+# Section names are tied to the function used. Except for the special cases, the function and section names
+# are the same except that the section names are mixed case and the function names are lower case. Special
+# functions are named special_foobar for the foobar package, special_aoeu for the aoeu package, etc.
+
+( Start Raw_Directory )
+# For raw directory URLs, the script appends '?C=M;O=D' to the URL
+# Raw Directory URLs are only ones which require recursing into directories
+goffice			http://ftp.gnome.org/pub/GNOME/sources/goffice/
+gthumb			http://ftp.gnome.org/pub/GNOME/sources/gthumb/
+midori			http://archive.in-us.xfce.org/src/apps/midori/
+shotwell		http://yorba.org/download/shotwell/
+#whaawmp			http://download.gna.org/whaawmp/
+( End Raw_Directory )
+
+( Start Universal )
+#Unity Package			#Tarball			#URL							#Type		#Prerelease	#wget User String
+#Mandatory			#Optional			#Mandatory						#Opt.		#Optional
+
+#foobar				#src:FooBar			http://example.com/					type:zip	allow_prerel
+
+# Commented out because of DNS issues at school
+adeskbar							http://www.ad-comp.be/public/projets/ADeskBar/
+alsaplayer							http://sourceforge.net/projects/alsaplayer/files/
+apvlv								http://code.google.com/p/apvlv/downloads/list
+aqualung							http://sourceforge.net/projects/aqualung/files/				allow_prerel
+asio								http://sourceforge.net/projects/asio/files/
+asunder								http://littlesvr.ca/asunder/releases/
+audacity			src:audacity-minsrc		http://sourceforge.net/projects/audacity/files/				allow_prerel	usr_str:'X11; Linux'
+ayttm								http://sourceforge.net/projects/ayttm/files/
+beaver								http://sourceforge.net/projects/beaver-editor/files/
+# Uses a non-standard versioning scheme
+#blobAndConquer							http://www.parallelrealities.co.uk/projects/blobAndConquer.php
+bmpanel				src:bmpanel2			http://code.google.com/p/bmpanel2/downloads/list			allow_prerel
+bogofilter							http://sourceforge.net/projects/bogofilter/files/
+# These two may have to be a special case because of the way they work together
+#claws-mail							http://sourceforge.net/projects/sylpheed-claws/files/
+# Need to recurse
+#claws-mail-plugins		src:claws-mail-extra-plugins	http://sourceforge.net/projects/sylpheed-claws/files/extra%20plugins/
+christine							http://sourceforge.net/projects/christine/files/
+# Not in the repos yet
+#cmus								http://sourceforge.net/projects/cmus/files/
+conky								http://sourceforge.net/projects/conky/files/
+deadbeef							http://sourceforge.net/projects/deadbeef/files/
+denemo								http://ftp.gnu.org/gnu/denemo/
+#dillo developers don't enclose their links in quotes, and that's a problem
+#dillo								http://www.dillo.org/download/
+dmenu								http://tools.suckless.org/dmenu/
+#Can get an accurate version this way, but doesn't generate a correct link to the download
+#drakwizard could be .pkginfo'd anyway
+#drakwizard							http://svn.mandriva.com/cgi-bin/viewvc.cgi/packages/cooker/drakwizard/current/SOURCES/
+elinks				src:elinks-current		http://elinks.or.cz/download/
+epdfview							http://trac.emma-soft.com/epdfview/wiki/Download
+esmtp								http://sourceforge.net/projects/esmtp/files/
+fluxbox								http://sourceforge.net/projects/fluxbox/files/
+# I can't find a tarball anywhere. Not Google Code, not the Foobnix website, not LaunchPad. ~KDulcimer 2011-02-23
+#foobnix							http://code.google.com/p/foobnix/downloads/list
+fotoxx								http://kornelix.squarespace.com/downloads/
+geany								http://download.geany.org/
+geany-plugins							http://plugins.geany.org/geany-plugins/
+geeqie								http://sourceforge.net/projects/geeqie/files/
+gifsicle							http://www.lcdf.org/gifsicle/
+gnumeric							http://projects.gnome.org/gnumeric/
+gobby								http://gobby.0x539.de/trac/wiki/Download
+gogglesmm							http://code.google.com/p/gogglesmm/downloads/list
+# Need to recurse
+#gparted								https://sourceforge.net/projects/gparted/files/gparted/
+grsync								http://www.opbyte.it/grsync/
+gpointing-device-settings					http://sourceforge.jp/projects/gsynaptics/releases/
+herrie								http://herrie.info/distfiles/
+hubbub								http://www.netsurf-browser.org/projects/hubbub/
+icecast								http://downloads.xiph.org/releases/icecast/
+icewm								https://sourceforge.net/projects/icewm/files/
+isomaster							http://littlesvr.ca/isomaster/releases/
+leafpad								http://download-mirror.savannah.gnu.org/releases/leafpad/
+libcss								http://www.netsurf-browser.org/projects/libcss/
+libetpan							https://sourceforge.net/projects/libetpan/files/
+libinfinity							http://gobby.0x539.de/trac/wiki/Download
+libnsbmp							http://www.netsurf-browser.org/projects/libnsbmp/
+libnsgif							http://www.netsurf-browser.org/projects/libnsgif/
+libopenraw							http://libopenraw.freedesktop.org/download/
+libparserutils							http://www.netsurf-browser.org/projects/libparserutils/
+libwapcaplet							http://www.netsurf-browser.org/projects/libwapcaplet/
+libxp				src:libXp			http://xorg.freedesktop.org/releases/individual/lib/
+libyahoo2							http://sourceforge.net/projects/libyahoo2/files/
+lilyterm							http://lilyterm.luna.com.tw/en/download.html				allow_prerel
+lightdm								http://people.ubuntu.com/~robert-ancell/lightdm/releases/
+medit								http://sourceforge.net/projects/mooedit/files/
+mhwaveedit							http://download.gna.org/mhwaveedit/
+mrxvt								http://sourceforge.net/projects/materm/files/
+mupdf								http://ccxvii.net/mupdf/download/
+ndiswrapper							http://sourceforge.net/projects/ndiswrapper/files/
+net6								http://gobby.0x539.de/trac/wiki/Download
+netsurf								http://www.netsurf-browser.org/downloads/source/
+nicoedit							http://puppy:linux@bkhome.org/sources/alphabetical/n/
+nitrogen							http://projects.l3ib.org/nitrogen/
+obby								http://gobby.0x539.de/trac/wiki/Download
+obconf								http://openbox.org/wiki/Openbox:Download
+openbox								http://openbox.org/wiki/Openbox:Download
+osmo								https://sourceforge.net/projects/osmo-pim/files/
+parcellite							http://sourceforge.net/projects/parcellite/files/
+parole								http://goodies.xfce.org/projects/applications/parole
+pekwm								http://www.pekwm.org/projects/pekwm/releases
+php-timezonedb			src:timezonedb			http://pecl.php.net/package/timezonedb			type:tgz
+pragha								http://code.google.com/p/dissonance/downloads/list
+python-alsaaudio		src:pyalsaaudio			http://sourceforge.net/projects/pyalsaaudio/files/
+python-psutil			src:psutil			http://code.google.com/p/psutil/downloads/list
+radiotray							http://sourceforge.net/projects/radiotray/files/releases/
+recorder							http://code.google.com/p/recorder/downloads/list
+roxterm								http://sourceforge.net/projects/roxterm/files/
+rpmorphan							http://sourceforge.net/projects/rpmorphan/files/
+sakura								http://www.pleyades.net/david/sakura.php
+sentinella							http://sourceforge.net/projects/sentinella/files/
+simpleburn							http://simpleburn.tuxfamily.org/IMG/bz2/
+simple-scan							https://launchpad.net/simple-scan/trunk/
+slim								http://download.berlios.de/slim/
+sselp								http://tools.suckless.org/sselp
+stalonetray							http://sourceforge.net/projects/stalonetray/files/
+stjerm								http://code.google.com/p/stjerm-terminal-emulator/downloads/list
+sudoku-savant							http://sourceforge.net/projects/sudoku-savant/files/
+supertuxkart							https://sourceforge.net/projects/supertuxkart/files/SuperTuxKart/
+# Not yet in the repos
+#surf								http://surf.suckless.org/
+sylpheed							http://sylpheed.sraoss.jp/en/download.html
+tabbed								http://tools.suckless.org/tabbed
+ted								http://ftp.nluug.nl/pub/editors/ted/
+termit								https://github.com/nonstop/termit/downloads
+tilda								http://sourceforge.net/projects/tilda/files/
+tint2								http://code.google.com/p/tint2/downloads/list
+transmission							http://download.m0k.org/transmission/files/
+ufraw								http://sourceforge.net/projects/ufraw/files/
+weechat								http://www.weechat.org/download/
+wicd								http://sourceforge.net/projects/wicd/files/
+x11-docs			src:xorg-docs			http://xorg.freedesktop.org/releases/individual/doc/
+viewnior							http://xsisqox.github.com/Viewnior/download.html
+volti								http://code.google.com/p/volti/downloads/list
+yeahconsole							http://phrat.de/downloads.html
+zathura								http://pwmt.org/files/
+( End Universal )
+
+( Start SourceForge )
+# tarball name		project name		Unity package name (optional)
+#Because the FreeImage devs don't follow normal naming convention for their tarballs, it will have to become a special case. :-P
+#freeimage		freeimage
+#pyneighborhood		pyneighborhood
+#scite			scintilla		# doesn't employ a delineator between the package name and version
+#sdcc is undergoing development
+#sdcc			sdcc
+#supertuxkart		supertuxkart
+( End SourceForge )
+
+( Start Special )
+#abiword			http://abisource.org/downloads/abiword/
+#opera			http://ftp.ussg.iu.edu/opera/linux/
+( End Special )

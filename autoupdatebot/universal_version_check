@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# Send this script:
+# 1. Name of the program we're checking for updates. (One at a time!)
+
+source ./generic_functions.sh
+
+src=$(sed -n "s|^$1\s.*src:\(\S*\).*|\1| p" $p_list)
+url=$(sed -n "s|^$1\s.*\([fh]t*tps*://\S*\).*|\1| p" $p_list)
+f_type=$(sed -n "s|^$1\s.*type:\(\S*\).*|\1| p" $p_list)
+prerel=$(sed -n "s|^$1\s.*\(allow_prerel\).*|\1| p" $p_list)
+usr_str=$(sed -n "s|^$1\s.*usr_str:'\(.*\)'.*|\1| p" $p_list)
+
+fetch_html $1 $url "$usr_str"
+
+if [[ $src == "" ]]; then
+	src=$1
+fi
+
+if [[ $f_type == "" ]]; then
+	f_type="tar"
+fi
+
+sed_file=normal.sed
+if [[ $prerel != "" ]]; then
+	sed_file=allow_prerel.sed
+fi
+
+#echo -e "$src\n$url\n$f_type\n$sed_file"
+
+links=( $(sed -n 's|.*[Hh][Rr][Ee][Ff]=\([\x22\x27]\)\(.*'$src'-v*[0-9].*\)\1.*|\2| p' $1.html | sed -f $sed_file | awk -F'[\x22\x27]' '{print $1}' | grep $f_type | uniq) )
+
+#for i in ${links[@]}; do echo $i; done
+
+sources=( $(echo ${links[@]} | sed -e 's|\s|\n|g' -e 's|.download||g' -e 's|/$||' | awk -F/ '{print $NF}' | grep ^$src) )
+
+#echo ${sources[@]}
+latest_source=$(echo ${sources[@]} | sed -e 's|\s|\n|g' -e '/packs/ d' | sort -V | tail -1)
+latest_version=$(echo $latest_source | sed -e "s|$src-\(.*\).$f_type.*|\1|" | sed -e 's|.m*i*n*src||' -e 's|.Source||')
+latest_link=$(for i in ${links[@]}; do echo $i; done | grep -m1 $latest_version)
+
+if [[ $(echo $latest_link | cut -c1) == "/" ]]; then
+	base_url=$(echo $url | sed -n 's|\([fh]t*tps*://[^/]*\).*|\1| p')
+	latest_link=$(echo $base_url/$latest_link | sed 's|//|/|g')
+elif [[ $(echo $latest_link | egrep ^??...://) == "" ]]; then
+	latest_link=$(echo $url/$latest_link | sed 's|//|/|g')
+fi
+
+#echo "$latest_source | $latest_version"
+loc_ver=$(get_local_version $1)
+
+if [[ $loc_ver != $latest_version ]]; then
+	print $1 $loc_ver $latest_version $latest_link
+fi

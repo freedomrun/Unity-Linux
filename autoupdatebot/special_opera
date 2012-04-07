@@ -1,0 +1,18 @@
+#!/bin/bash
+
+source ./generic_functions.sh
+
+url=$(sed -n "s|opera[\t ]\(.*\)|\1?C=M;O=D|p" $p_list)
+wget -qt 3 -O opera.html --force-clobber $url
+row=$(awk 'NR==9' opera.html)
+alt=$(echo $row | sed -n 's|.*alt="\[\(.*\)\]".*|\1| p')
+link=$(echo $row | sed -n 's|.*<a href="\(.*\)">\1</a>.*|\1| p')
+url=$(echo $url | sed "s|\(.*\)\(?C=M;O=D\)|\1$link\2|")
+wget -qt 3 -O opera.html --force-clobber $url
+row=$(awk 'NR==16' opera.html)
+link=$(echo $row | sed -n 's|.*<a href="\(.*\)">\1</a>.*|\1| p')
+version=$(echo $link | sed -e 's|.tar.gz||' -e 's|.tar.bz2||' -e 's|.tar.xz||' -e 's|.tar.lzma||' -e 's|.zip||' -e 's|tgz||' -e 's|.tbz2||' -e 's|txz||' -e 's|tlzma||' | awk -F- '{print $2}')
+local_version=$(sed -n 's|^Version:[\t ]*\(.*\)|\1|p' $svn_path/opera/F/opera.spec)
+if [[ "$version" != "$local_version" ]]; then
+	print opera $local_version $version $url/$link
+fi

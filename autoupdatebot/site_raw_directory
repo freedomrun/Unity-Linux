@@ -1,0 +1,27 @@
+#!/bin/bash
+
+source ./generic_functions.sh
+
+# Send this script the name of the package to check.
+# It is important not to send this script the ?C=M;O=D present on the end of the URL
+url=$(sed -n "s|$1[\t ]*\(.*\)|\1?C=M;O=D|p" $p_list)
+fetch_html $1 $url
+clean_html $1
+row=$(awk 'NR==1' $1.html)
+alt=$(echo $row | sed -n 's|.*alt="\[\(.*\)\]".*|\1| p')
+link=$(echo $row | sed -n 's|.*<a href="\(.*\)">\1</a>.*|\1| p')
+# If the most recent link is a directory, go inside that directory
+while [[ $alt == "DIR" ]]; do 
+	url=$(echo $url | sed "s|\(.*\)\(?C=M;O=D\)|\1$link\2|")
+	fetch_html $1 $url
+	clean_html $1
+	row=$(awk 'NR==1' $1.html)
+	alt=$(echo $row | sed -n 's|.*alt="\[\(.*\)\]".*|\1| p')
+	link=$(echo $row | sed -n 's|.*<a href="\(.*\)">\1</a>.*|\1| p')
+done
+version=$(get_tarball_version $1 $link)
+local_version=$(get_local_version $1)
+url=$(echo $url | sed -e 's|/?C=M;O=D||')
+if [[ "$version" != "$local_version" ]]; then
+	print $1 $local_version $version "$url/$link"
+fi

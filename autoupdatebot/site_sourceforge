@@ -1,0 +1,28 @@
+#!/bin/bash
+
+source ./generic_functions.sh
+
+# NOTE: This script does not work if the SourceForge project has >1 package (like LXDE)
+# Send this script the name of the package
+case $(grep "$1" $p_list | wc -w) in
+	1)
+		proj=$1
+		upkg=$1
+	;;
+	2)
+		proj=$(grep $1 $p_list | awk '{print $2}')
+		upkg=$1
+	;;
+	3)
+		proj=$(grep $1 $p_list | awk '{print $2}')
+		upkg=$(grep $1 $p_list | awk '{print $3}')
+	;;
+esac
+wget -qt 3 -O $1.html "http://sourceforge.net/projects/$proj/files/"
+link=$(grep -A1 'download-bar' $1.html | sed -n 's| *<a href="\(.*\)" title=.*|\1|p')
+tarball=$(echo $link | sed -n "s|.*/\($1-.*\)/download.*|\1|p")
+version=$(get_tarball_version $1 $tarball)
+local_version=$(get_local_version $upkg)
+if [[ "$version" != "$local_version" ]]; then
+	print $1 $local_version $version $link
+fi
