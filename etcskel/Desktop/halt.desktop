@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Halt
+Comment=Halt Unity Linux
+Exec=halt
+Icon=poweroff
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=X-MandrivaLinux-System-Configuration;System;

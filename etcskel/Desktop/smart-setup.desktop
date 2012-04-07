@@ -1,0 +1,11 @@
+
+[Desktop Entry]
+Name=Mirror Selection Tool
+Comment=Interactive tool to select package repository mirrors.
+Icon=networking_section
+Exec=gksu -l /usr/sbin/smart-setup
+Type=Application
+Terminal=false
+StartupNotify=true
+Categories=GTK;Settings;MirrorManager;System;
+X-Desktop-File-Install-Version=0.15

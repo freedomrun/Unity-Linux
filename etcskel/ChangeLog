@@ -1,0 +1,201 @@
+2012-02-15 15:30 Matthew Dawkins <mattydaw@gmail.com>
+	* fixed up for new pcmanfm
+	* added sakura scrollbar
+
+2010-11-20 14:48 JMiahMan <JMiahMan at unity-linux dot org>
+	* Add open box configs / Unity default configs
+
+
+2005-10-20 02:48  Olivier Thauvin <thauvin at aerov.jussieu.fr>
+
+	* Makefile, etcskel.spec: - fix release, merge changes made out of
+	  cvs
+
+2005-10-20 02:39  Olivier Thauvin <thauvin at aerov.jussieu.fr>
+
+	* Makefile, etcskel.spec: - remerge correct Makefile - release
+	  18mdk
+
+2005-10-20 02:19  Olivier Thauvin <thauvin at aerov.jussieu.fr>
+
+	* etcskel.spec: - mkrel - cleanup - s/mandrake/mandriva/
+
+2005-10-20 02:14  Olivier Thauvin <thauvin at aerov.jussieu.fr>
+
+	* Makefile: - better eval of rpm env
+
+2003-09-08 10:16  David Baudens <baudens at mandriva.com>
+
+	* Makefile, etcskel.spec: Update
+
+2001-10-09 15:42  Thierry Vignaud <tvignaud at mandriva.com>
+
+	* etcskel.spec: update
+
+2001-10-05 14:11  Chmouel Boudjnah
+
+	* etcskel.spec: Change descriptions.
+
+2001-05-15 11:00  Chmouel Boudjnah
+
+	* Makefile, etcskel.spec: Remove .bash* (provided by bash).
+
+2001-04-12 02:05  David Baudens <baudens at mandriva.com>
+
+	* Makefile: [no log message]
+
+2001-04-12 01:57  David Baudens <baudens at mandriva.com>
+
+	* etcskel.spec: Update spec
+
+2001-04-12 01:53  David Baudens <baudens at mandriva.com>
+
+	* netscape/: cache/.dummy, .dummy: [no log message]
+
+2001-04-12 01:42  David Baudens <baudens at mandriva.com>
+
+	* netscape/archive/.dummy: [no log message]
+
+2001-04-12 01:31  David Baudens <baudens at mandriva.com>
+
+	* etcskel.spec: [no log message]
+
+2001-04-12 01:27  David Baudens <baudens at mandriva.com>
+
+	* kderc: Remove kderc file. It is provided by kdebase now.
+
+2001-01-05 15:08  Frederic Lepied <flepied at mandriva.com>
+
+	* Xdefaults, etcskel.spec: Xdefaults
+
+2001-01-05 15:07  Frederic Lepied <flepied at mandriva.com>
+
+	* bash_profile: removed commands.
+
+2001-01-05 14:34  Frederic Lepied <flepied at mandriva.com>
+
+	* Makefile: removed Xdefaults
+
+2001-01-04 11:26  Frederic Lepied <flepied at mandriva.com>
+
+	* etcskel.spec: oops added hiden files back.
+
+2001-01-04 11:23  Frederic Lepied <flepied at mandriva.com>
+
+	* etcskel.spec: corrected license and file list.
+
+2001-01-04 11:20  Frederic Lepied <flepied at mandriva.com>
+
+	* etcskel.spec: 1.63-8mdk
+
+2001-01-04 11:17  Frederic Lepied <flepied at mandriva.com>
+
+	* bashrc: remove all except /etc/bashrc to be able to do upgrade
+	  cleanly.
+
+2000-09-24 11:55  Chmouel Boudjnah
+
+	* etcskel.spec: -q in %setup.
+
+2000-09-24 11:55  Chmouel Boudjnah
+
+	* etcskel.spec: Fix another dadou sucks.
+
+2000-09-24 11:54  Chmouel Boudjnah
+
+	* Makefile, etcskel.spec:
+	  - Rebuild to remove the CVS files.
+
+2000-08-31 22:38  David Baudens <baudens at mandriva.com>
+
+	* etcskel.spec: [no log message]
+
+2000-08-31 22:32  David Baudens <baudens at mandriva.com>
+
+	* etcskel.spec: [no log message]
+
+2000-08-31 22:30  David Baudens <baudens at mandriva.com>
+
+	* etcskel.spec: Update Spec
+
+2000-08-31 22:27  David Baudens <baudens at mandriva.com>
+
+	* etcskel.spec: Update Spec
+
+2000-08-31 22:13  David Baudens <baudens at mandriva.com>
+
+	* kderc: Update to KDE 2
+
+2000-08-03 12:10  Chmouel Boudjnah
+
+	* Makefile, netscape/.dummy, netscape/archive/.dummy,
+	  netscape/cache/.dummy: Add dummy files for cvs to don't erase
+	  empty directory.
+
+2000-08-03 12:07  Chmouel Boudjnah
+
+	* etcskel.spec: - Increase release since titi won't follow rules
+	  like normal.
+
+2000-08-03 11:55  Chmouel Boudjnah
+
+	* etcskel.spec: Ready to release 1.63-4mdk.
+
+2000-08-03 11:54  Chmouel Boudjnah
+
+	* mailcap: s|mswordview|wvHtml|;
+
+2000-07-29 20:23  Chmouel Boudjnah
+
+	* Makefile: Add a changelog target to be used with cvs2cl
+
+2000-04-25 20:31  Chmouel Boudjnah
+
+	* Makefile, etcskel.spec, vimrc: remove vimrc.
+
+2000-04-14 00:52  Chmouel Boudjnah
+
+	* bash_profile, etcskel.spec: "Seethechangelog"
+
+2000-03-22 14:58  Chmouel Boudjnah
+
+	* Makefile, etcskel.spec: "Seethechangelog"
+
+2000-03-22 14:55  Chmouel Boudjnah
+
+	* Makefile, etcskel.spec: "Seethechangelog"
+
+2000-03-22 14:52  Chmouel Boudjnah
+
+	* zshrc, etcskel.spec: "Seethechangelog"
+
+2000-03-18 20:59  Chmouel Boudjnah
+
+	* Makefile, emacs, etcskel.spec: [no log message]
+
+2000-02-23 18:45  Chmouel Boudjnah
+
+	* etcskel.spec, zshrc: "See_The_Changelog"
+
+1999-12-27 21:49  Chmouel Boudjnah
+
+	* etcskel.spec: "Seethechangelog"
+
+1999-12-27 21:27  Chmouel Boudjnah
+
+	* etcskel.spec: "Seethechangelog"
+
+1999-12-27 21:26  Pixel <pixel at mandriva.com>
+
+	* bashrc, etcskel.spec, zshrc: no_comment
+
+1999-12-27 21:14  Chmouel Boudjnah
+
+	* Makefile, Xdefaults, bash_logout, bash_profile, bashrc, emacs,
+	  etcskel.spec, kderc, mailcap, vimrc, zshrc: First_Release
+
+1999-12-27 21:14  Chmouel Boudjnah
+
+	* Makefile, Xdefaults, bash_logout, bash_profile, bashrc, emacs,
+	  etcskel.spec, kderc, mailcap, vimrc, zshrc: Initial revision
+

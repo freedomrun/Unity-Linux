@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=scite
+Comment=%{Summary}
+Exec=SciTE
+Icon=editors_section.png
+Terminal=false
+Type=Application
+StartupNotify=false
+Categories=Application;Utility;TextEditor;X-MandrivaLinux-MoreApplications-Editors;

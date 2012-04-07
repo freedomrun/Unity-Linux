@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Configure Your Computer
+Exec=/usr/sbin/drakconf
+Comment=Administration Center
+Icon=drakconf.png
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=System;GTK;X-MandrivaLinux-System-Configuration;

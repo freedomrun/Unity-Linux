@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Unity Installer
+Comment=The Unity Linux Installer
+Exec=gksu -l unity-installer
+Icon=unity-installer
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=X-MandrivaLinux-System-Configuration;System;

@@ -1,0 +1,6 @@
+# .bashrc
+
+# Source global definitions
+if [ -r /etc/bashrc ]; then
+	. /etc/bashrc
+fi
