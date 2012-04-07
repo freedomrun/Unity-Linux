@@ -1,0 +1,143 @@
+#!/bin/sh
+#
+#  mvme
+#
+#  Copyright (C) 2010  Matthew Dawkins <mattydaw@gmail.com>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#
+# # # # # # # # # # # # # # # # # # # # # # # #
+#  sync rpms to devel server and store away   #
+# # # # # # # # # # # # # # # # # # # # # # # #
+# 
+
+PKGPATH=~/pkgs
+NEW32=$PKGPATH/i586
+NEW64=$PKGPATH/x86_64
+NEWARM=$PKGPATH/armv5te
+PLF32=$PKGPATH/plfi586
+PLF64=$PKGPATH/plfx86_64
+PLFARM=$PKGPATH/plfarmv5te
+DEVEL_SERVER_ROOT=`/usr/sbin/unity_repo_details.sh -d`
+REPO_PATH=`/usr/sbin/unity_repo_details.sh -r`
+REPOPATH=$REPO_PATH
+STORE32=$REPOPATH/i586/test
+STORE64=$REPOPATH/x86_64/test
+STOREARM=$REPOPATH/armv5te/test
+PLFSTORE32=$REPOPATH/i586/plf
+PLFSTORE64=$REPOPATH/x86_64/plf
+PLFSTOREARM=$REPOPATH/armv5te/plf
+
+usage()
+{
+	printf $"Usage: %s [-h|--help] [--32] [--64] [--arm] [--plf]\n\n" $0
+	exit -1
+}
+
+eval set -- `getopt -o h --long help,32,64,arm,plf -n $(basename $0) -- "$@"`
+while true ; do
+	case "$1" in
+		-h|--help) usage ; shift ;;
+		--32) do32=1 ; shift ;;
+		--64) do64=1 ; shift ;;
+		--arm) doARM=1 ; shift ;;
+		--plf) doplf=1 ; shift ;;
+		--) shift ; break ;;
+		*) echo "Internal error!" ; exit 1 ;;
+	esac
+done
+
+## starting path
+PWD=`pwd`
+
+## sync & store i586 pkgs
+if [ -n "$do32" ]
+then
+	cd $NEW32
+	if [ $(find -maxdepth 1 -type f -iname "*rpm"|wc -l) -eq 0 ]; then 
+		echo "$NEW32: no rpms"
+	else 
+			echo "$NEW32: moving rpms to $STORE32"
+			mv $NEW32/*rpm $STORE32/
+	fi
+fi
+
+## sync & store x86_64 pkgs
+if [ -n "$do64" ]
+then
+	cd $NEW64
+	if [ $(find -maxdepth 1 -type f -iname "*rpm"|wc -l) -eq 0 ]; then 
+		echo "$NEW64: no rpms"
+	else 
+		echo "$NEW64: moving rpms to $STORE64"
+		mv $NEW64/*rpm $STORE64/
+	fi
+fi
+
+## sync & store armv5te pkgs
+if [ -n "$doARM" ]
+then
+	cd $NEWARM
+	if [ $(find -maxdepth 1 -type f -iname "*rpm"|wc -l) -eq 0 ]; then 
+		echo "$NEWARM: no rpms"
+	else 
+		echo "$NEWARM: moving rpms to $STOREARM"
+		mv $NEWARM/*rpm $STOREARM/
+	fi
+fi
+
+#############################################
+if [ -n "$doplf" ]
+then
+	## sync & store plf i586 pkgs
+	if [ -n "$do32" ]
+	then
+		cd $PLF32
+		if [ $(find -maxdepth 1 -type f -iname "*rpm"|wc -l) -eq 0 ]; then 
+			echo "$PLF32: no rpms"
+		else 
+			echo "$PLF32: moving rpms to $PLFSTORE32"
+			mv $PLF32/*rpm $PLFSTORE32/
+		fi
+	fi
+
+	## sync & store plf x86_64 pkgs
+	if [ -n "$do64" ]
+	then
+		cd $PLF64
+		if [ $(find -maxdepth 1 -type f -iname "*rpm"|wc -l) -eq 0 ]; then 
+			echo "$PLF64: no rpms"
+		else 
+			echo "$PLF64: moving rpms to $PLFSTORE64"
+			mv $PLF64/*rpm $PLFSTORE64/
+		fi
+	fi
+
+	## sync & store plf armv5te pkgs
+	if [ -n "$doARM" ]
+	then
+		cd $PLFARM
+		if [ $(find -maxdepth 1 -type f -iname "*rpm"|wc -l) -eq 0 ]; then 
+			echo "$PLFARM: no rpms"
+		else 
+			echo "$PLFARM: moving rpms to $PLFSTOREARM"
+			mv $PLFARM/*rpm $PLFSTOREARM/
+		fi
+	fi
+fi
+
+## return to starting path
+cd $PWD

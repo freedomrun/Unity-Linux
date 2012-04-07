@@ -1,0 +1,36 @@
+#!/bin/sh
+
+if [ -z "$1" ]
+then
+    cat <<EOH
+Usage: $0 SVN_username
+
+Generates client's ssh configuration (unity_svn_setup_<SVN_username>.tgz) that has to be extracted to client's home dir.
+Also generates authorized_keys.<SVN_username> file, which needs to be appended to ~/.ssh/authorized_keys on Unity Linux server.
+Both files are created in the current directory, therefore you need to have write permissions there.
+
+Unity SVN repository can be then accessed on URL svn+ssh://unity like this :
+
+svn list svn+ssh://unity 
+svn co svn+ssh://unity 
+
+EOH
+    exit 1
+fi
+
+mkdir -p /tmp/$0.$$/.ssh
+ssh-keygen -q -b 768 -t rsa -f /tmp/$0.$$/.ssh/id_rsa_unity_svn_$1 -C $1 -N ''
+echo -n "command=\"svnserve -r /home/unity/svn -t --tunnel-user=$1\",no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty " > authorized_keys.$1
+cat /tmp/$0.$$/.ssh/id_rsa_unity_svn_$1.pub >> authorized_keys.$1
+chmod o-rwx authorized_keys.$1
+cat <<EOT > /tmp/$0.$$/.ssh/config
+Host unity
+    Hostname dev.unity-linux.org
+    Port 22
+    IdentityFile ~/.ssh/id_rsa_unity_svn_$1
+    User unity
+EOT
+chmod 0644 /tmp/$0.$$/.ssh/config
+
+tar czf unity_svn_setup_$1.tgz -C /tmp/$0.$$/ .ssh
+rm -Rf /tmp/$0.$$
