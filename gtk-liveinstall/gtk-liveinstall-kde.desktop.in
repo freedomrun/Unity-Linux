@@ -1,0 +1,12 @@
+[Desktop Entry]
+_Name=GTK live install
+_Comment=Create 'liveUSB' or 'Poorman' installation
+_GenericName=Create liveUSB
+Encoding=UTF-8
+Exec=kdesu /usr/sbin/gtk-liveinstall
+Icon=gtk-liveinstall
+Terminal=false
+Type=Application
+StartupNotify=false
+Categories=X-MandrivaLinux-System;
+OnlyShowIn=KDE;

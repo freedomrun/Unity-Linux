@@ -1,0 +1,30 @@
+LINUX 'LIVE' / POOR MAN'S INSTALLATION
+
+This installer will create a 'live' operating system installation on the storage device of your choice.
+
+For example, an internal hard disk drive, a USB memory stick, a flash memory card... 
+
+The installed operating system will be a clone of a live-CD but with a boot option to save the changes you make to the operating system on your storage device. You can clone a live CD when running live from it, from a normal install if you have a live CD to hand, or from a downloaded live CD ISO file.
+
+You can install onto a ready-formatted device or you can choose to clear a device and partition it within this installer. 
+
+Make sure that the only storage devices attached to your computer are those that are normally attached at boot time. If you want to copy an ISO file from a storage device other than the one you are installing onto, then only attach it when you are prompted to select the ISO file.
+
+If you are installing on a flash memory device and are worried about decreasing the product's lifespan, you can opt not to use the 'changes' boot option. 
+
+If you do use the changes boot option your operating system can be used more like a normal installation, for instance you can save files and install software.
+
+This is also known as a Poor Man's Install and can be used when a traditional installation will not work, or if space is at a premium (because the operating system remains compressed in the squashfs file system).
+
+If you run this installer and choose option 1, be aware that all the data on the device will be erased!
+
+Please back up any important files before continuing.
+
+Your device must be at least as large as the live CD iso image. Any additional space can be used to save the 'changes' or you can leave some unformatted space on your device which you can then format in a file system of your choice later.
+
+During installation, the operating system automounting daemons (kded, gnome-volume-manager, thunar-volman) will be temorarily stopped. They will be restarted when the installation is complete. This means you won't be able to perform any file management tasks during installation. If for some reason they are not restarted, just log out and back in again. 
+
+Press close to continue this installation.
+
+(c) Iain Jackson, Clare Oldie 2008
+Licence GPL v2.0 or later

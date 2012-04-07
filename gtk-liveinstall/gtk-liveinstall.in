@@ -1,0 +1,1019 @@
+#!/bin/bash
+#@APPNAME@-@VERSION@
+#(C) Iain Jackson, ClareOldie 2008
+#Credits: jdeisenberg, Jmiahman, C-Chan, Ivan Kerekes, Gianvacca
+#License GPL 2.0 or later
+#Requires Zenity, Parted
+
+############################################################
+########################The Pre-amble###########################
+VERSION="@VERSION@"
+APPNAME="@APPNAME@"
+
+
+# gprintf is a function added to make this script localizable. It returns the translation of the message, if the translation in the "locale" language is available.
+gprintf () {
+        local TEXT=`gettext -e -d gtk-liveinstall "$1"`
+	[ "${1#*\\n}" ] || TEXT="$TEXT\n"
+	shift
+	printf "$TEXT" "$@"
+}	
+
+
+#Set script title
+TITLE="$(gprintf "GTK 'Live' Installer")"
+
+#Check if user is logged in as root
+if [ "$UID" != "0" ]; then
+	if [ ! -e /usr/bin/zenity ]; then
+		if [ -e /usr/bin/kdialog ]; then	
+			kdialog --title "$TITLE" --sorry "$(gprintf "You must run this installer as root! \nLog in as root (or su to root) and run this installer again")"
+			exit 0
+		else
+			xmessage -title "$TITLE" -nearmouse "$(gprintf "You must run this installer as root! \\nLog in as root (or su to root) and run this installer again")"
+			exit 0
+		fi
+	else
+	zenity --error --width=500 --title "$TITLE" --text "$(gprintf "You must run this installer as root!\n\nLog in as root (or su to root) and run this installer again")"
+	exit 0
+	fi
+fi
+
+#Build localized help file
+
+gprintf "LINUX 'LIVE' / POOR MAN'S INSTALLATION
+
+This installer will create a 'live' operating system installation on the storage device of your choice.
+
+For example, an internal hard disk drive, a USB memory stick, a flash memory card... 
+
+The installed operating system will be a clone of a live-CD but with a boot option to save the changes you make to the operating system on your storage device. You can clone a live CD when running live from it, from a normal install if you have a live CD to hand, or from a downloaded live CD ISO file.
+
+You can install onto a ready-formatted device or you can choose to clear a device and partition it within this installer. 
+
+Make sure that the only storage devices attached to your computer are those that are normally attached at boot time. If you want to copy an ISO file from a storage device other than the one you are installing onto, then only attach it when you are prompted to select the ISO file.
+
+If you are installing on a flash memory device and are worried about decreasing the product's lifespan, you can opt not to use the 'changes' boot option. 
+
+If you do use the changes boot option your operating system can be used more like a normal installation, for instance you can save files and install software.
+
+This is also known as a Poor Man's Install and can be used when a traditional installation will not work, or if space is at a premium (because the operating system remains compressed in the squashfs file system).
+
+If you run this installer and choose option 1, be aware that all the data on the device will be erased!
+
+Please back up any important files before continuing.
+
+Your device must be at least as large as the live CD iso image. Any additional space can be used to save the 'changes' or you can leave some unformatted space on your device which you can then format in a file system of your choice later.
+
+During installation, the operating system automounting daemons (kded, gnome-volume-manager, thunar-volman) will be temorarily stopped. They will be restarted when the installation is complete. This means you won't be able to perform any file management tasks during installation. If for some reason they are not restarted, just log out and back in again. 
+
+Press close to continue this installation.
+
+(c) Iain Jackson, Clare Oldie 2008
+Licence GPL v2.0 or later" > /usr/share/doc/$APPNAME/HELP
+
+#Open help file before continuing
+
+iconv --from-code=UTF-8 --to-code=ISO-8859-1 < /usr/share/doc/$APPNAME/HELP | zenity --text-info --width=700 --height=600 --title "$TITLE" 
+
+#Insert device now..!
+zenity --info --width=500 --height=300 --title "$TITLE" --text="$(gprintf "If you are installing onto a removeable device
+please insert/attach it now.\n
+If your OS autodetects the device, let the OS mount it and then close the window.\n
+Click on OK to scan system for attached devices\nincluding internal devices.\n")"
+
+#Scanning for devices. Not, really, just a sleep to give the OS time to automount any removeable media!
+(
+echo ; sleep 1
+sleep 3
+echo ; sleep 3
+) | zenity --progress --width=250 --height=150 --pulsate --title="$TITLE" --text "$(gprintf "Scanning for devices...\n\nPlease wait...")" \
+--auto-kill --auto-close
+
+############################################################
+########################Set functions############################
+
+whichdisk () {
+#Ask user to select their device to erase and install onto
+DRV=$(fdisk -l|grep -e '[[:space:]]/dev/'|sed -e 's/[:]//'|awk '{print $2 " " $3 $4 " " int($5/1048576) "MiB"}')
+
+DEVICE=$(zenity --height=300 --width=500 --list --title "$TITLE" \
+--text "$(gprintf "Please select the device to install onto.\n
+Then choose the partition you want to install onto on the next screen.\n
+You will be able to check the disk partitions and installation options before
+writing any data and cancel if need be. No data will be written at this stage.")" \
+--column "$(gprintf "Drive")" $DRV \
+--column "$(gprintf "Size - decimal measure")" \
+--column "$(gprintf "Size - binary measure")")
+
+echo "~~~ Erase and install onto $DEVICE ~~~"
+
+#Cancel
+if [ "$DEVICE" == "" ]; then
+	zenity --error --width=500 --text "$(gprintf "Installation cancelled. No changes were made to your device.")" --title="$(gprintf "Installation cancelled!")"
+	exit 0
+fi
+
+#Store size and partition numbers
+SIZE=$(fdisk -l $DEVICE|grep -w $DEVICE|awk '{print int($5/1048576)}')
+echo "~~~ Device capacity = $SIZE MiB ~~~"
+PARTS=$(ls ${DEVICE}*|grep -v "$DEVICE\>"|grep -e "$DEVICE"|awk '{print $1}')
+echo "~~~ Erase all these partitions: $PARTS ~~~"
+
+PART=${DEVICE}1
+}
+
+whichpartition () {
+#Ask user to select the pre-formatted partition to install onto
+#First ask user to select their device
+DRV=$(fdisk -l|grep -e '[[:space:]]/dev/'|sed -e 's/[:]//'|awk '{print $2 " " $3 $4 " " int($5/1048576) "MiB"}')
+
+DEVICE=$(zenity --height=300 --width=500 --list --title "$TITLE" \
+--text "$(gprintf "Please select the device to install onto.\n
+Then choose the partition you want to install onto on the next screen.\n
+You will be able to check the disk partitions and installation options before
+writing any data and cancel if need be. No data will be written at this stage.")" \
+--column "$(gprintf "Drive")" $DRV \
+--column "$(gprintf "Size - decimal measure")" \
+--column "$(gprintf "Size - binary measure")")
+
+echo "~~~ Selected $DEVICE for installation ~~~"
+
+#Cancel
+if [ "$DEVICE" == "" ]; then
+	zenity --error --width=500 --text "$(gprintf "Installation cancelled. No changes were made to your device.")" --title="$(gprintf "Installation cancelled!")"
+	exit 0
+fi
+
+#Mount each partition at temporary mount point, so that df can provide much needed info.
+#First find out how many partitions are on the device
+PARTNUMS=$(ls ${DEVICE}*|grep -v "$DEVICE\>"|grep -c $DEVICE )
+echo "~~~ Number of partitions on $DEVICE = $PARTNUMS ~~~"
+
+#Then progressively mount each partition at /tmp/mnt
+PARTNAME=( $(ls ${DEVICE}*|sed -e 's/[/]dev[/]//') )
+i=1
+while (( i <= ${#PARTNAME[@]}-1 ))
+do
+	#Work out the first partition to mount
+	MOUNTPOINT="/dev/${PARTNAME[i]}"
+	#Check if filesystem is already mounted
+	ISMOUNTED=$(mount|grep -e "$MOUNTPOINT\>"|awk '{print $1}')
+	if [[ "$MOUNTPOINT" == $ISMOUNTED ]]; then
+		echo "~~~ Partition $MOUNTPOINT is already mounted ~~~"
+	else
+		#Check the filesystem type so we don't mount any extended or swap partitions
+		PART_TYPE=$(fdisk -l|grep -e "$MOUNTPOINT\>"|awk '{print $5}')
+		if [[ $PART_TYPE == "5" ]]; then
+			echo "~~~ Partition $MOUNTPOINT is an extended container, won't mount ~~~"
+		elif [[ $PART_TYPE == "f" ]]; then
+			echo "~~~ Partition $MOUNTPOINT is an extended container, won't mount ~~~"
+		elif [[ $PART_TYPE == "82" ]]; then
+			echo "~~~ Partition $MOUNTPOINT is swap, won't mount ~~~"
+		else
+			#Just get last 4 digits of partition number for mountpoint eg sda1
+			MOUNTDEVICE=${PARTNAME[i]}
+			echo "~~~ Temporarily mount $MOUNTPOINT at /tmp/mnt/$MOUNTDEVICE ~~~"
+			mkdir -p /tmp/mnt/${MOUNTDEVICE}
+			mount -s $MOUNTPOINT /tmp/mnt/${MOUNTDEVICE}
+		fi
+	fi
+	(( i++ ))
+done
+
+#Then ask user to select the partition on that device
+PARTITIONS=$(df -T | grep -e $DEVICE | \
+awk '{print $1 " " int($3*1024/1000000) "MB" " " int($3/1024) "MiB" " " $2 }')
+
+PART=$(zenity --height=300 --width=500 --list --title "$TITLE" \
+--text "$(gprintf "Please select the partition to install onto.\n
+You will be able to check the disk partitions and installation options before
+writing any data and cancel if need be.\n
+No data will be written at this stage.")" \
+--column "$(gprintf "Drive")" $PARTITIONS \
+--column "$(gprintf "Size - decimal measure")" \
+--column "$(gprintf "Size - binary measure")" \
+--column "$(gprintf "Type")")
+echo "~~~ Install onto $PART ~~~"
+
+#Cancel
+if [ "$PART" == "" ]; then
+	zenity --error --width=500 --text "$(gprintf "Installation cancelled. No changes were made to your device.")" --title="$(gprintf "Installation cancelled!")"
+	housekeeping
+	exit 0
+fi
+
+#Store filesystem type and size
+FS=$(echo "$PARTITIONS" | grep -e "$PART\>" | awk '{print $4}')
+echo "~~~ Existing filesystem on $PART = $FS ~~~"
+SIZE=$(echo "$PARTITIONS" | grep -e "$PART\>" | awk '{print $3}'| sed 's/MiB//')
+echo "~~~ Partition size of $PART = $SIZE MiB ~~~"
+}
+
+free_space_calc () {
+# Calculate size of livecd.sqfs file in MiB integer units
+SQFS_SIZE=$(du -b ${COPYPATH}/livecd.sqfs | awk '{print int($1/1048576+1)}')
+# Calculate min partition size adding on 6% to cover journaling
+MIN=$(($SQFS_SIZE * 112/100))
+echo "~~~ Minimum size required for installation = $MIN MiB ~~~"
+# Calculate max size based on free space available on chosen device minus 3MB for safety.
+MAX=$(($SIZE - 3))
+FREE=$(($MAX - $MIN))
+echo "~~~ Free space for installation = $FREE MiB ~~~"
+if [ $SIZE -le $MIN ]; then
+	if $(zenity --question --width=500 --title="$TITLE" --width=500 --height=300 \
+	--text="$(gprintf "Not enough space on %s to install your chosen operating system.\n
+You need %s MiB of free space, but this partition only holds %s MiB.\n
+Press OK to select another, smaller operating system.\n
+Press Cancel to quit (no changes have been made to your device yet).
+Run the installer again and choose a larger partition size or device." $PART ${MIN} ${SIZE})")
+		then clonesource
+	else
+		zenity --error --width=500 --text "$(gprintf "You have decided to cancel.\n
+No changes have been made to your device.\n
+Exiting installation. Please try again some other time.")" --title="$(gprintf "Installation cancelled!")"
+		housekeeping
+		exit 0
+	fi
+else
+	clone_source=0
+	echo "~~~ let's start the installation! ~~~"
+fi
+}
+
+clonesource () {
+#Ask user to choose source to clone from - current live system, a live CD media or an ISO file
+CLONE=$(zenity --list --height=300 --width=500 --title "$TITLE" --text "$(gprintf "Please select the source for your live installation")" --radiolist \
+--column "$(gprintf "Click")" --column "$(gprintf "Source")" TRUE "$(gprintf "The current live system")" FALSE "$(gprintf "I have a live CD I want to clone")" \
+FALSE "$(gprintf "I have a downloaded ISO file I want to clone")")
+echo "~~~ $CLONE ~~~"
+
+#User selects viable source to clone
+#While loop ensure the user is directed to try again if the first choice is bad
+clone_source=1
+while (( clone_source >= 1 ))
+do
+if [ "$CLONE" = "$(gprintf "The current live system")" ]; then
+	if [ -d "/union" ]; then
+		SRC="/initrd/cdrom/livecd.sqfs"
+		clone_source=0
+	else
+		zenity --error --width=500 --text "$(gprintf "You are not running live!\n
+No files were copied to your device.")" --title="$(gprintf "Installation cancelled!")"
+		housekeeping
+		exit 0
+	fi
+elif [ "$CLONE" = "$(gprintf "I have a downloaded ISO file I want to clone")" ]; then
+	zenity --info title="$TITLE" --height=300 --width=500 --text "$(gprintf "Please select the ISO file to install from on the next screen.")"
+	SRC=$(zenity --title="$TITLE" --text="$(gprintf "Please select the ISO file")" --file-selection)
+elif [ "$CLONE" = "$(gprintf "I have a live CD I want to clone")" ]; then
+	zenity --info title="$TITLE" --height=300 --width=500 --text "$(gprintf "Make sure your CD is inserted and mounted.\n
+Then select the livecd.sqfs file from the live CD on the next screen.\n
+Under PCLOS, most CD/DVDs are mounted under /media")" 
+	SRC=$(zenity --title="$TITLE" --text="$(gprintf "Please select the livecd.sqfs file from a live CD")" --file-selection)
+else
+	zenity --error --width=500 --text "$(gprintf "You have not chosen a source to clone!\n
+No operating system files were copied to your device.")" --title="$(gprintf "Installation cancelled!")"
+	housekeeping
+	exit 0
+fi
+		
+if [[ "$SRC" == *".iso" ]]; then
+	mkdir -p /tmp/loop
+	mount -o loop "$SRC" /tmp/loop
+	COPYPATH="/tmp/loop" 
+	clone_source=0
+	free_space_calc
+elif [[ "$SRC" == *"livecd.sqfs" ]]; then
+	COPYPATH=${SRC%/livecd.sqfs}
+	clone_source=0
+	free_space_calc
+elif [[ "$SRC" == "" ]]; then
+	zenity --error --width=500 --text "$(gprintf "You have decided to cancel.\n
+No changes have been made to your device.\n
+Exiting installation. Please try again.")" --title="$(gprintf "Installation cancelled!")"
+	housekeeping
+	exit 0
+else
+	zenity --error --width=500 --text "$(gprintf "You have not chosen a valid source for the live system!\n
+Please try again...")" --title="$TITLE"
+	clone_source=1
+fi
+
+done
+}
+
+disableautomount () {
+#Disable any automount daemons. These will interfere with the mounting & unmounting in the script
+if [ -f "/usr/bin/kded" ]; then
+	echo "~~~ Running KDE 3. Disable KDE daemon. ~~~"
+	PID=$(pidof kded)
+	kill -s SIGSTOP $PID
+elif [ -f "/usr/bin/gnome-volume-manager" ]; then #This needs checking
+	echo "~~~ Running GNOME (or using GNOME mount tool). Disable gnome-volume-manager. ~~~"
+	PID=$(pidof gnome-volume-manager)
+	kill -s SIGSTOP $PID
+elif [ -f "/usr/bin/thunar-volman" ]; then
+	echo "~~~ Running XFCE (or using XFCE mount tool). Disable thunar-volman. ~~~"
+	PID=$(pidof Thunar)
+	kill -s SIGSTOP $PID
+else
+	echo "~~~ No automount tools to disable. Continue with installation. ~~~"
+fi
+}
+
+bootoptions () {
+#Ask where to install Grub
+GRUB=$(zenity ---list --height=300 --width=500 --title "$TITLE" --text \
+"$(gprintf "Where would you like to install the Grub bootloader?")" --radiolist --column "$(gprintf "Click")" --column "$(gprintf "Bootloader options")" \
+TRUE "$(gprintf "to the MBR of %s (will wipe any existing bootloader)." $DEVICE)" \
+FALSE "$(gprintf "to the partition %s." $PART)")
+echo "~~~ Install grub $GRUB ~~~"
+
+#Cancel
+if [ "$GRUB" == "" ]; then
+	zenity --error --width=500 --text "$(gprintf "Installation cancelled. No changes were made to your device.")" --title="$(gprintf "Installation cancelled!")"
+	housekeeping
+	enableautomount
+	exit 0
+fi
+	
+#Ask user to choose how to boot the device
+BOOT=$(zenity ---list --height=300 --width=500 --title "$TITLE" --text \
+"$(gprintf "Choose how best to configure the boot parameters in the bootloader\n
+eg device locations, bootcodes etc...")" --radiolist --column "$(gprintf "Click")" --column "$(gprintf "Bootloader options")" \
+TRUE "$(gprintf "Best for portability between different PCs.")" \
+FALSE "$(gprintf "Best for the current setup to boot %s\nas primary boot device in BIOS." $DEVICE)" \
+FALSE "$(gprintf "Best for chainloading to %s from the\ncurrent primary boot device." $DEVICE)" )
+echo "~~~ Boot setup = $BOOT ~~~"
+
+#Cancel
+if [ "$BOOT" == "" ]; then
+	zenity --error --width=500 --text "$(gprintf "Installation cancelled. No changes were made to your device.")" --title="$(gprintf "Installation cancelled!")"
+	housekeeping
+	enableautomount
+	exit 0
+fi
+
+#Get user input to check device code for Grub menu
+if [[ "$BOOT" == "$(gprintf "Best for the current setup to boot %s\nas primary boot device in BIOS." $DEVICE)" ]]; then
+	if [[ "$DEVICE" == *"s"* ]]; then
+		PATH=$(zenity ---entry --height=300 --width=500 --title "$TITLE" --entry-text="$PART" --text \
+"$(gprintf "Even though you intend to boot this OS as the primary boot device,
+If you have any card readers, SATA devices or other USB storage devices 
+attached at boot time, they may interfere with the device code allocated
+to this device. It is currently set at %s.\n
+You can change the device location now and it will be written to the Grub
+menu, or press OK to continue with the current device location." $PART)")
+	fi
+fi
+
+#Ask user for a name for their live installation
+NAME=$(zenity --entry --height=300 --width=500 --title "$TITLE" \
+--text "$(gprintf "Type the name for this installation. This will appear on the Grub menu.")")
+echo "~~~ Installation name = $NAME ~~~"
+}
+
+makefilesystem () {
+#Create single partition - size and filesystem chosen by user
+# Ask user to choose partition size
+PARTSIZE=$(zenity --scale --height=300 --width=500 --title="$TITLE" --text "$(gprintf "Choose partition size in MiB for the installation\n
+Allow at least 20Mb above the minimum size if you
+want to save changes you make to the installation
+(add 50MB if using a FAT32 filesystem).\n
+The minimum value is set to allow room for journalling
+filesystems.
+")" --min-value=$MIN --max-value=$MAX \
+--value=$MIN --step 1)
+echo "~~~ Partition size chosen = ${PARTSIZE} MiB ~~~"
+
+#Cancel
+if [ "$PARTSIZE" == "" ]; then
+	zenity --error --width=500 --text "$(gprintf "Installation cancelled. No changes were made to your device.")" --title="$(gprintf "Installation cancelled!")"
+	housekeeping
+	enableautomount
+	exit 0
+fi
+
+MB=$(($PARTSIZE * 1048576/1000000))
+echo "~~~ Partition size chosen = ${MB} MB ~~~"
+
+#Ask user to choose filesystem type
+FSCHOICE=$(zenity --list --height=300 --width=500 --title "$TITLE" --text "$(gprintf "Which filesystem would you like to create?")" --radiolist --column "$(gprintf "Click")" \
+--column "$(gprintf "Filesystem type")" TRUE "$(echo -n "ext3 "; gprintf "(default)")" FALSE "ext2" FALSE "reiserfs" FALSE "FAT32")
+echo "~~~ Filesystem to create = $FSCHOICE ~~~"
+
+#Cancel
+if [ "$FSCHOICE" == "" ]; then
+	zenity --error --width=500 --text "$(gprintf "Installation cancelled. No changes were made to your device.")" --title="$(gprintf "Installation cancelled!")"
+	housekeeping
+	enableautomount
+	exit 0
+elif [ "$FSCHOICE" = "$(echo -n "ext3 "; gprintf "(default)")" ]; then
+	FSCHOICE="ext3"
+fi
+
+#Summarise installation options. Last chance to bail out!
+zenity --question --width=500 --height=300 --title "$TITLE" --text "$(gprintf "You have chosen this device to install onto with the following options:
+%s - %s MiB\n
+All of these partitions will be erased:
+%s\n
+Installation source:
+%s\n
+You have chosen to create one %s partition 
+of %s MiB.\n
+Grub installed %s
+Boot method: %s\n
+ALL DATA ON THIS DEVICE WILL BE LOST WHEN YOU CLICK OK!\n
+Click cancel if this is not the correct device or if you do not want to lose the data on these partitions. Then re-run the installer.\n
+To start the installation click OK." "$DEVICE" "$SIZE" "$PARTS" "$CLONE" "$FSCHOICE" "${PARTSIZE}" "$GRUB" "$BOOT")"
+
+#Cancel
+if [ "$?" == "1" ]; then
+	zenity --error --width=500 --text "$(gprintf "Installation cancelled. No changes were made to your device.")" --title="$(gprintf "Installation cancelled!")"
+	housekeeping
+	enableautomount
+	exit 0
+fi
+
+echo "~~~ Ready to install onto $DEVICE ~~~"
+
+if [ "$FSCHOICE" = "FAT32" ]; then
+	FS="vfat"
+fi
+
+#Clear device, wipe MBR, create and format filesystem
+(
+gprintf "# Deleting all partitions from %s.\n\nPlease wait...\n\nDisk activity will be intermittent throughout this process.\n\n" $DEVICE; echo ; sleep 1
+echo "14"
+umount ${DEVICE}* 
+{ seq -f d$'\n'%g 64 -1 1 
+	echo "w"
+} | fdisk $DEVICE >& /dev/null ; sleep 10 #Deletes all existing partitions (nicked from http://www.knoppix.net/wiki/Poor-mans_install,_grub,_PDI)
+gprintf "# Cleaning master boot record.\n\nPlease wait...\n\nDisk activity will be intermittent throughout this process.\n\n"; echo ; sleep 3
+echo "28"
+dd if=/dev/zero of=$DEVICE bs=512 count=1 ; sleep 10 #Zeros entire MBR
+gprintf "# Creating new msdos disk label.\n\nPlease wait...\n\nDisk activity will be intermittent throughout this process.\n\n"; echo ; sleep 3
+echo "42"
+parted -s $DEVICE mklabel msdos ; sleep 10 #Use parted for partitioning as it is more reliable than fdisk
+gprintf "# Creating %s MiB %s partition.\n\nPlease wait...\n\nDisk activity will be intermittent throughout this process.\n\n" ${PARTSIZE} ${FS}; echo ; sleep 3
+echo "56"
+if [[ "$FS" == "ext2" ]]; then
+	parted -s $DEVICE mkpartfs primary ext2 0 $MB
+elif [[ "$FS" == "ext3" ]]; then
+	parted -s $DEVICE mkpart primary 0 $MB && sleep 10 && mkfs.ext3 -q $PART
+elif [[ "$FS" == "reiserfs" ]]; then
+	parted -s $DEVICE mkpart primary 0 $MB && sleep 10 && mkfs.reiserfs -ff -q -b 4096 $PART
+elif [[ "$FS" == "vfat" ]]; then
+	parted -s $DEVICE mkpartfs primary fat32 0 $MB
+else
+	parted -s $DEVICE mkpartfs primary ext2 0 $MB
+fi
+sleep 10
+gprintf "# Setting boot label.\n\nPlease wait...\n\nDisk activity will be intermittent throughout this process.\n\n"; echo ; sleep 3
+echo "70"
+parted -s $DEVICE set 1 boot on ; sleep 10
+echo "84"
+gprintf "# Ejecting and reconnecting device (if possible).\n\nPlease wait...\n\nDisk activity will be intermittent throughout this process.\n\n"; echo
+eject $DEVICE ; sleep 10 # Eject (not physically) and then reconnect the device
+eject -t $DEVICE ; sleep 10
+echo "98" 
+gprintf "# Finishing up...\n\nPlease wait...\n\n\n\n"; echo ; sleep 3
+) | zenity --progress --percentage=0 --title="$TITLE" --text=" " --auto-close --auto-kill --height=300 --width=500 
+}
+
+checkfilesystem() {
+
+#Summarise installation options. Last chance to bail out!
+zenity --question --width=500 --height=300 --title "$TITLE" --text "$(gprintf "You have chosen this partition to install onto with the following options:
+%s - %s - %s MiB\n
+Installation source:
+%s\n
+Grub installed %s
+Boot method: %s\n
+ALL DATA ON THIS PARTITION WILL BE LOST WHEN YOU CLICK OK!\n
+Click cancel if this is not the correct device/partition and re-run the installer\n
+To start the installation click OK." "$PART" "$FS" "$SIZE" "$CLONE" "$GRUB" "$BOOT")" 
+
+#Cancel
+if [ "$?" == "1" ]; then
+	zenity --error --width=500 --text "$(gprintf "Installation cancelled. No changes were made to your device.")" --title="$(gprintf "Installation cancelled!")"
+	housekeeping
+	enableautomount
+	exit 0
+fi
+
+#Format partition ready for installation (if required)
+zenity --question --title="$TITLE" --width=500 --height=300 --text="$(gprintf "Do you want to format %s?\n
+You only need to do so if there is data on the partition.\n
+Click OK to format or click Cancel to continue without formatting." $PART)"
+
+if [ "$?" != "1" ]; then
+	if [ "$FS" = "ext3" -o "$FS" = "ext2" -o "$FS" = "reiserfs" \
+	      -o "$FS" = "FAT32" -o "$FS" = "FAT16" -o "$FS" = "vfat" \
+	      -o "$FS" = "" ]; then
+		(
+		gprintf "# Formatting %s as %s.\n\nPlease wait...\n\n\n\n" $PART $FS; echo; sleep 1
+		echo "10"
+		umount ${DEVICE}* 
+		echo "50"
+		if [ "$FS" = "ext3" ]; then
+			mkfs.ext3 -q $PART; sleep 10
+		elif [ "$FS" = "ext2" ]; then
+			mke2fs -q $PART; sleep 10
+		elif [ "$FS" = "reiserfs" ]; then
+			mkfs.reiserfs -q -ff -b 4096 $PART; sleep 10
+		elif [ "$FS" = "FAT32" ]; then
+			mkfs.vfat -F 32 $PART; sleep 10
+		elif [ "$FS" = "FAT16" ]; then
+			mkfs.vfat -F 16 $PART; sleep 10
+		elif [ "$FS" = "vfat" ]; then
+			mkfs.vfat -F 32 $PART; sleep 10
+		elif [ "$FS" = "" ]; then
+			mke2fs -q $PART; sleep 10
+		fi
+		echo "80"
+		gprintf "# Ejecting and reconnecting device (if possible).\n\nPlease wait...\n\nDisk activity will be intermittent throughout this process.\n\n"
+		eject $DEVICE ; sleep 5 # Eject (not physically) and then reconnect the device
+		eject -t $DEVICE ; sleep 5
+		echo "95" 
+		gprintf "# Finishing up...\n\nPlease wait...\n\n\n\n"; echo ; sleep 3
+		) | zenity --progress --percentage=0 --title="$TITLE" --text=" " \
+		--auto-close --auto-kill --height=300 --width=500 
+	else 
+		zenity --error --width=500 --text "$(gprintf "Unknown partition type: %s.\n
+Will attempt to continue without formatting.\n
+If there are any problems with the installation, please use ext2/3, reiserfs or FAT16/32 next time and try again." $FS)" --title="$TITLE"
+	fi
+else
+	echo "~~~ Continue without formatting ~~~"
+fi
+}
+
+check_device_reconnect ()
+{	
+# Check that the device has been successfully re-connected
+if [ $(fdisk -l | grep -c ${DEVICE}: ) != 1 ]; then
+	echo "~~~ $DEVICE not connected ~~~"
+	zenity --info --title="$TITLE" --height=300 --width=500 \
+	--text "$(gprintf "Please unplug and then reinsert your device.\n
+Then click on OK to continue with the installation.\n\n\n")"
+	# Scanning for devices. Not, really, just a sleep to give the OS time to automount any removeable media!
+	(
+	echo ; sleep 1
+	sleep 3
+	echo ; sleep 3
+	) | zenity --progress --width=250 --height=150 --pulsate --title="$TITLE" --text "$(gprintf "Scanning for devices...\n\nPlease wait...")" \
+	--auto-kill --auto-close
+	if [ $(fdisk -l | grep -c ${DEVICE}: ) != 1 ]; then
+		echo "~~~ $DEVICE still not connected ~~~"
+		zenity --error --width=500 --title="$(gprintf "Installation cancelled!")" --height=300 --width=500 \
+		--text "$(gprintf "There was an error reconnecting your device.\n
+The device wouldn't remount, so the installation couldn't proceed.\n")"
+		housekeeping
+		enableautomount
+		exit 0
+	else
+		echo "~~~ $DEVICE is successfully re-connected. Continue with file copy. ~~~"
+	fi
+else
+	echo "~~~ $DEVICE is successfully re-connected. Continue with file copy. ~~~"
+fi
+}
+
+copyosfiles () {
+# Copy OS files to device
+echo "~~~ Begin copying OS files ~~~"
+
+(
+gprintf "# Starting file copy. Creating tmp directory...\n\nPlease wait...\n\n\n\n"; echo ; sleep 3
+echo "10"
+umount $PART ; wait
+if [ -d /tmp/poorman ]; then
+	gprintf "# /tmp/poorman directory exists.\n\nDelete contents and use as mount point.\n\nPlease wait...\n\n
+"; echo ; sleep 3
+	echo "20"
+	rm -f /tmp/poorman/* && mount -t $FS $PART /tmp/poorman
+else
+	gprintf "# Mounting %s at /tmp/poorman.\n\nPlease wait...\n\n\n\n" $PART; echo ; sleep 3
+	echo "20"
+	mkdir -v /tmp/poorman && mount -t $FS $PART /tmp/poorman
+fi
+gprintf "# Copying livecd.sqfs file...\n\nThis process will take a long time. 1-2 minutes per 100MB to copy.\nThe progress bar will not move on until the file copy is complete.\n\nPlease wait...\n"; echo ; sleep 3
+echo "40"
+cp -rPv ${COPYPATH}/livecd.sqfs /tmp/poorman ; wait
+umount $PART ; wait
+mount -t $FS $PART /tmp/poorman ; wait
+gprintf "# Copying isolinux directory...\n\nPlease wait...\n\n\n\n"; echo ; sleep 3
+echo "60"
+cp -rPv ${COPYPATH}/isolinux /tmp/poorman ; wait
+umount $PART ; wait
+mount -t $FS $PART /tmp/poorman ; wait
+gprintf "# Copying Grub boot files..\n\nPlease wait...\n\n\n\n"; echo ; sleep 3 
+echo "70"
+mkdir -v /tmp/poorman/boot ; wait
+mkdir -v /tmp/poorman/boot/grub ; wait
+#This directory should be present in all PCLOS derivatives
+cp -rPv /lib/grub/i386-mandriva/* /tmp/poorman/boot/grub ; wait
+#Assuming there is only one boot theme installed in the right place, this will work
+#For future, create special live install boot theme at /usr/share/gtk-liveinstall?
+cp -v /usr/share/gtk-liveinstall/message /tmp/poorman/boot ; wait 
+umount $PART ; wait
+mount -t $FS $PART /tmp/poorman ; wait
+gprintf "# Installing Grub bootloader. Probing devices...\n\nPlease wait...\n\n\n\n" ; sleep 3
+echo "80" ; sleep 3
+# Install Grub to MBR of selected device or to partition
+if [ "$GRUB" == "$(gprintf "to the partition %s." $PART)" ]; then
+	grub-install --root-directory=/tmp/poorman $PART; wait
+else
+	grub-install --root-directory=/tmp/poorman $DEVICE ; wait
+fi
+gprintf "# Finishing up...\n\nPlease wait...\n\n\n\n"; echo ; sleep 3
+echo "95" ; sleep 3
+) | zenity --progress --percentage=0 --title="$TITLE" --text=" " --auto-close --auto-kill --height=300 --width=500 
+}
+
+changes () {
+# Calculate free space on partition, minus 2Mb for safety
+FreeSpace=$(df $PART -B 1048576 | grep -v Available |  awk '{print $4-2}')
+echo "~~~ Free space for changes = ${FreeSpace} MiB ~~~"
+
+#Ask user if they want to save changes
+if $(zenity --question --width=500 --height=300 --title "$TITLE" \
+--text "$(gprintf "If you want to add a boot option to save changes
+to the live system, press OK, otherwise press Cancel.\n
+You can manually add in this option at a later time by
+editing the menu.lst file.")")
+	then 
+	if [ "$FS" = "vfat" ]; then
+		if [ $FreeSpace -ge 50 ]; then
+			if $(zenity --question --width=500 --height=300 --title "$TITLE" \
+--text "$(gprintf "Saving changes on a FAT partition only works with live systems created with mklivecd
+version 0.7.0-26 ie after MiniMe 2008.\n
+It will require a 'loop' changes file to be created.\n
+Click OK to continue and choose the size for the changes file on the next screen.\n
+Click Cancel to skip this step.")")
+				then CHANGES="yes"
+				echo "~~~ changes = $CHANGES ~~~"
+				makeloopfile
+			else
+				CHANGES="no"
+				echo "~~~ changes = $CHANGES ~~~"
+			fi
+		else
+			zenity --error --width=500 --title="$TITLE" --text="$(gprintf "Sorry, there is not enough space on %s to save changes.\n
+You need more than 50MB to be able to save changes on a FAT32 partition.\n
+However, you can still use the installation as a read-only/kiosk style system." $PART)"
+			CHANGES="no"
+			echo "~~~ changes = $CHANGES ~~~"
+		fi
+	elif [ $FreeSpace -ge 20 ]; then
+		CHANGES="yes"
+		echo "~~~ changes = $CHANGES ~~~"
+		echo "~~~ Changes can be saved on a Linux filesystem. No need to create loop changes file. ~~~"
+	else
+		zenity --error --width=500 --title="$TITLE" --text="$(gprintf "Sorry, there is not enough space on %s to save changes.\n
+You need more than 20MB to be able to save changes safely.\n
+However, you can still use the installation as a read-only/kiosk style system." $PART)"
+		CHANGES="no"
+		echo "~~~ changes = $CHANGES ~~~"
+	fi
+else
+	CHANGES="no"
+	echo "~~~ changes = $CHANGES ~~~"
+fi
+}
+
+makeloopfile () {
+# Ask user to select file size for loop file
+FILESIZE=$(zenity --title="$TITLE" --scale --height=300 --width=500 --text "$(gprintf "Choose changes loop file size in MiB.\nIt needs to be at least 50MB.\n")" \
+--min-value=50 --max-value=$FreeSpace --value=50 --step 1)
+echo "~~~ Loop changes file size = $FILESIZE ~~~"
+
+if [ "$FILESIZE" == "1" ]; then
+	zenity --error --width=500 --title="$TITLE" --text="$(gprintf "You decided to cancel.\n\nThe loop changes file wasn't created.\n\nContinuing with installation.")"
+fi
+
+#Ask user to choose filesystem type for loop file
+LOOPFS=$(zenity --list --height=300 --width=500 --title "$TITLE" --text "$(gprintf "Which filesystem would you like to create in your loop file?\n
+It has to be a Linux filesystem.\n
+Ext2 maximises the available space better.
+Ext3 offers better protection against data loss.")" \
+--radiolist --column "$(gprintf "Click")" --column "$(gprintf "Filesystem type")" TRUE "$(echo -n "ext2 "; gprintf "(default)")" FALSE "ext3")
+if [ "$LOOPFS" == "" ]; then
+	zenity --error --width=500 --title="$TITLE" --text="$(gprintf "You decided to cancel.\n\nThe loop changes file wasn't created.\n\nContinuing with installation.")"
+elif [ "$LOOPFS" = "$(echo -n "ext2 "; gprintf "(default)")" ]; then
+	LOOPFS="ext2"
+fi
+echo "~~~ Filesystem chosen for changes file = $LOOPFS ~~~"
+
+# Create and format the changes loopfile
+echo "~~~ Creating changes loop file. Please wait. ~~~"
+(
+gprintf "# Creating %s MB loop changes file on %s...\n\nPlease wait...\nThis process will take a long time - about 4 mins per 512MB.\n\nDisk activity will be intermittent throughout this process.\n
+" ${FILESIZE} ${PART}; echo ; sleep 3
+echo "10" 
+dd if=/dev/zero of=/tmp/poorman/changesloop bs=1048576 count=$FILESIZE ; sleep 15 && sync
+gprintf "# Formatting loop changes file as %s...\n\nPlease wait...\n\nDisk activity will be intermittent throughout this process.\n\n" $LOOPFS; echo ; sleep 3
+echo "50"
+if [[ $LOOPFS == "ext3" ]]; then
+	echo -e 'y' | mkfs.ext3 -q /tmp/poorman/changesloop ; sleep 25
+else
+	echo -e 'y' | mke2fs -q /tmp/poorman/changesloop ; sleep 25
+fi
+gprintf "# Checking filesystem and repairing if necessary...\n\nPlease wait...\n\nDisk activity will be intermittent throughout this process.\n\n"; echo ; sleep 3
+echo "65"
+e2fsck -p /tmp/poorman/changesloop ; sleep 3
+gprintf "# Disabling tune2fs...\n\nPlease wait...\n\nDisk activity will be intermittent throughout this process.\n\n"; echo ; sleep 3
+echo "80" 
+tune2fs -i0 -c0 /tmp/poorman/changesloop ; sleep 3
+gprintf "# Finishing up...\n\nPlease wait...\n\n\n\n" ; echo; sleep 3
+echo "95" ; sleep 3
+) |  zenity --progress --percentage=0 --title="$TITLE" --text=" " --auto-close --auto-kill --height=300 --width=500
+echo "~~~ Loop changes file created ~~~"
+
+#There have been vaious problems successfully formatting the changes file. Best do a check and re-do if necessary:
+CHANGESCHECK=$(file /tmp/poorman/changesloop | awk '{print $5}')
+
+if [[ "$CHANGESCHECK" != *"ext"* ]]; then
+	echo "~~~ The Changes file is not properly formatted.  Trying once again. ~~~"
+	(
+	gprintf "# For some reason the changes loop file was not properly formatted.\n
+Attempting to repair %s Changes File with additional safety checks...\nPlease wait...\nThis will take longer than usual.\n\n" $LOOPFS; echo ; sleep 3
+	echo "10" 
+	gprintf "# Recreating filesystem and checking for bad blocks...\n\nPlease wait...\nThis will take longer than usual.\n\n"; echo ; sleep 3
+	echo "40"
+		if [[ $LOOPFS == "ext3" ]]; then
+			echo -e 'y' | mkfs.ext3 -c -q /tmp/poorman/changesloop ; sleep 35
+		else
+			echo -e 'y' | mke2fs -c -q /tmp/poorman/changesloop ; sleep 35
+		fi
+	gprintf "# Running disk check...\n\nPlease wait...\nThis will take longer than usual.\n\n"; echo ; sleep 3
+	echo "60"
+	e2fsck -c -p /tmp/poorman/changesloop ; sleep 10
+	gprintf "# Disabling tune2fs...\n\nPlease wait...\nThis will take longer than usual.\n\n"; echo ; sleep 3
+	echo "80"
+	tune2fs -i0 -c0 /tmp/poorman/changesloop ; sleep 3
+	gprintf "# Finishing up...\n\nPlease wait...\n\n\n\n"; echo ; sleep 3
+	echo "95" ; sleep 3
+	) |  zenity --progress --percentage=0 --title="$TITLE" --text="" --auto-close --auto-kill --height=300 --width=500
+fi
+
+#Second and final check before moving on...
+CHANGESCHECK2=$(file /tmp/poorman/changesloop | awk '{print $5}')
+
+if [[ "$CHANGESCHECK2" != *"ext"* ]]; then
+	zenity --error --width=500 --title="$TITLE" --text="$(gprintf "The loop changes file still wasn't properly created.\n
+Try formatting it manually when installation is complete.\n
+Continuing with installation.")"
+	echo "~~~ The Changes file is still not properly formatted.  Moving on. ~~~"
+else
+	echo "~~~ The Changes file was successfully created with an $CHANGESCHECK2 file system ~~~"
+fi
+}
+
+writegrubmenu () {
+#Convert block device to Grub device (hdx,x)
+#Taken from the debian update-grub script, some parts may be unnecessary but they stay in cos it works!
+
+#Work out partition number
+TMP_PART=`echo "$PART" | sed -e 's%.*/[sh]d[a-z]\([0-9]*\)$%\1%' \
+-e 's%.*/fd[0-9]*$%%' \
+-e 's%.*/floppy/[0-9]*$%%' \
+-e 's%.*/\(disc\|part\([0-9]*\)\)$%\2%' \
+-e 's%.*c[0-7]d[0-9]*p*%%'`
+
+#Get Grub device (hd0,x) if booting from this device
+GRUBZERO=`echo '(hd0)' | sed "s%)$%,\`expr $TMP_PART - 1\`)%"`
+
+#Get Grub disk number (hdx,x) for chainloaders or multi-boot scenarios
+TMP_DISK=$(cat /tmp/poorman/boot/grub/device.map | grep -e $DEVICE | awk '{print $1}')
+GRUBDISK=`echo "$TMP_DISK" | sed "s%)$%,\`expr $TMP_PART - 1\`)%"`
+
+echo "~~~ Create Grub menu.lst ~~~"
+
+#Work out best boot codes
+if [[ "$BOOT" == "$(gprintf "Best for portability between different PCs.")" ]]; then
+	if [[ "$DEVICE" == *"h"* ]]; then
+		GRUBPATH="/dev/hda${TMP_PART}"
+		GRUBDEVICE=$GRUBZERO
+	elif [[ "$DEVICE" == *"s"* ]]; then
+		GRUBPATH="/dev/sda${TMP_PART}"
+		GRUBOPT="fromusb"
+		GRUBDEVICE=$GRUBZERO
+	fi
+elif [[ "$BOOT" == "$(gprintf "Best for the current setup to boot %s\nas primary boot device in BIOS." $DEVICE)" ]]; then
+	GRUBDEVICE=$GRUBZERO
+	GRUBOPT=
+	GRUBPATH="${DEVICE}${TMP_PART}"
+elif [[ "$BOOT" == "$(gprintf "Best for chainloading to %s from the\ncurrent primary boot device." $DEVICE)" ]]; then
+	GRUBDEVICE=$GRUBDISK
+	GRUBOPT=
+	GRUBPATH=$PART
+fi
+
+echo "~~~ Grub device code = $GRUBDEVICE ~~~"
+echo "~~~ Path to sqfs file = $GRUBPATH ~~~"
+
+#Apply correct changes boot code
+if [ -f "/tmp/poorman/changesloop" ]; then
+	CHANGESPATH="changes=${GRUBPATH}/changesloop"
+elif [[ "$CHANGES" == "yes" ]]; then
+	CHANGESPATH="changes=$GRUBPATH"
+else
+	CHANGESPATH=
+fi
+
+cat >"/tmp/poorman/boot/grub/menu.lst"<<EOF
+timeout 10
+default 0
+gfxmenu $GRUBDEVICE/boot/message
+
+### Created by GTK Live Install ###
+
+title $NAME Live
+kernel $GRUBDEVICE/isolinux/vmlinuz bootfrom=$GRUBPATH initrd=initrd.gz root=/dev/rd/3 \
+vga=788 splash=silent fstab=rw,auto \
+$GRUBOPT $CHANGESPATH noeject
+initrd $GRUBDEVICE/isolinux/initrd.gz
+
+title $NAME VideoSafeModeVesa
+kernel $GRUBDEVICE/isolinux/vmlinuz bootfrom=$GRUBPATH initrd=initrd.gz root=/dev/rd/3 \
+vga=788 splash=silent fstab=rw,auto \
+$GRUBOPT $CHANGESPATH vesa noeject
+initrd $GRUBDEVICE/isolinux/initrd.gz
+
+title $NAME VideoSafeModeFramebuffer
+kernel $GRUBDEVICE/isolinux/vmlinuz bootfrom=$GRUBPATH initrd=initrd.gz root=/dev/rd/3 \
+vga=788 splash=silent fstab=rw,auto \
+$GRUBOPT $CHANGESPATH framebuffer noeject
+initrd $GRUBDEVICE/isolinux/initrd.gz
+
+title Safe mode (read-only)
+kernel $GRUBDEVICE/isolinux/vmlinuz bootfrom=$GRUBPATH initrd=initrd.gz root=/dev/rd/3 \
+noapic nolapic nopcmcia acpi=off $BOOTCODE noeject
+initrd $GRUBDEVICE/isolinux/initrd.gz
+EOF
+
+if $(zenity --question --width=500 --height=300 --title "$TITLE" --text "$(gprintf "Here is a summary of the default boot option:\n
+title %s Live
+kernel %s/isolinux/vmlinuz bootfrom=%s
+initrd=initrd.gz root=/dev/rd/3 vga=788 splash=silent
+fstab=rw,auto %s %s noeject
+initrd %s/isolinux/initrd.gz\n
+If the OS does not boot or cannot find the loop image,
+you will need to edit the file:\n
+%s/boot/grub/menu.lst\n
+and alter the device numbers accordingly.\n
+If you are happy with these settings click OK to complete the
+installation, otherwise click Cancel to manually edit the menu.lst file." $NAME $GRUBDEVICE $GRUBPATH $GRUBOPT $CHANGESPATH $GRUBDEVICE ${PART})")
+	then echo "~~~ Start file clean up. ~~~"
+else
+	editgrub
+	echo "~~~ Start file clean up. ~~~"
+fi
+}
+
+editgrub () {
+#Open Grub menu.lst in system's default editor for manual tweaking
+echo "~~~ Attempt to open menu.lst file in default editor ~~~"
+if [ -f "/usr/bin/kwrite" ]; then
+	kwrite /tmp/poorman/boot/grub/menu.lst
+elif [ -f "/usr/bin/gedit" ]; then
+	gedit /tmp/poorman/boot/grub/menu.lst
+elif [ -f "/usr/bin/medit" ]; then
+	medit /tmp/poorman/boot/grub/menu.lst
+elif [ -f "/usr/bin/mousepad" ]; then
+	mousepad /tmp/poorman/boot/grub/menu.lst
+elif [ -f "/usr/bin/SciTE" ]; then
+	SciTE "open:/tmp/poorman/boot/grub/menu.lst"
+elif [ -f "/usr/bin/nano" ]; then
+	xterm -e "nano /tmp/poorman/boot/grub/menu.lst"
+else
+	echo "~~~ No suitable editor found ~~~"
+	zenity --error --width=500 --title="$TITLE" --text="$(gprintf "No suitable editor found.\nPlease edit the Grub file manually.")"
+fi
+}
+
+startdiskdrake () {
+#Inform user and start diskdrake for custom partitioning
+
+zenity --warning --width=500 --height=300 --title "$TITLE" --text "$(gprintf "The PCLinuxOS partitioning tool will open when you click OK.\n
+1. Partition your disk as you see fit.\n
+2. This installer is compatible with ext2, ext3, reiserfs 
+    and FAT32 filesystems.\n
+3. Do not set a mount point.\n
+4. You can create a swap partition if you are using a standard 
+    hdd with low memory. This is not recommended for flash 
+    memory devices.\n
+5. Make sure you remember to format the partition once it is 
+    created.\n
+6. Safely remove the device (if using removeable media).\n
+7. Run this installer again and choose 'Use Existing Partitions'.")"
+
+echo "~~~ Open diskdrake partitioning tool ~~~"
+exec diskdrake
+}
+
+housekeeping () {
+(
+echo ; sleep 3
+#Clean up main tmp poorman mount point
+if [ -d /tmp/poorman ]; then
+	umount $PART ; wait
+	umount -f /tmp/poorman ; wait
+	rm -fv /tmp/poorman/* ; wait
+	rmdir -v /tmp/poorman ; wait
+fi
+#Remove all other tmp mount points
+if [ -d "/tmp/mnt" ]; then
+	umount /tmp/mnt/* ; wait
+	rmdir -v /tmp/mnt/* ; wait
+	rmdir -v /tmp/mnt ; wait
+fi
+# Remove tmp loop mount point
+if [ -d /tmp/loop ]; then
+	umount -d -f /tmp/loop ; wait
+	rmdir -v /tmp/loop ; wait 
+fi
+echo ; sleep 1
+) | zenity --progress --pulsate --title="$TITLE" --text="$(gprintf "Cleaning up temp files.\n\nPlease wait...\n\n\n\n")" \
+--auto-close --auto-kill --height=300 --width=500
+}
+
+enableautomount () {
+if [ -f "/usr/bin/kded" ]; then
+	echo "~~~ Restart KDE daemon. ~~~"
+	PID=$(pidof kded)
+	kill -s SIGCONT $PID
+elif [ -f "/usr/bin/gnome-volume-manager" ]; then
+	echo "~~~ Restart gnome-volume-manager. ~~~"
+	PID=$(pidof gnome-volume-manager)
+	kill -s SIGCONT $PID
+elif [ -f "/usr/bin/thunar-volman" ]; then
+	echo "~~~ Restart thunar-volman. ~~~"
+	PID=$(pidof Thunar)
+	kill -s SIGCONT $PID
+else
+	echo "~~~ No automount tools to restart. Installation done. ~~~"
+fi
+}
+
+############################################################
+#######################End of functions###########################
+
+# First question - how do you intend to install the OS?
+
+METHOD=$(zenity --list --height=300 --width=500 --title "$TITLE" --text \
+"$(gprintf "How would you like to install the live system?\n
+You will be given a list of devices to install onto once
+you have chosen the installation method.")" \
+--radiolist --column "$(gprintf "Click")" \
+--column "$(gprintf "Install method")" TRUE "$(gprintf "Erase entire drive and install with options")" FALSE "$(gprintf "Use existing partitions")" FALSE "$(gprintf "Custom disk partitioning (launches diskdrake)")")
+echo "~~~ $METHOD ~~~"
+
+if [[ "$METHOD" == "$(gprintf "Erase entire drive and install with options")" ]]; then 
+	whichdisk
+	clonesource
+	disableautomount
+	bootoptions
+	makefilesystem
+	check_device_reconnect
+	copyosfiles
+	changes
+	writegrubmenu
+	housekeeping
+	enableautomount
+elif [[ "$METHOD" == "$(gprintf "Use existing partitions")" ]]; then
+	whichpartition
+	clonesource
+	disableautomount
+	bootoptions
+	checkfilesystem
+	check_device_reconnect
+	copyosfiles
+	changes
+	writegrubmenu
+	housekeeping
+	enableautomount
+elif [[ "$METHOD" == "$(gprintf "Custom disk partitioning (launches diskdrake)")" ]]; then
+	startdiskdrake
+else
+	zenity --error --width=500 --text "$(gprintf "Installation cancelled. No changes were made to your device.")" --title="$(gprintf "Installation cancelled!")"
+	exit 0
+fi
+
+# Final dialog. Installation complete.
+
+zenity --info --title="$TITLE" --height=300 --width=500 --text \
+"$(gprintf "Congratulations, your live system has now been successfully installed onto %s.\n
+To run the live system follow these steps:\n
+1. Reboot your computer leaving the device inserted or attached
+2. If necessary enter the BIOS and set your device to boot before the main internal hard disk drive
+3. Choose the appropriate boot option from the graphical menu.\n
+If you encountered any problems, please leave a bug report at:
+http://dev.unity-linux.org/projects/unitylinux/issues\n" $PART)"
+
+echo "~~~ Installation complete. Thank you for using GTK Live Install. Licensed under GPL 2.0+ ~~~"
+exit 0
+
