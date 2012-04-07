@@ -1,0 +1,344 @@
+# translation of DrakX-az.po to Azerbaijani
+# translation of DrakX-az.po to Azerbaijani Turkish
+# DrakX-az.po faylının Azərbaycan dilinə tərcüməsi
+# Copyright (C) 2000,2003, 2004 Free Software Foundation, Inc.
+# Copyright (c) 2000 Mandriva
+# Vasif Ismailoglu MD<azerb_linux@hotmail.com> , 2000-2001
+# Mətin Əmirov <metin@karegen.com>, 2001-2003, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: DrakX-az\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2005-03-31 14:21+0200\n"
+"Last-Translator: Mətin Əmirov <metin@karegen.com>\n"
+"Language-Team: Azerbaijani <translation-team-az@lists.sourceforge.net>\n"
+"Language: az\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../draklive-install:106
+#, c-format
+msgid "Unity Installer"
+msgstr ""
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr ""
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Xəta"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Bir xəta oldu"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr ""
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr ""
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Təbriklər"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Davam edilsin?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Qeyd etmədən Çıx"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Bölmə cədvəli qeyd edilmədən çıxılsın?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Dəyişikliklər /etc/fstab faylına qeyd edilsin?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Bölmə cəvəlindəki dəyişikliklərin tətbiq edilməsi üçün kompüterinizi yenidən "
+"başlatmalısınız."
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Please wait"
+#~ msgstr "Xahiş edirik, gözləyin"
+
+#, fuzzy
+#~ msgid "Copying in progress"
+#~ msgstr "Təsbit etmə fəaliyyətdədir"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "Şəkilləndirmək istədiyiniz bölmələrini seçin"
+
+#~ msgid "Check bad blocks?"
+#~ msgstr "Xətalı bloklar sınansınmı?"
+
+#~ msgid ""
+#~ "Failed to check filesystem %s. Do you want to repair the errors? (beware, "
+#~ "you can lose data)"
+#~ msgstr ""
+#~ "%s fayl sisteminin yoxlanması bacarılmadı. Xətaları düzəltmək "
+#~ "istəyirsiniz? (diqqətli olun, mə'lumatları itirə bilərsiniz)"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr "Qurulumu bitirmək üçün lazımi sahə yoxdur, xahiş edirik, əlavə edin"
+
+#~ msgid "No partition available"
+#~ msgstr "Uyğun bölmə mövcud deyil"
+
+#~ msgid "Scanning partitions to find mount points"
+#~ msgstr "Bölmələr bağlama nöqtələri üçün yoxlanır"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "Bağlama nöqtələrini seçin"
+
+#~ msgid "Partitioning"
+#~ msgstr "Bölmələndirmə"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "%s bağlama nöqtəsini ikiləşdir"
+
+#~ msgid ""
+#~ "Some hardware on your computer needs ``proprietary'' drivers to work.\n"
+#~ "You can find some information about them at: %s"
+#~ msgstr ""
+#~ "Sisteminizdaki bə'zi avadanlıqlar işləməsi üçün düzgün sürücülərə ehtiyac "
+#~ "duyar.\n"
+#~ "Bunun haqqında %s də/a lazımi malumatları tapa bilərsiniz"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "Bir kök bölməsi yaratmalısınız.\n"
+#~ "Bunun üçün istər mövcud bir disk bölümü üzərinə tıqlayın, \n"
+#~ "ya da yeni birini başdan yaradın. Sonra \"Bağlama \n"
+#~ "Nöqtəsi\"gedişatını seçin va buranı '/' olaraq dəyişdirin."
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "Dəyiş-toqquş sahəniz yoxdur\n"
+#~ "Davam edilsin?"
+
+#~ msgid "You must have a FAT partition mounted in /boot/efi"
+#~ msgstr "/boot/efi ünvanına bağlanmış FAT bölməniz olmalıdır"
+
+#~ msgid "Use free space"
+#~ msgstr "Boş sahəni istifadə et"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr "Yeni bölmələr ayırmaq üçün kifayət qədər boş yer yoxdur"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "Mövcud bölmələri işlət"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "İstifadə ediləcək mövcud bölmə yoxdur"
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "Loopback üçün Windows bölməsini işlət"
+
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "Linux4Win-i qurmaq üçün hansı disk bölməsini istifadə edəcəksiniz?"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "Böyüklükləri seçin"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "Kök bölməsi böyüklüyü (Mb): "
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "Dəyiş-toqquş sahəsi böyüklüyü (Mb): "
+
+#~ msgid ""
+#~ "There is no FAT partition to use as loopback (or not enough space left)"
+#~ msgstr "Loopback üçün FAT bölməsi yoxdur (ya da lazımi yer yoxdur)"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "Windows bölməsindəki boş sahəni işlət"
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "Hansı bölmə ölçüləndirilsin?"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "FAT ölçüləndiricimiz sizin bölməniziri işlədə bilmir,\n"
+#~ "bu xəta oldu: %s"
+
+#~ msgid "Resizing"
+#~ msgstr "Ölçüləndirilir"
+
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "Windows bölməsin böyüklüyü hesablanır"
+
+#~ msgid ""
+#~ "Your Windows partition is too fragmented. Please reboot your computer "
+#~ "under Windows, run the ``defrag'' utility, then restart the Mandriva "
+#~ "Linux installation."
+#~ msgstr ""
+#~ "Windows bölümünüz çox dağınıqdır. Daxiş edirik, əvvəlcə kompüterinizi "
+#~ "Windows ilə açın, ''defrag'' vasitəsini işlədin, sonra Mandriva Linux "
+#~ "qurulumunu yenidən başladın."
+
+#~ msgid ""
+#~ "WARNING!\n"
+#~ "\n"
+#~ "DrakX will now resize your Windows partition. Be careful: this\n"
+#~ "operation is dangerous. If you have not already done so, you\n"
+#~ "first need to exit the installation, run \"chkdsk c:\" from a\n"
+#~ "Command Prompt under Windows (beware, running graphical program\n"
+#~ "\"scandisk\" is not enough, be sure to use \"chkdsk\" in a\n"
+#~ "Command Prompt!), optionally run defrag, then restart the\n"
+#~ "installation. You should also backup your data.\n"
+#~ "When sure, press Ok."
+#~ msgstr ""
+#~ "XƏBƏRDARLIQ!\n"
+#~ "\n"
+#~ "DrakX indi Windows disk bölmənizin böyüklüyünü dəyişdirəcək.\n"
+#~ "Diqqətli olun, bu təhlükəli ola bilər. Hələ də etmədinizsə qurulumdan\n"
+#~ "çıxın və Windows altında scandisk (lazım gələrsə defrag da) proqramını\n"
+#~ "icra edin. Eyni zamanda mə'lumatlarınızın da ehtiyat nüsxəsini alın.\n"
+#~ "Ardından quruluma davam edin.\n"
+#~ "Hazır olanda, Oldu düyməsinə basın."
+
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "Windows üçün hansı böyüklüyü saxlamaq istəyirsiniz"
+
+#~ msgid "partition %s"
+#~ msgstr "%s bölməsi"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "Windows bölməsi ölçüləndirilir"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "FAT ölçüləndirilməsi bacarılmadı: %s"
+
+#~ msgid ""
+#~ "To ensure data integrity after resizing the partition(s), \n"
+#~ "filesystem checks will be run on your next boot into Windows(TM)"
+#~ msgstr ""
+#~ "Bölmə(lər)in böyüklüyünün dəyişdirilməsindən sonra mə'lumat \n"
+#~ "bütövlüyünü qorumaq üçün fayl sistemi yoxlamaları bir sonrakı\n"
+#~ "Windows(TM) açılışınızda işə salınacaq."
+
+#~ msgid "There is no FAT partition to resize (or not enough space left)"
+#~ msgstr "Ölçüləndiriləcək FAT bölməsi mövcud deyil (ya da lazımi yer yoxdur)"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Windows(TM)'u Sil"
+
+#, fuzzy
+#~ msgid "Erase and use entire disk"
+#~ msgstr "Bütün diski sil"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr ""
+#~ "Sizin birdən çox diskiniz var, linux qurmaq üçün hansını istifadə "
+#~ "edəcəksiniz?"
+
+#~ msgid "ALL existing partitions and their data will be lost on drive %s"
+#~ msgstr ""
+#~ "%s sürüsündəki mövcud bütün bölmələr və onlardakı mə'lumatitiriləcək"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "Xüsusi disk bölmələndirməsi"
+
+#~ msgid "Use fdisk"
+#~ msgstr "Fdisk istifadə et"
+
+#~ msgid ""
+#~ "You can now partition %s.\n"
+#~ "When you are done, do not forget to save using `w'"
+#~ msgstr ""
+#~ "İndi %s sabit diskinizi bölmələndirə bilərsiniz\n"
+#~ "İşinizi bitirdiyinizdə `w' ilə qeyd etməyi unutmayın"
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "Artıq bölmə əlavə edilə bilməz"
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr "DrakX bölmələndirmə sehirbazı bu çıxış yollarını tapdı:"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "Bölmələndirmə bacarılmadı: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "Şəbəkə fəallaşdırılır"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "Şəbəkə dayandırılır"
+
+#~ msgid "none"
+#~ msgstr "heç biri"

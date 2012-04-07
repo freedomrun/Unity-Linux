@@ -1,0 +1,147 @@
+# draklive-install-fi - Finnish Translation
+#
+# Copyright (C) 2002,2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+# Copyright (C) 2002 Mandriva
+#
+#
+# Matias Griese <mahagr@utu.fi>, 2001.
+# Taisto Kuikka <69319@batman.jypoly.fi>, 2003,2004.
+# Esa Linna <denzo@mbnet.fi>, 2004.
+# Thomas Backlund <tmb@mandrake.org>, 2002, 2003, 2004, 2005.
+# Thomas Backlund <tmb@mandriva.org>, 2006.
+# Anssi Hannula <anssi@mandriva.org>, 2008.
+# Jani Välimaa <wally@mandriva.org>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: draklive-install\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2010-04-03 09:01+0200\n"
+"Last-Translator: Jani Välimaa <wally@mandriva.org>\n"
+"Language-Team: Finnish <cooker-i18n@mandrivalinux.org>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../draklive-install:106
+#, fuzzy, c-format
+msgid "Unity Installer"
+msgstr "Asenna Mandriva"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Tämä velho auttaa Live-jakelun asentamisessa."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Virhe"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Ilmeni virhe"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr "Vapaata levytilaa ei ole riittävästi (%s käytettävissä, tarvitaan %s)"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Lasketaan kokonaiskoko"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Tiedostoja ei voida kopioida uuteen juureen"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Onnittelut"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Pysäytä järjestelmä, poista Live-media ja käynnistä tietokone uudelleen."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Jatka joka tapauksessa?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Lopeta tallentamatta"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Lopeta kirjoittamatta osiotaulua?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Tallennetaanko muutokset tiedostoon /etc/fstab"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Järjestelmä tulee käynnistää uudelleen, jotta muutokset tulevat voimaan"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Osio %s tulisi alustaa.\n"
+"Muuten tiedostoon /etc/fstab ei kirjoiteta\n"
+"tietuetta liitospisteelle %s.\n"
+"Lopeta joka tapauksessa?"
+
+#: ../draklive-install.desktop.in.h:1
+#, fuzzy
+msgid "Install Unity"
+msgstr "Asenna kiintolevylle"
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Odota hetki"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Kopiointi käynnissä"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Asenna Mandriva Live -järjestelmä kiintolevylle"

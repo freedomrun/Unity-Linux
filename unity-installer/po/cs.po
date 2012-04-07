@@ -1,0 +1,141 @@
+# translation of cs.po to
+# Translation of cs.po to Czech
+# Copyright (C) 1999,2003, 2004, 2005, 2006, 2008 Free Software Foundation, Inc.
+#
+# Radek Vybiral <Radek.Vybiral@vsb.cz>, 2000, 2001-2003.
+# Michal Bukovjan <bukm@centrum.cz>, 2002-2003, 2004, 2005, 2006, 2008, 2010.
+# Vlastimil Ott <vlastimil@e-ott.info>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: cs\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2010-05-03 21:30+0200\n"
+"Last-Translator: Michal Bukovjan <bukm@centrum.cz>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 1.0\n"
+
+#: ../draklive-install:106
+#, fuzzy, c-format
+msgid "Unity Installer"
+msgstr "Živá instalace"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Tento průvodce vám pomůže nainstalovat živou distribuci."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Chyba"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Stala se chyba"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr "Není k dispozici dostatek místa (je k dispozici %s, je potřeba %s)"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Počítám celkovou velikost"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Nelze zkopírovat soubory do nového kořenu"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Gratulujeme"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Zastavte prosím váš počítač, odstraňte live CD a znovu počítač spusťte."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Chcete přesto pokračovat?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Konec bez uložení"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Chcete skončit bez zapsání do tabulky oddílů?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Chcete uložit úpravy souboru /etc/fstab?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr "Aby se projevily změny v tabulce oddílů, musíte restartovat počítač"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Měli byste naformátovat oddíl %s.\n"
+"Jinak nebude do souboru fstab zapsána položka pro přípojný bod %s.\n"
+"Chcete přesto skončit?"
+
+#: ../draklive-install.desktop.in.h:1
+#, fuzzy
+msgid "Install Unity"
+msgstr "Instalace na pevný disk"
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Prosím počkejte"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Probíhá kopírování"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Instalace vašeho živého systému Mandriva na disk"

@@ -1,0 +1,147 @@
+# translation of DrakX-el.po to Greek
+# Greek translation for drakfloppy.
+# Copyright (C) 2001,2003 Free Software Foundation, Inc.
+#
+# Thanos Kyritsis <djart@hellug.gr>, 2001.
+#  Νίκος Νύκταρης (Nick Niktaris) <niktarin@yahoo.com>, 2003.
+# Glentadakis Dimitrios <dglent@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: DrakX-el_2008-03-23\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2010-04-12 12:45+0200\n"
+"Last-Translator: Glentadakis Dimitrios <dglent@gmail.com>\n"
+"Language-Team: Greek <translators_team@mandrivalinux.gr>\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: Greek\n"
+"X-Poedit-Country: GREECE\n"
+
+#: ../draklive-install:106
+#, fuzzy, c-format
+msgid "Unity Installer"
+msgstr "Εγκατάσταση του Live CD"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Αυτός ο οδηγός θα σε βοηθήσει να εγκαταστήσεις την live διανομή."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Σφάλμα"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Συνέβη ένα σφάλμα"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+"Δεν υπάρχει αρκετός διαθέσιμος χώρος (είναι διαθέσιμο %s , ενώ απαιτείται "
+"%s )"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Υπολογισμός συνολικού μεγέθους"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Αδύνατη η αντιγραφή των αρχείων στη νέα root"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Συγχαρητήρια"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Παρακαλώ αποσυνδέσου από τον υπολογιστή σου, απομάκρυνε το live σύστημα, και "
+"επανεκκίνησε τον υπολογιστή σου."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Να συνεχίσω, έτσι κι αλλιώς;"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Έξοδος χωρίς αποθήκευση"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Έξοδος χωρίς αποθήκευση του πίνακα κατατμήσεων;"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Θέλετε να αποθηκεύσετε τις αλλαγές του /etc/fstab"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Απαιτείται επανεκκίνηση για να ενεργοποιηθούν οι αλλαγές στον πίνακα "
+"κατατμήσεων"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Θα πρέπει να μορφοποιήσεις την κατάτμηση %s.\n"
+"Διαφορετικά, το σημείο προσάρτησης %s δεν θα εγγραφεί στο fstab.\n"
+"Να γίνει έξοδος έτσι και αλλιώς;"
+
+#: ../draklive-install.desktop.in.h:1
+#, fuzzy
+msgid "Install Unity"
+msgstr "Εγκατάσταση στο σκληρό δίσκο"
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Παρακαλώ περιμένετε"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Αντιγραφή σε εξέλιξη"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Εγκατάσταση στο δίσκο, του του συστήματός σου Mandriva Live"

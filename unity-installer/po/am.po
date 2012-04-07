@@ -1,0 +1,190 @@
+# Latest versions of po files are at http://www.mandrivalinux.com/l10n/am.php3
+# Copyright (C) 2004 Mandriva SA
+# Alemayehu Gemeda <alemayehu@gmx.at>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: DrakX\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2004-06-01 03:36+0100\n"
+"Last-Translator: Alemayehu <alemayehu@gmx.at>\n"
+"Language-Team: Amharic <am-translate@geez.org>\n"
+"Language: am\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../draklive-install:106
+#, c-format
+msgid "Unity Installer"
+msgstr ""
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr ""
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "ስህተት"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "ስህተት ተፈጥሯል"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr ""
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr ""
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "እንኳን ደስ ያለዎ!"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "ለማንኛውም ቀጥል?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "ሳታስቀምጥ ውጣ"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr ""
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr ""
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Please wait"
+#~ msgstr "እባክዎ ይጠብቁ"
+
+#, fuzzy
+#~ msgid "Copying in progress"
+#~ msgstr "የተሻሻለ ዊድጌት ፍጠር"
+
+#, fuzzy
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "እባክዎ ለማሳየት የሚፈልጉትን ተጠቃሽ-መረጃ ይምረጡ:"
+
+#, fuzzy
+#~ msgid "Check bad blocks?"
+#~ msgstr "ተመልከት ይህንን"
+
+#~ msgid "No partition available"
+#~ msgstr "ምንም ክፋይ አልተገኘም"
+
+#, fuzzy
+#~ msgid "Choose the mount points"
+#~ msgstr "የመመልከቻውን ቀለም ይምረጡ"
+
+#, fuzzy
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "እያንዳንዱን የተመረጠውን አርዕስተ ጉዳይ አባዙ"
+
+#~ msgid "Use free space"
+#~ msgstr "ነጻ ቦታ ተጠቀም"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "የነበሩትን ክፋዮች ተጠቀም"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "መጠኖቹን ይምረጡ"
+
+#~ msgid "Resizing"
+#~ msgstr "መጠን በማስተካከል ላይ"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "የWindows ክፋይ መጠን በማስተካከል ላይ"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "የFATን መጠን መለወጥ አልተሳካም: %s"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Windows(TM)ን አስወግድ"
+
+#, fuzzy
+#~ msgid "Erase and use entire disk"
+#~ msgstr "ዲስኩን እንዳለ ደምስስ"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "የተለመደውን ዲስክ አከፋፈል"
+
+#~ msgid "Use fdisk"
+#~ msgstr "fdiskን ተጠቀም"
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "የመትከያ ቦታ ማግኘት አልቻልኩም"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "መከፋፈል አልተሳካም: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "መረቡን በማቀራረብ ላይ"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "መረቡን በማለያየት ላይ"
+
+#~ msgid "none"
+#~ msgstr "ምንም"

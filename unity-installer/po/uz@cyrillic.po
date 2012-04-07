@@ -1,0 +1,356 @@
+# translation of draklive-install-uz.po to Uzbek
+# Copyright (C) 2003, 2004, 2006 Free Software Foundation, Inc.
+# Copyright (C) 2003 Mandriva.
+#
+# Mashrab Kuvatov <kmashrab@uni-bremen.de>, 2003, 2004, 2006.
+# Nurali Abdurahmonov <mavnur@gmail.com>, 2006, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: draklive-install-uz\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2009-12-18 20:48+0500\n"
+"Last-Translator: Nurali Abdurahmonov <mavnur@gmail.com>\n"
+"Language-Team: American English <kde-i18n-doc@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../draklive-install:106
+#, fuzzy, c-format
+msgid "Unity Installer"
+msgstr "LiveCD/DVD ўрнатувчиси"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Ушбу уста Mandriva Linux тизимини ўрнатишда ёрдам беради."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Хато"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Хато рўй берди"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr "Хотира етарли эмас (мавжуд — %s, керак — %s)"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Умумий ҳажм ҳисобланмоқда"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Файллардан янги root'га нусха кўчириб бўлмади"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Табриклаймиз"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr "Компьютерни ўчиринг, компакт-дискни олиб ташлаб компьютерни яна ёқинг."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Бунга қарамасдан давом этишни истайсизми?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Сақламасдан чиқиш"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Дискнинг қисмлар жадвалини сақламасдан чиқишни истайсизми?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "/etc/fstab файлига киритилган ўзгаришларни сақлашни истайсизми?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Дискнинг қисмлар жадвалига киритилган ўзгаришлар кучга кириши учун "
+"компьютерни ўчириб-ёқиш керак."
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"%s диск қисмини формат қилиш керак.\n"
+"Акс ҳолда %s уланиш нуқтаси fstab'да қайд этилмайди.\n"
+"Шунга қарамасдан чиқишни истайсизми?"
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Илтимос кутиб туринг"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Нусха олиш давом этмоқда"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Mandriva Live тизимини компьютернинг дискига ўрнатиш"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "Формат қилиш учун дискнинг қисмларини танланг"
+
+#~ msgid "Check bad blocks?"
+#~ msgstr "Хато блокларни текширайми?"
+
+#~ msgid ""
+#~ "Failed to check filesystem %s. Do you want to repair the errors? (beware, "
+#~ "you can lose data)"
+#~ msgstr ""
+#~ "%s файл тизимини текшириш муваффақиятсиз тугади. Хатоларни тузатишни "
+#~ "истайсизми? (эсингизда турсин, сиз маълумотни йўқотишингиз мумкин)"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr ""
+#~ "Ўрнатишни бажариш учун етарли своп хотираси мавжуд эмас, илтимос уни "
+#~ "қўшинг"
+
+#~ msgid "No partition available"
+#~ msgstr "Дискнинг қисми йўқ"
+
+#~ msgid "Scanning partitions to find mount points"
+#~ msgstr "Улаш нуқталарини топиш учун дискнинг қисмлари текширилмоқда"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "Улаш нуқталарини танланг"
+
+#~ msgid "Partitioning"
+#~ msgstr "Дискни бўлиш"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "Бир хил улаш нуқталари %s"
+
+#~ msgid ""
+#~ "Some hardware on your computer needs ``proprietary'' drivers to work.\n"
+#~ "You can find some information about them at: %s"
+#~ msgstr ""
+#~ "Компьютернинг баъзи асбоб-ускунаси эркин бўлмаган драйверни талаб "
+#~ "қилади.\n"
+#~ "Улар ҳақида баъзи маълумотни қуйидаги жойдан олса бўлади: %s"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "Сизда дискнинг туб қисми бўлиши шарт.\n"
+#~ "Бунинг учун, дискда янги қисм яратинг (ёки борини танланг).\n"
+#~ "Кейин, \"Улаш нуқтаси\" амали ёрдамида улаш нуқтаси сифатида \"/\"ни "
+#~ "кўрсатинг"
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "Дискнинг своп қисми кўрсатилмаган.\n"
+#~ "\n"
+#~ "Бунга қарамасдан давом этишни истайсизми?"
+
+#~ msgid "You must have a FAT partition mounted in /boot/efi"
+#~ msgstr "Сизда /boot/efi нуқтасига уланган дискнинг FAT қисми бўлиши шарт"
+
+#~ msgid "Use free space"
+#~ msgstr "Бўш жойдан фойдаланиш"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr "Янги қисм яратиш учун дискда етарли жой йўқ"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "Дискда бор қисмлардан фойдаланиш"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "Фойдаланиш учун дискнинг қисми мавжуд эмас"
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "Loopback учун дискнинг Windows қисмини ишлатиш"
+
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "Linux4Win учун дискнинг қайси қисмини ишлатишни истайсиз?"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "Ҳажмни танлаш"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "Дискнинг туб қисми Мб'да: "
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "Дискнинг своп қисми Мб'да: "
+
+#~ msgid ""
+#~ "There is no FAT partition to use as loopback (or not enough space left)"
+#~ msgstr ""
+#~ "Loopback сифатида ишлатиш учун дискда FAT қисм йўқ (ёки етарли жой йўқ)"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "Дискнинг Windows қисмидаги бўш жойдан фойдаланиш"
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "Дискнинг қайси қисмининг ҳажмини ўзгартиришни истайсиз?"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "Дискнинг FAT қисмининг ҳажмини ўзгартириш дастури кўрсатилган\n"
+#~ "дискнинг қисми устида ишлаолмади. Қуйидаги хато рўй берди:\n"
+#~ "%s"
+
+#~ msgid "Resizing"
+#~ msgstr "Ҳажм ўзгартирилмоқда"
+
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "Дискнинг Windows қисмининг ҳажми ҳисобланмоқда"
+
+#~ msgid ""
+#~ "Your Windows partition is too fragmented. Please reboot your computer "
+#~ "under Windows, run the ``defrag'' utility, then restart the Mandriva "
+#~ "Linux installation."
+#~ msgstr ""
+#~ "Дискнинг Windows қисми жуда ҳам фрагментлашган. Илтимос компьютерни "
+#~ "Windows остида ўчириб-ёқинг ва \"defrag\" дастурини ишга туширинг. Шундан "
+#~ "сўнг Mandriva Linux ўрнатишни қайта ишга туширинг."
+
+#~ msgid ""
+#~ "WARNING!\n"
+#~ "\n"
+#~ "DrakX will now resize your Windows partition. Be careful: this\n"
+#~ "operation is dangerous. If you have not already done so, you\n"
+#~ "first need to exit the installation, run \"chkdsk c:\" from a\n"
+#~ "Command Prompt under Windows (beware, running graphical program\n"
+#~ "\"scandisk\" is not enough, be sure to use \"chkdsk\" in a\n"
+#~ "Command Prompt!), optionally run defrag, then restart the\n"
+#~ "installation. You should also backup your data.\n"
+#~ "When sure, press Ok."
+#~ msgstr ""
+#~ "ДИҚҚАТ!\n"
+#~ "\n"
+#~ "Дискни бўлиш воситаси кўрсатилган дискнинг Windows\n"
+#~ "қисмларининг ҳажмини ўзгартириш арафасида. Эсингизда\n"
+#~ "турсин, бу хавфли амалдир. Уни давом этиш учун биринчидан,\n"
+#~ "Windows ОТда \"defrag\" воситасини ишга тушириш керак. Сўнг,\n"
+#~ "\"chkdsk\" воситаси ёрдамида дискни албатта текшириш керак.\n"
+#~ "Дискнинг Windows қисмидаги маълумотдан ҳар эҳтимолга қарши\n"
+#~ "нусха олиш ҳам тавсия қилинади.\n"
+#~ "\n"
+#~ "Агар давом этишга ишончингиз комил бўлса, \"Ок\" тугмасини\n"
+#~ "босинг."
+
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "Windows учун қанча жой қолдирмоқчисиз"
+
+#~ msgid "partition %s"
+#~ msgstr "дискнинг %s қисми"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "Дискнинг Windows қисмининг ҳажмини ўзгартириш"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "Дискнинг FAT қисмининг ҳажмини ўзгартириш муваффақиятсиз тугади: %s"
+
+#~ msgid ""
+#~ "To ensure data integrity after resizing the partition(s), \n"
+#~ "filesystem checks will be run on your next boot into Windows(TM)"
+#~ msgstr ""
+#~ "Дискдаги маълумот бутунлигини текшириш учун диск қисмининг\n"
+#~ "ҳажми ўзгартирилганда, Windows ишга тушишидан олдин керакли\n"
+#~ "текширув бажарилади."
+
+#~ msgid "There is no FAT partition to resize (or not enough space left)"
+#~ msgstr ""
+#~ "Ҳажмини ўзгартириш учун дискда FAT қисм мавжуд эмас (ёки етарли жой "
+#~ "мавжуд эмас)"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Windows ОТни ўчириш"
+
+#~ msgid "Erase and use entire disk"
+#~ msgstr "Бутун дискни ўчириб ишлатиш"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr ""
+#~ "Сизда биттадан кўп қаттиқ диск мавжуд. Уларни қайсига Mandriva Linux ОТни "
+#~ "ўрнатишни истайсиз?"
+
+#~ msgid "ALL existing partitions and their data will be lost on drive %s"
+#~ msgstr "%s дискнинг барча қисмлари ва улардаги барча маълумот ўчирилади"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "Дискни бошқача бўлиш"
+
+#~ msgid "Use fdisk"
+#~ msgstr "Fdisk дастуридан фойдаланиш"
+
+#~ msgid ""
+#~ "You can now partition %s.\n"
+#~ "When you are done, do not forget to save using `w'"
+#~ msgstr ""
+#~ "Энди сиз %s дискни бўлишингиз мумкин.\n"
+#~ "Тугатгач \"w\" билан сақлаш эсингиздан чиқмасин."
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "Ўрнатиш учун етарли жой топилмади"
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr "Дискни бўлиш воситаси қуйидаги ечимларни топди:"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "Дискни бўлиш муваффақиятсиз тугади: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "Тармоқ ишга туширилмоқда"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "Тармоқ ўчирилмоқда"

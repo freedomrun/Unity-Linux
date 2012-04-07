@@ -1,0 +1,145 @@
+# translation of sl.po to Slovenian
+# Copyright (C) 2004, 2005, 2006, 2008 Free Software Foundation, Inc.
+#
+# Matjaž Kaše <matjaz.kase@g-kabel.si>, 2004.
+# Aljoša Ločičnik <aljosa.locicnik@mandrakeprinas.org>, 2005.
+# Gregor Pirnaver <gregor.pirnaver@sdm-si.org>, 2002,2004,2005.
+# Jure Repinc <jlp@holodeck1.com>, 2005, 2008, 2010.
+# Matjaž Kaše <matjaz.kase@telemach.net>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: sl\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2010-05-09 16:45+0200\n"
+"Last-Translator: Jure Repinc <jlp@holodeck1.com>\n"
+"Language-Team: Slovenian <lugos-slo@lugos.si>\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms:  nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3);\n"
+
+#: ../draklive-install:106
+#, fuzzy, c-format
+msgid "Unity Installer"
+msgstr "Namestitev"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Ta čarovnik vam bo pomagal namestiti živo distribucijo."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Napaka"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Prišlo je do napake"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr "Na voljo ni dovolj prostora (na voljo ga je %s, potrebno pa %s)"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Izračunavanje celotnega prostora"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Ni moč skopirati datotek v novo korensko mapo"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Čestitke"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Prosimo, zaustavite računalnik, odstranite nosilec z živo distribucijo in "
+"ponovno zaženite računalnik."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Ali naj vseeno nadaljujem?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Končaj brez shranjevanja"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Ali naj končam brez zapisovanja razdelitvene tabele?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Ali želite shraniti spremembe v /etc/fstab?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Da bi uveljavili spremembe razdelitvene tabele, morate ponovno zagnati "
+"računalnik."
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Razdelek %s bi morali formatirati.\n"
+"Drugače vnos za priklopno točko %s ne bo vpisan v fstab.\n"
+"Ali naj vseeno končam?"
+
+#: ../draklive-install.desktop.in.h:1
+#, fuzzy
+msgid "Install Unity"
+msgstr "Namesti na trdi disk"
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live "
+
+#~ msgid "Please wait"
+#~ msgstr "Prosim, počakajte!"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Kopiranje poteka"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Namestitev sistema Mandriva na trdi disk"

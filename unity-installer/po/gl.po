@@ -1,0 +1,359 @@
+# translation of draklive-install-gl.po to Galician
+#
+#
+# Proxecto Trasno http://trasno.net
+#
+# Jesús Bravo Álvarez <jba@pobox.com>, 2001.
+# Leandro Regueiro <leandro.regueiro@gmail.com>, 2004, 2005, 2006, 2008.
+# Alejo Pacin Jul <alejopj@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: draklive-install-gl\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2009-03-02 19:23+0100\n"
+"Last-Translator: Alejo Pacin Jul <alejopj@gmail.com>\n"
+"Language-Team: Galician <cooker-i18n@mandrivalinux.org>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 0.2\n"
+
+#: ../draklive-install:106
+#, fuzzy, c-format
+msgid "Unity Installer"
+msgstr "Instalación da Live"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Este asistente axudaralle a instalar a distribución live."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Erro"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Ocorreu un erro"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+"Non hai espacio dispoñible dabondo (%s dispoñibles ainda que fan falta %s)"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Calculando o tamaño total"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Non foi posible copiar os ficheiros á nova raíz"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Noraboa"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Por favor deteña o seu sistema, extraia o sistema live, e reinicie o "
+"ordenador."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "¿Continuar de calquera xeito?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Sair sen gardar"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "¿Saír do programa sen garda-la táboa de particións?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "¿Desexa garda-las modificacións de /etc/fstab?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Precisa reiniciar para que as modificacións da táboa de particións teñan "
+"efecto"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Debe formatar a partición %s.\n"
+"Doutro xeito non se escribirá unha entrada para o punto de montaxe %s no "
+"fstab.\n"
+"Desexa saír de tódolos xeitos?"
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Por favor, agarde"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Copiando"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Instalar o sistema live Mandriva no disco"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "Elixa as particións que desexa formatar"
+
+#~ msgid "Check bad blocks?"
+#~ msgstr "Desexa comproba-los bloques erróneos?"
+
+#~ msgid ""
+#~ "Failed to check filesystem %s. Do you want to repair the errors? (beware, "
+#~ "you can lose data)"
+#~ msgstr ""
+#~ "Fallo ó verificar o sistema de ficheiros %s. Desexa reparar os erros? "
+#~ "(teña coidado, pode perder datos)"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr ""
+#~ "Non hai espacio de intercambio (swap) dabondo para levar a cabo a "
+#~ "instalación, engada algún"
+
+#~ msgid "No partition available"
+#~ msgstr "Non hai ningunha partición dispoñible"
+
+#~ msgid "Scanning partitions to find mount points"
+#~ msgstr "Examinando as particións para atopa-los puntos de montaxe"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "Escolla os puntos de montaxe"
+
+#~ msgid "Partitioning"
+#~ msgstr "Facendo as particións"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "Punto de montaxe %s duplicado"
+
+#~ msgid ""
+#~ "Some hardware on your computer needs ``proprietary'' drivers to work.\n"
+#~ "You can find some information about them at: %s"
+#~ msgstr ""
+#~ "Algún hardware do seu ordenador necesita drivers ``propietarios''\n"
+#~ "para funcionar. Pode atopar máis información sobre eles en: %s"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "Ten que ter unha partición raíz.\n"
+#~ "Para iso, cree unha partición (ou clique nunha que xa exista).\n"
+#~ "Entón escolla a acción ``Punto de montaxe'', e asócieo a `/'"
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "Non ten unha partición de intercambio\n"
+#~ "\n"
+#~ "¿Desexa continuar de calquera xeito?"
+
+#~ msgid "You must have a FAT partition mounted in /boot/efi"
+#~ msgstr "Debe ter unha partición FAT montada en /boot/efi"
+
+#~ msgid "Use free space"
+#~ msgstr "Usar espacio libre"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr "Non hai espacio libre dabondo para asignar novas particións"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "Usar particións existentes"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "Non hai ningunha partición existente para usar"
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "Usar a partición de Windows para loopback"
+
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "¿Que partición desexa usar para Linux4Win?"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "Escolla os tamaños"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "Tamaño da partición raíz en MB: "
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "Tamaño da partición de intercambio en MB: "
+
+#~ msgid ""
+#~ "There is no FAT partition to use as loopback (or not enough space left)"
+#~ msgstr ""
+#~ "Non hai particións FAT para usar coma loopback (ou non hai espacio nelas)"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "Usa-lo espacio libre da partición de Windows"
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "¿Qué partición desexa redimensionar?"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "O redimensionador de FAT non é capaz de manexa-la súa partición,\n"
+#~ "ocorreu o seguinte erro: %s"
+
+#~ msgid "Resizing"
+#~ msgstr "Redimensionando"
+
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "Calculando o tamaño da partición de Windows"
+
+#~ msgid ""
+#~ "Your Windows partition is too fragmented. Please reboot your computer "
+#~ "under Windows, run the ``defrag'' utility, then restart the Mandriva "
+#~ "Linux installation."
+#~ msgstr ""
+#~ "A partición de Windows está demasiado fragmentada. Por favor reinicie o "
+#~ "seu sistema con Windows, execute a utilidade ``defrag'', e despois "
+#~ "reinicie a instalación de Mandriva Linux."
+
+#~ msgid ""
+#~ "WARNING!\n"
+#~ "\n"
+#~ "DrakX will now resize your Windows partition. Be careful: this\n"
+#~ "operation is dangerous. If you have not already done so, you\n"
+#~ "first need to exit the installation, run \"chkdsk c:\" from a\n"
+#~ "Command Prompt under Windows (beware, running graphical program\n"
+#~ "\"scandisk\" is not enough, be sure to use \"chkdsk\" in a\n"
+#~ "Command Prompt!), optionally run defrag, then restart the\n"
+#~ "installation. You should also backup your data.\n"
+#~ "When sure, press Ok."
+#~ msgstr ""
+#~ "¡ADVERTENCIA!\n"
+#~ "\n"
+#~ "O DrakX vai redimensiona-la partición de Windows agora. Teña coidado:\n"
+#~ "esta operación é perigosa. Se aínda non o fixo, necesita sair da\n"
+#~ "instalación primeiro, executar \"chkdsk c:\" nun Intérprete de Comandos\n"
+#~ "en Windows (Teña coidado, executa-lo programa gráfico \"scandisk\")\n"
+#~ "non é dabondo, ¡asegúrese de usar \"chkdsk\" nun Intérprete de\n"
+#~ "Comandos!), e opcionalmente o defrag, e reinicia-la instalación.\n"
+#~ "Tamén é aconsellable facer unha copia de seguridade dos seus datos.\n"
+#~ "Cando estea seguro, prema Aceptar."
+
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "¿Que tamaño desexa manter para o Windows en"
+
+#~ msgid "partition %s"
+#~ msgstr "partición %s"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "Redimensionando a partición de Windows"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "O redimensionamento da FAT fallou: %s"
+
+#~ msgid ""
+#~ "To ensure data integrity after resizing the partition(s), \n"
+#~ "filesystem checks will be run on your next boot into Windows(TM)"
+#~ msgstr ""
+#~ "Para asegurar a integridade dos datos despois de redimensionar a(s) "
+#~ "partición(s), \n"
+#~ "executaranse unhas verificacións do sistema de ficheiros a próxima vez "
+#~ "que arrinque Windows(TM)"
+
+#~ msgid "There is no FAT partition to resize (or not enough space left)"
+#~ msgstr ""
+#~ "Non hai particións FAT para redimensionar (ou non hai espacio libre "
+#~ "dabondo)"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Elimina-lo Windows(TM)"
+
+#~ msgid "Erase and use entire disk"
+#~ msgstr "Borrar e usar o disco enteiro"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr ""
+#~ "Ten máis dunha unidade de disco duro, ¿en cal delas desexa instalar linux?"
+
+#~ msgid "ALL existing partitions and their data will be lost on drive %s"
+#~ msgstr ""
+#~ "Perderanse TODALAS particións existentes e os seus datos na unidade %s"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "Particionamento de disco personalizado"
+
+#~ msgid "Use fdisk"
+#~ msgstr "Usar fdisk"
+
+#~ msgid ""
+#~ "You can now partition %s.\n"
+#~ "When you are done, do not forget to save using `w'"
+#~ msgstr ""
+#~ "Agora pode particionar %s.\n"
+#~ "Cando remate, non esqueza gardar usando `w'"
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "Non se pode atopar espacio para a instalación"
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr ""
+#~ "O Asistente de Particionamento do DrakX atopou as seguintes solucións:"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "O particionamento fallou: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "Activando a rede"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "Desactivando a rede"

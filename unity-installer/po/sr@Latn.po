@@ -1,0 +1,342 @@
+# Cirilicni prevod drakbootdisk.po fajla.
+# Copyright (C) 1997-2003 MandrakeSERBIA.
+# Tomislav Jankovic <tomaja@net.yu>, 2000.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: DrakX\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2004-09-15 13:34+0200\n"
+"Last-Translator: Toma Jankovic_<tomaja@net.yu>\n"
+"Language-Team: Serbian <i18n@mandrake.co.yu>\n"
+"Language: sr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 0.9.6\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: ../draklive-install:106
+#, c-format
+msgid "Unity Installer"
+msgstr ""
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr ""
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Greška"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Hm,pojavila se greška"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr ""
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr ""
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Čestitke"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Svejedno nastaviti ?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Kraj bez snimanja promena"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Kraj bez snimanja promena u tabele particija?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Da li hoćete da sačuvate izmene u /etc/fstab?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr "Treba da resetujete mašinu za primenu izmena u tabeli particija"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Please wait"
+#~ msgstr "Samo momenat..."
+
+#~ msgid "Copying in progress"
+#~ msgstr "Kopiranje u toku"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "Izaberi particije za formatiranje"
+
+#~ msgid "Check bad blocks?"
+#~ msgstr "Proveri loše blokove ?"
+
+#~ msgid ""
+#~ "Failed to check filesystem %s. Do you want to repair the errors? (beware, "
+#~ "you can lose data)"
+#~ msgstr ""
+#~ "Neuspešna prvera fajl sistema %s. Da li želite da popravite greške? "
+#~ "(budite pažljivi, možete izgubiti podatke)"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr "Nema dovoljno swap-a da završi instalaciju, dodajte još swap-a"
+
+#~ msgid "No partition available"
+#~ msgstr "nema dostupnih particija"
+
+#~ msgid "Scanning partitions to find mount points"
+#~ msgstr "Skeniranje particija za pronalaženje tačke montiranja"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "Izaberite tačke montiranja"
+
+#~ msgid "Partitioning"
+#~ msgstr "Particionisanje"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "Duplirana tačka montiranja %s"
+
+#~ msgid ""
+#~ "Some hardware on your computer needs ``proprietary'' drivers to work.\n"
+#~ "You can find some information about them at: %s"
+#~ msgstr ""
+#~ "Neke hardverske komponente u vašem računaru zahtevaju odgovarajuće "
+#~ "drajvere da bi normalno funkcionisale.\n"
+#~ "Informacije o njima možete pronaći na: %s"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "Morate imati  root particiju.\n"
+#~ "Za ovo, kreirajte particiju (ili kliknite na postojeću).\n"
+#~ "Zatim izaberite \"Tačka montiranja\" i podesite na `/'"
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "Hm, nema swap particije\n"
+#~ "\n"
+#~ "Svejedno nastaviti dalje ?"
+
+#~ msgid "You must have a FAT partition mounted in /boot/efi"
+#~ msgstr "Morate imati FAT particiju montiranu u /boot/efi"
+
+#~ msgid "Use free space"
+#~ msgstr "Koristi slobodan prostor"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr "Nema dovoljno slobodnog prostora za alociranje novih particija"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "Koristi postojeću particiju"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "Nema ni jedne pariticije za rad"
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "Koristi Windows particiju za loopback"
+
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "Koju particiju želite da korisite za Linux4Win?"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "Izaberite veličinu"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "Veličina Root particije u MB:"
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "Veličina Swap particije u MB:"
+
+#~ msgid ""
+#~ "There is no FAT partition to use as loopback (or not enough space left)"
+#~ msgstr ""
+#~ "Ne postoje FAT particije kojima se može promeniti veličina (ili nema "
+#~ "dovoljno slobodnog prostora)"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "Korisiti slobodan prostor na Windows particiji"
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "Kojoj particiji  želite da promenite veličinu?"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "Program za promenu veličine FAT paritcija ne može da upravlja vašom "
+#~ "particijom, \n"
+#~ "zbog sledeće greške: %s"
+
+#~ msgid "Resizing"
+#~ msgstr "Promena veličine (resizing)"
+
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "Proračunavam veličinu Windows particije"
+
+#~ msgid ""
+#~ "Your Windows partition is too fragmented. Please reboot your computer "
+#~ "under Windows, run the ``defrag'' utility, then restart the Mandriva "
+#~ "Linux installation."
+#~ msgstr ""
+#~ "Vaša Windows particija je previše fragmentirana, prvo pokrenite ``defrag''"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING!\n"
+#~ "\n"
+#~ "DrakX will now resize your Windows partition. Be careful: this\n"
+#~ "operation is dangerous. If you have not already done so, you\n"
+#~ "first need to exit the installation, run \"chkdsk c:\" from a\n"
+#~ "Command Prompt under Windows (beware, running graphical program\n"
+#~ "\"scandisk\" is not enough, be sure to use \"chkdsk\" in a\n"
+#~ "Command Prompt!), optionally run defrag, then restart the\n"
+#~ "installation. You should also backup your data.\n"
+#~ "When sure, press Ok."
+#~ msgstr ""
+#~ "UPOZORENJE!\n"
+#~ "\n"
+#~ "DrakX treba da izmeni veličinu Windows particije. Budite pažljivi: ova\n"
+#~ "operacija je opasna. Ukoliko to do sada niste radili, prvo treba da "
+#~ "izađete\n"
+#~ "iz instalacije,pokrenete pod Windows-om\n"
+#~ "scandisk (eventualno i defrag), a onda ponovo pokrenite instalaciju.\n"
+#~ "Ako ste sigurni, pritisnite OK (U redu)."
+
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "Koju veličinu želite da zadržite za prozore"
+
+#~ msgid "partition %s"
+#~ msgstr "particija %s "
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "Proračunavam granice Windows fajl-sistema"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "FAT izmena veličine neuspela: %s"
+
+#~ msgid ""
+#~ "To ensure data integrity after resizing the partition(s), \n"
+#~ "filesystem checks will be run on your next boot into Windows(TM)"
+#~ msgstr ""
+#~ "Da bi osigurali integritet nakon promene veličine particije(a), \n"
+#~ "provera fajl sistema će biti pokrenuta kada se sledeći put ulogujete u "
+#~ "Windows(TM)"
+
+#~ msgid "There is no FAT partition to resize (or not enough space left)"
+#~ msgstr ""
+#~ "Ne postoje FAT particije kojima se može promeniti veličina  (ili nema "
+#~ "dovoljno slobodnog prostora)"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Ukloni Windows(TM)"
+
+#, fuzzy
+#~ msgid "Erase and use entire disk"
+#~ msgstr "Izbriši celi disk"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr ""
+#~ "Imate više od jednog hard diska, na koji od njih želite da instalirate "
+#~ "Linux ?"
+
+#~ msgid "ALL existing partitions and their data will be lost on drive %s"
+#~ msgstr "SVE postojeće particije i podaci na disku %s će biti izgubljeni"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "Custom disk particioniranje"
+
+#~ msgid "Use fdisk"
+#~ msgstr "Koristi fdisk"
+
+#~ msgid ""
+#~ "You can now partition %s.\n"
+#~ "When you are done, do not forget to save using `w'"
+#~ msgstr ""
+#~ "Sada možete particionirati vaš %s hard disk uređaj\n"
+#~ "Kada završite,ne zaboravite da potvrdite koristeći `w'"
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "Ne mogu da pronađem slobodan prostor za instaliranje"
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr "DrakX čarobnjak za particioniranje je pronašao sledeća rešenja:"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "Particioniranje nije uspelo: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "Pristupam  mrežu"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "Odstupam od mreže"
+
+#~ msgid "none"
+#~ msgstr "nijedan"

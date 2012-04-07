@@ -1,0 +1,334 @@
+#
+# Mykolas Norvai-as <Myka@centras.lt>, 2002
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: DrakX VERSION\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2000-12-23 13:50+0200\n"
+"Last-Translator: Mykolas Norvai­as <Myka@centras.lt>\n"
+"Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
+"%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../draklive-install:106
+#, c-format
+msgid "Unity Installer"
+msgstr ""
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr ""
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Klaida"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Įvyko klaida"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr ""
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr ""
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Sveikinimai"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Ar vis tiek tęsti?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Išeiti neišsaugojus"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Išeiti neišsaugojus skirsnių lentelės?"
+
+#: ../draklive-install:505
+#, fuzzy, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Ar tu nori išbandyti nustatymus?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Tau reikia perkrauti kompiuterį, kad skirsnių lentelės pakeitimai būtų "
+"naudojami"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Please wait"
+#~ msgstr "Prašom palaukti"
+
+#, fuzzy
+#~ msgid "Copying in progress"
+#~ msgstr "aptiktas prievade %s"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "Pasirink skirsnius, kuriuos nori sužymėti"
+
+#~ msgid "Check bad blocks?"
+#~ msgstr "Ieškoti blogų blokų?"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr "Nepakanka swap atminties įdiegimo vykdymui, prašom praplėsti"
+
+#~ msgid "No partition available"
+#~ msgstr "nėra prieinamų skirsnių"
+
+#~ msgid "Scanning partitions to find mount points"
+#~ msgstr "Peržiūrimi skirsniai, ieškant montavimo taškų"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "Pasirink montavimo taškus"
+
+#, fuzzy
+#~ msgid "Partitioning"
+#~ msgstr "Spausdintuvas"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "Pasikartojantis montavimo taškas %s"
+
+#~ msgid ""
+#~ "Some hardware on your computer needs ``proprietary'' drivers to work.\n"
+#~ "You can find some information about them at: %s"
+#~ msgstr ""
+#~ "Kad kai kurie tavo kompiuterio įrenginiai veiktų, jiems reikia\n"
+#~ "taip vadinamų \"proprietary\" tvarkyklių. daugiau informacijos apie jas "
+#~ "gali\n"
+#~ "rasti čia: %s"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "Tu turi turėti root skirsnį. Tam sukurk skirsnį\n"
+#~ "(arba spragtelėk ant jau esamo). Tada pasirink\n"
+#~ "veiksmą „Montavimo taškas“ ir nurodyk jam „/“"
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "Tu neturi swap skirsnio\n"
+#~ "\n"
+#~ "Vis tiek tęsti?"
+
+#, fuzzy
+#~ msgid "You must have a FAT partition mounted in /boot/efi"
+#~ msgstr "Tu privalai turėti swap skirsnį"
+
+#~ msgid "Use free space"
+#~ msgstr "Naudoti laisvą vietą"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr "Naujiems skirsniams nepakanka laisvos vietos"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "Naudoti esamą skirsnį"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "Nėra jokio skirsnio, tinkamo naudojimui"
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "Naudoti Windows skirsnį loopback'ui"
+
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "Kuri skirsnį tu nori naudoti Linux4Win įdiegimui?"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "Pasirink dydžius"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "Šakninio skirsnio dydis, MB: "
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "Swap skirsnio dydis, MB: "
+
+#, fuzzy
+#~ msgid ""
+#~ "There is no FAT partition to use as loopback (or not enough space left)"
+#~ msgstr ""
+#~ "Nėra jokių FAT skirsnių, kurių dydį būtų galima pakeisti arba naudoti "
+#~ "juos loopback'ui\n"
+#~ "(arba nėra pakankamai laisvos vietos)"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "Naudoti laisvą vietą Windows skirsnyje"
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "Kurio skirsnio dydį tu nori pakeisti?"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "FAT dydžio keitimo programa nesusitvarko su tavo\n"
+#~ "skirsniu, įvyko tokia klaida: %s"
+
+#~ msgid "Resizing"
+#~ msgstr "Keičiamas dydis"
+
+#, fuzzy
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "Naudoti laisvą vietą Windows skirsnyje"
+
+#~ msgid ""
+#~ "Your Windows partition is too fragmented. Please reboot your computer "
+#~ "under Windows, run the ``defrag'' utility, then restart the Mandriva "
+#~ "Linux installation."
+#~ msgstr ""
+#~ "Tavo Windows skirsnis yra pernelyg fragmentuotas, pirma paleisk „defrag“"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING!\n"
+#~ "\n"
+#~ "DrakX will now resize your Windows partition. Be careful: this\n"
+#~ "operation is dangerous. If you have not already done so, you\n"
+#~ "first need to exit the installation, run \"chkdsk c:\" from a\n"
+#~ "Command Prompt under Windows (beware, running graphical program\n"
+#~ "\"scandisk\" is not enough, be sure to use \"chkdsk\" in a\n"
+#~ "Command Prompt!), optionally run defrag, then restart the\n"
+#~ "installation. You should also backup your data.\n"
+#~ "When sure, press Ok."
+#~ msgstr ""
+#~ "PERSPĖJIMAS!\n"
+#~ "\n"
+#~ "DrakX dabar pakeis tavo Windows skirsnio dydį. Būk atsargus: šis "
+#~ "veiksmas\n"
+#~ "yra pavojingas. Jeigu to dar nepadarei, dabar pats laikas išeiti iš "
+#~ "įdiegimo,\n"
+#~ "paleisti scandisk iš Windows (nepakenktų ir defrag paleisti), o tada iš "
+#~ "naujo\n"
+#~ "pradėti įdiegimą. Taip pat turėtum pasidaryti atsarginę duomenų kopiją.\n"
+#~ "Kai viskas sutvarkyta, spausk Gerai."
+
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "Kokį dydį norėtum palikti Windows'ams"
+
+#~ msgid "partition %s"
+#~ msgstr "skirsnyje %s"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "Skaičiuojami Windows bylų sistemos rėžiai"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "Nepavyko pakeisti FAT dydžio: %s"
+
+#, fuzzy
+#~ msgid "There is no FAT partition to resize (or not enough space left)"
+#~ msgstr ""
+#~ "Nėra jokių FAT skirsnių, kurių dydį būtų galima pakeisti arba naudoti "
+#~ "juos loopback'ui\n"
+#~ "(arba nėra pakankamai laisvos vietos)"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Išmesti Windows(TM)"
+
+#, fuzzy
+#~ msgid "Erase and use entire disk"
+#~ msgstr "Ištrinti visą diską"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr "Tu turi daugiau negu vieną kietą diską, į kurį nori įdiegti Linux?"
+
+#~ msgid "ALL existing partitions and their data will be lost on drive %s"
+#~ msgstr "VISI kaupiklyje %s esantys skirsniai ir duomenys bus prarasti"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "Rankinis diskų skirstymas"
+
+#~ msgid "Use fdisk"
+#~ msgstr "Naudoti fdisk"
+
+#~ msgid ""
+#~ "You can now partition %s.\n"
+#~ "When you are done, do not forget to save using `w'"
+#~ msgstr ""
+#~ "Tu dabar gali sudalinti %s.\n"
+#~ "Kai baigsi, nepamiršk išsaugoti su 'w'"
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "Aš niekur negaliu rasti vietos įdiegimui"
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr "DrakX Skirsnių dalinimo meistras rado tokius sprendimus:"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "Dalinimas į skirsnius nepavyko: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "Paleidžiamas tinklas"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "Išjungiamas tinklas"
+
+#~ msgid "none"
+#~ msgstr "jokios"

@@ -1,0 +1,353 @@
+# translation of DrakX-tl.po to Filipino
+# translation of DrakX.po to Filipino
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# Arys P. Deloso <arys@deloso.org>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: DrakX-tl\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2004-09-15 13:35+0200\n"
+"Last-Translator: Arys P. Deloso <arys@deloso.org>\n"
+"Language-Team: Filipino <salinpinoy@comitus.net>\n"
+"Language: fil\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3\n"
+
+#: ../draklive-install:106
+#, c-format
+msgid "Unity Installer"
+msgstr ""
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr ""
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Error"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "May \"error\" na nangyari"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr ""
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr ""
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Maligayang bati"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Magpatuloy kahit paano?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Mag-quit na walang pag-save"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Mag-quit na hindi isinusulat ang \"partition table\"?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Gusto ninyo bang i-save ang mga pagbabago sa /etc/fstab"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Kailangan kayong mag-reboot bago gumana ang mga pagbabago sa \"partition "
+"table\""
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Please wait"
+#~ msgstr "Maghintay lamang"
+
+#, fuzzy
+#~ msgid "Copying in progress"
+#~ msgstr "Tumatakbo ang pagtitiktik"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "Piliin ang mga partisyon na inyong gustong i-format"
+
+#~ msgid "Check bad blocks?"
+#~ msgstr "Suriin ang mga sirang block?"
+
+#~ msgid ""
+#~ "Failed to check filesystem %s. Do you want to repair the errors? (beware, "
+#~ "you can lose data)"
+#~ msgstr ""
+#~ "Nabigo na suriin ang filesystem na %s. Gusto ninyo bang kumpunihin ang "
+#~ "mga error? (maaaring mawala ang data!)"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr ""
+#~ "Walang sapat na puwang ng swap para isaganap ang pag-i-install, "
+#~ "pakidagdagan"
+
+#~ msgid "No partition available"
+#~ msgstr "Walang available na partisyon"
+
+#~ msgid "Scanning partitions to find mount points"
+#~ msgstr ""
+#~ "Minamasdang mabuti ang mga partisyon para hanapin ang mga mount point"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "Piliin ang mga mount point"
+
+#~ msgid "Partitioning"
+#~ msgstr "Pagpartisyon"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "Duplicate mount point %s"
+
+#~ msgid ""
+#~ "Some hardware on your computer needs ``proprietary'' drivers to work.\n"
+#~ "You can find some information about them at: %s"
+#~ msgstr ""
+#~ "Ilang hardware sa inyong computer ay nangangailangan ng "
+#~ "``proprietary'' (may nagmamay-ari) na driver para gumana.\n"
+#~ "Makakahanap kayo ng ilang inpormasyon tungkol sa kanila sa: %s"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "Dapat kayong lumikha ng partisyon ng \"root\".\n"
+#~ "Para dito, gumawa ng partisyon (o mag-click sa mayroon na).\n"
+#~ "Tapos piliin ang aksyon na ``Mount point'' at i-set ito sa `/'"
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "Wala kayong partisyon ng swap.\n"
+#~ "\n"
+#~ "Magpatuloy pa rin?"
+
+#~ msgid "You must have a FAT partition mounted in /boot/efi"
+#~ msgstr "Dapat mayroon kayong partisyon ng FAT na naka-mount sa /boot/efi"
+
+#~ msgid "Use free space"
+#~ msgstr "Gamitin ang libreng puwang"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr ""
+#~ "Walang sapat na libreng puwang para maibahagi sa mga bagong partisyon"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "Gamitin ang partisyons mayroon"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "Walang partisyon na magagamit"
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "Gamitin ang partisyon ng Windows para sa loopback"
+
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "Aling partisyon ang gusto ninyong gamitin para sa Linux4Win?"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "Piliin ang mga laki"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "Laki ng partisyon ng root sa MB: "
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "Laki ng partisyon ng swap sa MB: "
+
+#~ msgid ""
+#~ "There is no FAT partition to use as loopback (or not enough space left)"
+#~ msgstr ""
+#~ "Walang partisyon ng FAT na gagamitin bilang loopback (o walang sapat na "
+#~ "puwang)"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "Gamitin ang libreng puwang sa partisyon ng Windows"
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "Aling partisyon ang gusto ninyong i-resize?"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "Ang taga-resize ng FAT ay hindi kayang pangasiwaan ang inyong "
+#~ "partisyon, \n"
+#~ "nangyari ang sumusunod na error: %s"
+
+#~ msgid "Resizing"
+#~ msgstr "Nag-re-resize"
+
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "Kino-compute ang laki ng partisyon ng Windows"
+
+#~ msgid ""
+#~ "Your Windows partition is too fragmented. Please reboot your computer "
+#~ "under Windows, run the ``defrag'' utility, then restart the Mandriva "
+#~ "Linux installation."
+#~ msgstr ""
+#~ "Ang inyong partisyon ng Windows ay sobrang fragmented. Paki-reboot ang "
+#~ "inyong computer sa Windows, patakbuhin ang ``defrag'', at simulan ulit "
+#~ "ang pag-i-install ng Mandriva Linux."
+
+#~ msgid ""
+#~ "WARNING!\n"
+#~ "\n"
+#~ "DrakX will now resize your Windows partition. Be careful: this\n"
+#~ "operation is dangerous. If you have not already done so, you\n"
+#~ "first need to exit the installation, run \"chkdsk c:\" from a\n"
+#~ "Command Prompt under Windows (beware, running graphical program\n"
+#~ "\"scandisk\" is not enough, be sure to use \"chkdsk\" in a\n"
+#~ "Command Prompt!), optionally run defrag, then restart the\n"
+#~ "installation. You should also backup your data.\n"
+#~ "When sure, press Ok."
+#~ msgstr ""
+#~ "BABALA!\n"
+#~ "\n"
+#~ "Babaguhin na ngayon ng DrakX ang laki ng inyong partisyon ng Windows.\n"
+#~ "Mag-ingat: ang operasyon na ito ay mapanganib. Kung hindi pa ninyo\n"
+#~ "nagagawa, dapat muna kayong lumabas ng pag-i-install, patakbuhin ang\n"
+#~ "\"chkdsk c:\" mula sa \"Command Prompt\" ng Windows (babala, ang\n"
+#~ "paggamit ng graphical na program na \"scandisk\" ay hindi sapat, "
+#~ "tiyaking\n"
+#~ "gamitin ang \"chkdsk\" sa \"Command Prompt\"!), maaaring patakbuhin\n"
+#~ "ang \"defrag\", at simulan ulit ang pag-i-install. Dapat rin ninyong i-"
+#~ "backup\n"
+#~ "ang inyong data. Kung sigurado na, pindutin ang Ok."
+
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "Aling laki ang gusto ninyong itago para sa Windows sa"
+
+#~ msgid "partition %s"
+#~ msgstr "partisyon na %s"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "Binabago ang laki ng partisyon ng Windows"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "Pagbago ng laki ng FAT nabigo: %s"
+
+#~ msgid ""
+#~ "To ensure data integrity after resizing the partition(s), \n"
+#~ "filesystem checks will be run on your next boot into Windows(TM)"
+#~ msgstr ""
+#~ "Para matiyak ang integridad ng inyong data matapos ma-resize ang mga "
+#~ "partisyon, \n"
+#~ "magsasagawa ng pagsusuri ng filesystem sa susunod ninyong pag-boot sa "
+#~ "Windows(TM)"
+
+#~ msgid "There is no FAT partition to resize (or not enough space left)"
+#~ msgstr "Walang partisyon ng FAT para i-resize (o walang sapat na puwang)"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Tanggalin ang Windows(TM)"
+
+#, fuzzy
+#~ msgid "Erase and use entire disk"
+#~ msgstr "Burahin ang buong disk"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr ""
+#~ "Mayroon kayong mahigit isang hard drive, alin ang gusto ninyong lagyan ng "
+#~ "linux?"
+
+#~ msgid "ALL existing partitions and their data will be lost on drive %s"
+#~ msgstr ""
+#~ "LAHAT ng mayroong mga partisyon at kanilang data ay mawawala sa drive %s"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "Custom na pagpapartisyon ng disk"
+
+#~ msgid "Use fdisk"
+#~ msgstr "Gamitin ang fdisk"
+
+#~ msgid ""
+#~ "You can now partition %s.\n"
+#~ "When you are done, do not forget to save using `w'"
+#~ msgstr ""
+#~ "Maaari na ninyo ngayong ipartisyon ang  %s.\n"
+#~ "Kung tapos na kayo, huwag kalimutang i-save gamit ang `w'"
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "Wala akong makitang puwang para sa pag-install"
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr ""
+#~ "Nakita ng \"DrakX Partitioning wizard\" ang mga sumusunod na paglutas:"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "Pagpapartisyon nabigo: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "Ginagawang \"up\" ang network"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "Ginagawang \"down\" ang network"
+
+#~ msgid "none"
+#~ msgstr "wala"

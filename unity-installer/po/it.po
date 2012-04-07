@@ -1,0 +1,144 @@
+# translation of it.po to Italian
+# Copyright (C) 2000, 2001 Mandriva S.A.
+#
+# Paolo Lorenzin <pasusu@tin.it>, 2000.
+# Simone Riccio <s.riccio@aeb-informatica.it>, 2002.
+# Roberto Rosselli Del Turco <rosselli@ling.unipi.it>, 2001, 2002,2003.
+# Marco De Vitis <mdv@spin.it>, 2003.
+# Giuseppe Levi <giuseppe.levi@email.it>, 2005.
+# Andrea Celli <andrea.celli@libero.it>, 2003, 2004, 2005, 2006, 2007, 2008, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: it\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2010-11-06 17:57+0100\n"
+"Last-Translator: Alessio Adamo <gianvacca@unity-linux.org>\n"
+"Language-Team: Italian <timl@frelists.org>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 0.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../draklive-install:106
+#, c-format
+msgid "Unity Installer"
+msgstr "Unity Installer"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Questo assistente ti aiuterà a installare la distribuzione live."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Errore"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Si è verificato un errore"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr "Poco spazio disponibile (ci sono %s mentre ne servono %s)"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Calcolo della dimensione totale..."
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Impossibile copiare i file nella nuova directory radice"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Congratulazioni"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Ora devi spegnere il computer, rimuovere il supporto della live e riavviare."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Continuo comunque?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Esci senza salvare"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Devo uscire senza scrivere la tabella delle partizioni?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Devo salvare le modifiche a /etc/fstab?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Bisogna riavviare il PC affinché le modifiche alla tabella delle partizioni "
+"abbiano effetto"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Dovresti formattare la partizione %s.\n"
+"Altrimenti non verrà assegnato un punto di mount per %s in fstab.\n"
+"Vuoi uscire comunque?"
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr "Installa Unity"
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr "Installazione di Unity Linux"
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Attendere prego"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Copia in corso"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Installa Mandriva Live sul disco"

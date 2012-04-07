@@ -1,0 +1,355 @@
+# translation of draklive-install-mk.po to Macedonian
+# Copyright (C) 2002,2003, 2004, 2006 Free Software Foundation, Inc.
+#
+# Danko Ilik <danko@mindless.com>, 2002,2003.
+# Vladimir Stefanov <vladoboss@mt.net.mk>, 2003.
+# Зоран Димовски <zoki@email.com>, 2003.
+# Danko Ilik <danko@on.net.mk>, 2003.
+# Зоран Димовски <decata@mt.net.mk>, 2004.
+# Zoran Dimovski <zoki.dimovski@gmail.com>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: draklive-install-mk\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2006-08-11 22:45-0700\n"
+"Last-Translator: Zoran Dimovski <zoki.dimovski@gmail.com>\n"
+"Language-Team: Macedonian\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural= n==1 || n%10==1 ? 0 : 1\n"
+
+#: ../draklive-install:106
+#, c-format
+msgid "Unity Installer"
+msgstr ""
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Овој волшебник ќе ви помогне да ја инсталирате „живата“ дистрибуција."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Грешка"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Се случи грешка"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Пресметување на вкупната големина"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr ""
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Ви честитаме"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Ве молиме исклучете го компјутерот, отстрането го медиумот и рестартирајте "
+"го компјутерот."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Продолжуваме?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Напушти без зачувување"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Напушти без запишување на партициската табела?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Дали сакате да ги зачувате модификациите на /etc/fstab"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr "Морате да го рестартирате компјутерот за модификациите да имаат ефект"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Партицијата %s треба да се форматира.\n"
+"Спротивно, во fstab нема да се запише внесот на точката на монтирање за %s.\n"
+"Откажувате?"
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Ве молиме почекајте"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Копирањето е во тек"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "Изберете ги партициите за форматирање"
+
+#~ msgid "Check bad blocks?"
+#~ msgstr "Проверка на оштетени блокови?"
+
+#~ msgid ""
+#~ "Failed to check filesystem %s. Do you want to repair the errors? (beware, "
+#~ "you can lose data)"
+#~ msgstr ""
+#~ "Неуспешна проверка на датотечниот систем %s. Дали сакате да ги поправете "
+#~ "грешките? (внимавајте, може да загубите податоци)"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr ""
+#~ "Нема доволно swap простор за завршување на инсталацијата; додадете малку"
+
+#~ msgid "No partition available"
+#~ msgstr "Нема достапна партиција"
+
+#~ msgid "Scanning partitions to find mount points"
+#~ msgstr "Скенирање на партиции за да се најдат точки на монтирање"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "Изберете ги точките на монтирање"
+
+#~ msgid "Partitioning"
+#~ msgstr "Партиционирање"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "Дупликат точка на монтирање: %s"
+
+#~ msgid ""
+#~ "Some hardware on your computer needs ``proprietary'' drivers to work.\n"
+#~ "You can find some information about them at: %s"
+#~ msgstr ""
+#~ "На дел од хардверот на Вашиот компјутер му се потребни \"затворени\"\n"
+#~ "(proprietary) драјвери за да работи. Некои информации за тоа можете\n"
+#~ "да најдете на: %s"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "Мора да имате root-партиција.\n"
+#~ "Затоа, создадете партиција (или изберете веќе постоечка),\n"
+#~ "потоа изберете \"Точка на монтирање\" и поставете ја на \"/\""
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "Немате swap партиција.\n"
+#~ "\n"
+#~ "Да продолжиме?"
+
+#~ msgid "You must have a FAT partition mounted in /boot/efi"
+#~ msgstr "Мора да имате FAT партиција монтирана на /boot/efi"
+
+#~ msgid "Use free space"
+#~ msgstr "Користи празен простор"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr "Нема доволно слободен простор за алоцирање на нови партиции"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "Користи ги постоечките партиции"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "Не постои партиција за да може да се користи"
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "Користи ја Windows партицијата за loopback"
+
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "Која партиција сакате да ја користите за Linux4Win?"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "Избири ги големините"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "Root партиција големина во во МБ: "
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "swap партиција (во МБ): "
+
+#~ msgid ""
+#~ "There is no FAT partition to use as loopback (or not enough space left)"
+#~ msgstr ""
+#~ "Не постои FAT партиција за користење како loopback\n"
+#~ "(или нема доволно преостанат простор)"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "Користи го празниот простор на Windows партицијата"
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "Која партиција сакате да ја зголемувате/намалувате?"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "FAT зголемувачот не може да се справи со Вашата партиција,\n"
+#~ "зашто се случи следнава грешка: %s"
+
+#~ msgid "Resizing"
+#~ msgstr "Менување големина"
+
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "Пресметување на големината на Windows партицијата"
+
+#~ msgid ""
+#~ "Your Windows partition is too fragmented. Please reboot your computer "
+#~ "under Windows, run the ``defrag'' utility, then restart the Mandriva "
+#~ "Linux installation."
+#~ msgstr ""
+#~ "Вашата Windows партиција е премногу фрагментирана. Рестартирајте го "
+#~ "компјутерот, подигнете го под Windows, вклучете ја алатката \"defrag\", и "
+#~ "потоа повторно подигнете ја инсталациската постапка на Мадрак Линукс."
+
+#~ msgid ""
+#~ "WARNING!\n"
+#~ "\n"
+#~ "DrakX will now resize your Windows partition. Be careful: this\n"
+#~ "operation is dangerous. If you have not already done so, you\n"
+#~ "first need to exit the installation, run \"chkdsk c:\" from a\n"
+#~ "Command Prompt under Windows (beware, running graphical program\n"
+#~ "\"scandisk\" is not enough, be sure to use \"chkdsk\" in a\n"
+#~ "Command Prompt!), optionally run defrag, then restart the\n"
+#~ "installation. You should also backup your data.\n"
+#~ "When sure, press Ok."
+#~ msgstr ""
+#~ "ПРЕДУПРЕДУВАЊЕ!\n"
+#~ "\n"
+#~ "DrakX сега ќе ја промени големината на Вашата Windows партиција.\n"
+#~ "Внимавајте: оваа операција е опасна. Најпрво е потребно да извршите\n"
+#~ "„chkdsk c:“преку командната конзола во Windows. Доколку не сте го сториле "
+#~ "тоа,\n"
+#~ "треба да излезете од инсталацијава, и да ја извршите оваа команда\n"
+#~ "(внимавајте, не е доволно да го извршите графичкиот програм „scandisk“,\n"
+#~ "бидете сигурни дека користите „chkdsk“ во командната конзола!). Како "
+#~ "опција\n"
+#~ "може да го извршите и „defrag“ и потоа повторно да ја вклучите "
+#~ "инсталацијата.\n"
+#~ "Исто така, пожелно е да направите и резервна копија на вашите податоци.\n"
+#~ "Кога ќе сте сигурни, притиснете „Во ред“"
+
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "Колкава големина да остане за Windows на"
+
+#~ msgid "partition %s"
+#~ msgstr "партиција %s"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "Зголемување/намалување на Windows партиција"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "FAT зголемувањето/намалувањето не успеа: %s"
+
+#~ msgid ""
+#~ "To ensure data integrity after resizing the partition(s), \n"
+#~ "filesystem checks will be run on your next boot into Windows(TM)"
+#~ msgstr ""
+#~ "За да се потврди интегритетот на податиците по завршувањето на промената "
+#~ "на големината на партицијата/партициите, \n"
+#~ "при следното вклучување во Windows™ ќе се вклучи проверка на датотечниот "
+#~ "систем"
+
+#~ msgid "There is no FAT partition to resize (or not enough space left)"
+#~ msgstr ""
+#~ "Не постои FAT партиција за зголемување/намалување (или нема доволно "
+#~ "преостанат простор)"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Отстрани го Windows™"
+
+#~ msgid "Erase and use entire disk"
+#~ msgstr "Избриши и користи го целиот диск"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr "Имате повеќе од еден хард диск; на кој инсталирате Линукс?"
+
+#~ msgid "ALL existing partitions and their data will be lost on drive %s"
+#~ msgstr "СИТЕ постоечки партиции и податоци на %s ќе бидат изгубени"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "Сопствено партицирање"
+
+#~ msgid "Use fdisk"
+#~ msgstr "Користи fdisk"
+
+#~ msgid ""
+#~ "You can now partition %s.\n"
+#~ "When you are done, do not forget to save using `w'"
+#~ msgstr ""
+#~ "Сега можете да го партицирате %s.\n"
+#~ "Кога ќе завршите, не заборавајте да зачувате користејќи \"w\""
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "Не можам да најдам простор за инсталирање"
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr "DrakX партицирачката самовила ги пронајде следниве решенија:"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "Партицирањето не успеа: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "Подигање на мрежата"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "Спуштање на мрежата"

@@ -1,0 +1,363 @@
+# translation of DrakX-nl.po to Nederlands
+# Dutch translation of DrakX.
+# Copyright (C) 2000, 2005 Free Software Foundation, Inc.
+# Copyright (c) 2000 Mandriva
+# Niels Gras <niels.gras@wanadoo.nl>, 2000.
+# Jeroen ten Berge <j.ten.berge@twinbit.nl>, 2002.
+# Reinout van Schouwen <reinout@gmail.com>, 2002-2008.
+# Peter Bosch <peter.bosch@hccnet.nl>, 2002.
+# Rob Teng <mandrake.tips@free.fr>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: DrakX-nl\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2008-03-22 20:17+0200\n"
+"Last-Translator: Reinout van Schouwen <reinout@gmail.com>\n"
+"Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../draklive-install:106
+#, fuzzy, c-format
+msgid "Unity Installer"
+msgstr "Live installeren"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Deze wizard helpt u de live-distributie te installeren."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Fout"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Er is een fout opgetreden"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr "Niet genoeg beschikbare ruimte (%s beschikbaar terwijl %s benodigd is)"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Uitrekenen totale grootte"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Niet in staat bestanden naar nieuwe hoofdmap te kopiëren"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Gefeliciteerd"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Sluit uw computer af, verwijder het live-systeem, en start uw computer "
+"opnieuw op."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Toch doorgaan?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Afsluiten zonder opslaan"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Afsluiten zonder de partitietabel weg te schrijven?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Wilt u de /etc/fstab aanpassingen bewaren"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"U dient te herstarten om de wijzigingen in de partitietabel te activeren."
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"U dient partitie %s te formatteren.\n"
+"Anders kan er geen regel voor koppelpunt %s in fstab worden gezet.\n"
+"Toch afsluiten?"
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Even geduld"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Bezig met kopiëren"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Het Mandriva live systeem op de harde schijf installeren"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "Kies de partities die u wenst te formatteren"
+
+#~ msgid "Check bad blocks?"
+#~ msgstr "Controleren op onleesbare blokken?"
+
+#~ msgid ""
+#~ "Failed to check filesystem %s. Do you want to repair the errors? (beware, "
+#~ "you can lose data)"
+#~ msgstr ""
+#~ "Het controleren van bestandssysteem %s is mislukt. Wilt u de fouten "
+#~ "repareren? (Let op, gegevensverlies is mogelijk)"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr "Niet genoeg swap voor de installatie, voeg er wat toe"
+
+#~ msgid "No partition available"
+#~ msgstr "Geen beschikbare partities"
+
+#~ msgid "Scanning partitions to find mount points"
+#~ msgstr "Bezig met scannen van partities om koppelpunten te vinden"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "Selecteer de koppelpunten"
+
+#~ msgid "Partitioning"
+#~ msgstr "Partitionering"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "Dubbel koppelpunt %s"
+
+#~ msgid ""
+#~ "Some hardware on your computer needs ``proprietary'' drivers to work.\n"
+#~ "You can find some information about them at: %s"
+#~ msgstr ""
+#~ "Sommige hardware op uw computer heeft ''fabrikantsgebonden'' drivers \n"
+#~ "nodig om te kunnen functioneren. U kunt informatie hierover vinden op: %s"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "U dient een root-partitie te hebben.\n"
+#~ "Hiervoor dient u een partitie aan te maken (of op een bestaande partitie "
+#~ "teklikken). Daarna kiest u de actie ``Koppelpunt'' en stelt u dit i nop "
+#~ "`/'"
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "U heeft geen swap-partitie!\n"
+#~ "\n"
+#~ "Toch verdergaan?"
+
+#~ msgid "You must have a FAT partition mounted in /boot/efi"
+#~ msgstr ""
+#~ "U dient een partitie met FAT-bestandssysteem gekoppeld te hebben aan /"
+#~ "boot/efi"
+
+#~ msgid "Use free space"
+#~ msgstr "Vrije ruimte benutten"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr "Niet genoeg vrije ruimte om nieuwe partities te maken"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "Een bestaande partitie gebruiken"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "Er is geen bestaande partitie om te gebruiken"
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "Gebruik de Windows-partitie voor loopback "
+
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "Welke partitie wenst u te gebruiken voor Linux4Win?"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "Kies de grootte"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "Root-partitie-grootte in MB:"
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "Swap-partitie-grootte in MB: "
+
+#~ msgid ""
+#~ "There is no FAT partition to use as loopback (or not enough space left)"
+#~ msgstr ""
+#~ "Er is geen FAT-partitie om als loopback te gebruiken (of er is te weinig "
+#~ "ruimte over)"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "Gebruik de vrije ruimte op de Windows partitie"
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "Van welke partitie wilt u de grootte veranderen?"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "De FAT grootte-aanpasser was niet instaat met uw partitie om te gaan, \n"
+#~ "de volgende fout is opgetreden: %s"
+
+#~ msgid "Resizing"
+#~ msgstr "Grootte aanpassen"
+
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "Bezig met berekenen grootte van Windows-partitie"
+
+#~ msgid ""
+#~ "Your Windows partition is too fragmented. Please reboot your computer "
+#~ "under Windows, run the ``defrag'' utility, then restart the Mandriva "
+#~ "Linux installation."
+#~ msgstr ""
+#~ "Uw Windows-partitie is te gefragmenteerd. Start uw computer opnieuw op "
+#~ "onder Windows, gebruik het ``defrag''-hulpprogramma, en herstart "
+#~ "vervolgens de installatie van Mandriva Linux."
+
+#~ msgid ""
+#~ "WARNING!\n"
+#~ "\n"
+#~ "DrakX will now resize your Windows partition. Be careful: this\n"
+#~ "operation is dangerous. If you have not already done so, you\n"
+#~ "first need to exit the installation, run \"chkdsk c:\" from a\n"
+#~ "Command Prompt under Windows (beware, running graphical program\n"
+#~ "\"scandisk\" is not enough, be sure to use \"chkdsk\" in a\n"
+#~ "Command Prompt!), optionally run defrag, then restart the\n"
+#~ "installation. You should also backup your data.\n"
+#~ "When sure, press Ok."
+#~ msgstr ""
+#~ "WAARSCHUWING!\n"
+#~ "\n"
+#~ "DrakX zal nu de grootte van uw Windows-partitie aanpassen. Wees\n"
+#~ "voorzichtig: deze operatie is gevaarlijk. Als u dit niet reeds\n"
+#~ "gedaan heeft, dient u eerst de installatie af te breken, \n"
+#~ "\"chkdsk c:\" uit te voeren vanuit een Opdrachtaanwijzing onder\n"
+#~ "Windows (kijk uit, het draaien van het grafische programma \"scandisk\"\n"
+#~ "is niet genoeg, zorg ervoor dat u \"chkdsk\" in een opdrachtaanwijzing\n"
+#~ "gebruikt!), eventueel defrag uit te voeren, en daarna de\n"
+#~ "installatie opnieuw te starten. Maakt u ook een reservekopie\n"
+#~ "van uw gegevens.\n"
+#~ "Wanneer u zeker van uw zaak bent, klik dan OK."
+
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "Welke grootte wilt u behouden voor Windows op"
+
+#~ msgid "partition %s"
+#~ msgstr "partitie %s"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "Bezig met grootte aanpassen van Windows-partitie"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "FAT grootte-aanpassing mislukt: %s"
+
+#~ msgid ""
+#~ "To ensure data integrity after resizing the partition(s), \n"
+#~ "filesystem checks will be run on your next boot into Windows(TM)"
+#~ msgstr ""
+#~ "Om de data-integriteit na het aanpassen van de partitiegrootte(s)\n"
+#~ "te garanderen, zal het bestandssysteem worden gecontroleerd\n"
+#~ "de volgende keer dat u Windows(TM) opstart"
+
+#~ msgid "There is no FAT partition to resize (or not enough space left)"
+#~ msgstr ""
+#~ "Er is geen FAT partitie om de grootte van aan te passen (of er is te "
+#~ "weinig ruimte over)"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Windows(TM) verwijderen"
+
+#~ msgid "Erase and use entire disk"
+#~ msgstr "Gehele schijf wissen en gebruiken"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr ""
+#~ "U heeft meer dan één harde schijf, op welke wilt u Linux installeren?"
+
+#~ msgid "ALL existing partitions and their data will be lost on drive %s"
+#~ msgstr ""
+#~ "ALLE bestaande partities en de gegevens die ze bevatten, zullen verloren "
+#~ "gaan op schijf %s"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "Aangepaste schijfpartitionering"
+
+#~ msgid "Use fdisk"
+#~ msgstr "fdisk gebruiken"
+
+#~ msgid ""
+#~ "You can now partition %s.\n"
+#~ "When you are done, do not forget to save using `w'"
+#~ msgstr ""
+#~ "U kunt nu uw schijf %s partitioneren.\n"
+#~ "Vergeet niet op te slaan met `w' wanneer u klaar bent."
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "Er is geen ruimte meer voor installatie"
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr "De partitionerings-wizard heeft de volgende oplossingen gevonden:"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "Partitionering mislukt: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "Bezig met opstarten van het netwerk"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "Bezig met stoppen van het netwerk"
+
+#~ msgid "none"
+#~ msgstr "geen"

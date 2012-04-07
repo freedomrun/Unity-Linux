@@ -1,0 +1,320 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# Wachara Chinsettawong <wachara@yahoo.com>, 2001
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: DrakX\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2001-09-10 14:24GMT+7\n"
+"Last-Translator: Wachara Chinsettawong <wachara@yahoo.com>\n"
+"Language-Team: Thai <th@li.org>\n"
+"Language: th\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 0.9.5\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../draklive-install:106
+#, c-format
+msgid "Unity Installer"
+msgstr ""
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr ""
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "ผิดพลาด"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "มีปัญหาเกิดขึ้น"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr ""
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr ""
+
+#: ../draklive-install:479
+#, fuzzy, c-format
+msgid "Congratulations"
+msgstr "ขอแสดงความยินดี"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "ทำงานต่อหรือไม่?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "ออกโดยไม่ต้องบันทึก"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "ออกโดยไม่ต้องเขียนตารางพาร์ติชั่น"
+
+#: ../draklive-install:505
+#, fuzzy, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "คุณต้องการทดสอบการคอนฟิกหรือไม่"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr "คุณต้องทำการรีบูตระบบให้เครื่องรับทราบการเปลี่ยนแปลงตารางพาร์ติชั่น"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Please wait"
+#~ msgstr "โปรดรอสักครู่"
+
+#, fuzzy
+#~ msgid "Copying in progress"
+#~ msgstr "ค้นหาเจอบน port %s"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "เลือกพาร์ติชั่นที่คุณต้องการฟอร์แมต"
+
+#~ msgid "Check bad blocks?"
+#~ msgstr "ตรวจสอบ bad blocks"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr "ไม่มีพื้นที่สวอปเพียงพอกับการติดตั้ง โปรดเพิ่มเนื้อที่"
+
+#~ msgid "No partition available"
+#~ msgstr "ไม่มีพาร์ติชั่นเหลือ"
+
+#~ msgid "Scanning partitions to find mount points"
+#~ msgstr "Scanning partitions to find mount points"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "เลือกจุดเม้าท์"
+
+#, fuzzy
+#~ msgid "Partitioning"
+#~ msgstr "เครื่องพิมพ์"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "ทำซ้ำจุดเม้าท์ %s"
+
+#~ msgid ""
+#~ "Some hardware on your computer needs ``proprietary'' drivers to work.\n"
+#~ "You can find some information about them at: %s"
+#~ msgstr ""
+#~ "hardware บางชนิดต้องการ driver พิเศษ\n"
+#~ "คุณสามารถหาข้อมูลได้จาก: %s"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "คุณต้องมี root พาร์ติชั่น\n"
+#~ "เพราะฉนั้นคุณต้องสร้าง พาร์ติชั่น (หรือกดเลือกอันที่มีอยู่)\n"
+#~ "หลังจากนั้นเลือก ``Mount Point'' และจัดให้มันเป็น `/'"
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "คุณไม่มีสวอปพาร์ติชั่นเลย\n"
+#~ "\n"
+#~ "ต้องการจะทำต่อหรือไม่?"
+
+#, fuzzy
+#~ msgid "You must have a FAT partition mounted in /boot/efi"
+#~ msgstr "คุณจะต้องมีพาร์ติชั่นสวอป"
+
+#~ msgid "Use free space"
+#~ msgstr "ใช้พื้นที่ที่ว่าง"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr "ไม่มีพื้นที่เพียงพอสำหรับ พาร์ติชั่น ใหม่"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "ใช้พาร์ติชั่นที่มีอยู่"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "ไม่มีพาร์ติชั่นที่มีอยู่ที่ใช้งานได้"
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "ใช้ windows partion สำหรับการ Loopback"
+
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "พาร์ติชั่นใหนที่ท่านต้องการใช้กับ Linux4Win"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "เลือกขนาด"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "ขนาดของพาร์ติชั่นรูท MB:"
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "ขนาดพาร์ติชั่น Swapเป็น MB: "
+
+#, fuzzy
+#~ msgid ""
+#~ "There is no FAT partition to use as loopback (or not enough space left)"
+#~ msgstr "ไม่มี พาร์ติชั่น FAT เพื่อทำการเปี่ยนขนาดหรือให้ใช้เป็น loopback (พื้นที่ไม่พอ)"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "ใช้พื้นที่ที่ว่างใน Windows partition"
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "พาร์ติชั่นไหนที่คุณต้องการเปลี่ยนขนาด"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "ตัวเปลี่ยนขนาดไม่สามารถทำงานกับ partition ของคุณ\n"
+#~ "มีข้อผิดพลาดนี้เกิดขึ้น: %s"
+
+#~ msgid "Resizing"
+#~ msgstr "ปรับขนาด"
+
+#, fuzzy
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "ใช้พื้นที่ที่ว่างใน Windows partition"
+
+#~ msgid ""
+#~ "Your Windows partition is too fragmented. Please reboot your computer "
+#~ "under Windows, run the ``defrag'' utility, then restart the Mandriva "
+#~ "Linux installation."
+#~ msgstr "Windows partition ของคุณกระจัดกระจายมากเกินไป กรุณา Defrag ก่อน"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING!\n"
+#~ "\n"
+#~ "DrakX will now resize your Windows partition. Be careful: this\n"
+#~ "operation is dangerous. If you have not already done so, you\n"
+#~ "first need to exit the installation, run \"chkdsk c:\" from a\n"
+#~ "Command Prompt under Windows (beware, running graphical program\n"
+#~ "\"scandisk\" is not enough, be sure to use \"chkdsk\" in a\n"
+#~ "Command Prompt!), optionally run defrag, then restart the\n"
+#~ "installation. You should also backup your data.\n"
+#~ "When sure, press Ok."
+#~ msgstr ""
+#~ "ระวัง!\n"
+#~ "DrakX กำลังจะลดขนาดพาร์ติชั่นของ windows การทำงานนี้อันตลายมาก\n"
+#~ "ถ้าคุณยังไม่เคยทำมาก่อนคุณควรออกจากการทำงานนี้และรัน Scandisk บน\n"
+#~ "Windows (และ defrag) แล้วค่อยเริ่มทำงานนี้ใหม่  และคุณสมควรที่จะทำการ\n"
+#~ "Backup ข้อมูลสำคัญขึ้นมาก่อน\n"
+#~ "เมื่อคุณแน่ใจแล้ว กด OK"
+
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "คุณต้องการเก็บ Windows ไว้ในขนาดใหน"
+
+#~ msgid "partition %s"
+#~ msgstr "พาร์ติชั่น %s"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "คำนวณขอบเขตของระบบไฟล์ Windows"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "การกำหนดขนาด FAT เกิดการผิดพลาด: %s"
+
+#, fuzzy
+#~ msgid "There is no FAT partition to resize (or not enough space left)"
+#~ msgstr "ไม่มี พาร์ติชั่น FAT เพื่อทำการเปี่ยนขนาดหรือให้ใช้เป็น loopback (พื้นที่ไม่พอ)"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "ลบ Windows(TM)"
+
+#, fuzzy
+#~ msgid "Erase and use entire disk"
+#~ msgstr "ลบ disk ทั้งหมด"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr "คุณมี harddisk มากกว่า  1 ตัว  คุณต้องการลง linux บน harddisk ตัวใหน"
+
+#~ msgid "ALL existing partitions and their data will be lost on drive %s"
+#~ msgstr "ข้อมูลทั้งหมดในพาร์ติชั่นทั้งหมดจะสูญหายไป %s"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "กำลังพาร์ติชั่น Custom disk"
+
+#~ msgid "Use fdisk"
+#~ msgstr "ใช้ fdisk"
+
+#~ msgid ""
+#~ "You can now partition %s.\n"
+#~ "When you are done, do not forget to save using `w'"
+#~ msgstr ""
+#~ "คุณสามารถพาร์ติชั่น %s เดี๋ยวนี้\n"
+#~ "เมื่อเสร็จแล้วอย่าลืมบันทึกโดยใช้ `w'"
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "ผมไม่สามารถหาพื้นที่ว่างเพื่อทำการติดตั้ง"
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr "The DrakX Partitioning wizard เจอทางเลือกดังต่อไปนี้"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "การทำพาร์ติชั่นล้มเหลว: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "ระบบเน็ตเวิร์กกำลังจะทำงาน"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "ระบบเน็ตเวิร์กกำลังจะหยุดทำงาน"
+
+#~ msgid "none"
+#~ msgstr "ไม่มี"

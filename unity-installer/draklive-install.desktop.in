@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+_Name=Install Unity
+_Comment=The Unity Linux Installer
+Exec=unity-installer
+Icon=unity-installer
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=X-MandrivaLinux-System-Configuration;System;
+

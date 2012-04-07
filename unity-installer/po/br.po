@@ -1,0 +1,312 @@
+# DrakX e Brezhoneg.
+# Copyright (C) 1999-2005 Mandriva
+# Thierry Vignaud <tvignaud@mandriva.com>, 1999-2005
+# Jañ-Mai Drapier <jan-mai.drapier@mail.dotcom.fr>, 1999-2000
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: DrakX 10.2\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2006-02-23 13:23+0100\n"
+"Last-Translator: Thierry Vignaud <tvignaud@mandriva.com>\n"
+"Language-Team: Brezhoneg <ofisk@wanadoo.fr>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1;plural=0\n"
+
+#: ../draklive-install:106
+#, c-format
+msgid "Unity Installer"
+msgstr ""
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr ""
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Fazi"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Ur fazi zo bet"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "O jediñ ar ment hollek"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr ""
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Brav !"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Lazhit hoc'h urzhiater mar plij, lamit ho reiziad bev hag adloc'hit hoc'h "
+"urzhiater."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Kenderc'hel evelato ?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Kuitaat hep enrollañ"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Kuitaat hep skrivañ an daolenn barzhañ ?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Mennout a rit skrivañ kemmoù /etc/fstab"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr "Ret eo deoc'h adloc'hañ evit ma talvezo kemmoù an daolenn barzhañ"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Gortozit mar plij"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Oc'h eilañ"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "Dibabit ar parzhadur a vennit furmadiñ"
+
+#~ msgid "Check bad blocks?"
+#~ msgstr "Gwiriañ ar bloc'hoù siek ?"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr ""
+#~ "N'eus ket a-walc'h a zisloañ evit peurstaliañ, kreskit anezhañ mar plij"
+
+#~ msgid "No partition available"
+#~ msgstr "Parzhadur hegerz ebet"
+
+#~ msgid "Scanning partitions to find mount points"
+#~ msgstr "O klask ar parzhadurioù evit kavout poentoù marc'hañ"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "Dibabit at poentoù marc'hañ"
+
+#~ msgid "Partitioning"
+#~ msgstr "O parzhañ"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "Poent marc'hañ doubl %s"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "Ret eo deoc'h kaout ur parzhadur gwrizienn.\n"
+#~ "Evit se, krouit ur parzhadur (pe glikit ouzh unan a zo c'hoazh).\n"
+#~ "Da c'houde dibabit an ober « Poent marc'hañ » ha lakait anezhañ da `/'"
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "N'hoc'h eus ket a barzhadur disloañ\n"
+#~ "\n"
+#~ "Kenderc'hel evelato ?"
+
+#~ msgid "You must have a FAT partition mounted in /boot/efi"
+#~ msgstr "Ret eo deoc'h kaout ur parzhadur FAT marc'het war /boot/efi"
+
+#~ msgid "Use free space"
+#~ msgstr "Implij an egor dieub"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr "N'eus ket a-walc'h egor dieub evit parzhadurioù nevez"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "Impliji parzhadurioù o vezañ"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "N'eus parzhadur da implij ebet"
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "Implij ar barzhadur Windows evit saveteiñ"
+
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "Pe barzhadur a vennit implijout evit lakaat Linux4Win ?"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "Dibabit ar mentoù"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "Ment ar parzhadur gwrizienn e Mo : "
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "Ment ar parzhadur disloañ e Mo : "
+
+#~ msgid ""
+#~ "There is no FAT partition to use as loopback (or not enough space left)"
+#~ msgstr ""
+#~ "N'eus ket ur barzhadur FAT evit saveteiñ (n'eus ket a-walc'h egor dieub)"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "Implijit an egor dieub war ar barzhadur Windows"
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "Pe seurt parzhadur a vennit da adventañ ?"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "N'eus ket moaien d'adenvañ ho parzhadur gant an adventer FAT,\n"
+#~ "degouezhet ez eus ar fazi a-heul : %s"
+
+#~ msgid "Resizing"
+#~ msgstr "Oc'h adventañ"
+
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "O jediñ ment ar barzhadur Windows"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING!\n"
+#~ "\n"
+#~ "DrakX will now resize your Windows partition. Be careful: this\n"
+#~ "operation is dangerous. If you have not already done so, you\n"
+#~ "first need to exit the installation, run \"chkdsk c:\" from a\n"
+#~ "Command Prompt under Windows (beware, running graphical program\n"
+#~ "\"scandisk\" is not enough, be sure to use \"chkdsk\" in a\n"
+#~ "Command Prompt!), optionally run defrag, then restart the\n"
+#~ "installation. You should also backup your data.\n"
+#~ "When sure, press Ok."
+#~ msgstr ""
+#~ "HO EVEZH !\n"
+#~ "\n"
+#~ "Ezhomm en deus DrakX adventañ ho parzhadur Windows bremañ. Bezit war "
+#~ "evezh :\n"
+#~ "arvarus eo an obererezh-se. Ma n'hoc'h eus ket graet c'hoazh, gwelloc'h "
+#~ "e\n"
+#~ "vije deoc'h seveniñ da gentañ scandisk (ha diouzh ret seveniñ defrag) war "
+#~ "ar\n"
+#~ "parzhadur-se, ha gwareziñ ho roadoù. Pa vezit sur, gwaskit « Mat eo »"
+
+#, fuzzy
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "Da beseurt rann e mennit dilec'hiañ ?"
+
+#~ msgid "partition %s"
+#~ msgstr "parzhadur %s"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "Oc'h adventañ ar parzhadur Windows"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "Adventañ FAT zo sac'het : %s"
+
+#~ msgid "There is no FAT partition to resize (or not enough space left)"
+#~ msgstr ""
+#~ "N'eus ket ur barzhadur FAT d'adventañ (n'eus ket a-walc'h egor dieub)"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Chetan Windows(TM)"
+
+#~ msgid "Erase and use entire disk"
+#~ msgstr "Chetañ hag implij an holl planedenn"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr ""
+#~ "Meur a bladenn oc'h eus. Pehini oc'h eus c'hoant da implij evit staliñ "
+#~ "Linux ?"
+
+#~ msgid "ALL existing partitions and their data will be lost on drive %s"
+#~ msgstr ""
+#~ "Ar parzhadurioù HOLL o vezañ hag e vo kollet holl roadoù war ar bladenn %s"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "Parzhaduroù diouzoc'h"
+
+#~ msgid "Use fdisk"
+#~ msgstr "Implijit fdisk"
+
+#~ msgid ""
+#~ "You can now partition %s.\n"
+#~ "When you are done, do not forget to save using `w'"
+#~ msgstr ""
+#~ "Gallout a rit bremañ parzhañ ho pladenn galet %s.\n"
+#~ "Pa 'z eo graet, na zisoñjit ket enrollañ dre implijout `w'"
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "N'hellan ket kavout plas da staliañ"
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr "Kinnig eo deoc'h gant ar skoazeller parzhadur DrakX :"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "Parzhañ zo sac'het : %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "O lañsañ ar rouedad"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "O tizenaouiñ ar rouedad"

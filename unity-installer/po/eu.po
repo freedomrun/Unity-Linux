@@ -1,0 +1,141 @@
+# translation of draklive-install.po to Euskara
+# EUSKARA: Mandriva Linux translation.
+# Copyright (C) 2002,2003, 2004, 2005, 2006, 2008 Free Software Foundation, Inc.
+#
+# Iñigo Salvador Azurmendi <xalba@euskalnet.net>, 2001-2002,2003,2004, 2005, 2006, 2008, 2010.
+# Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2004.
+msgid ""
+msgstr ""
+"Project-Id-Version: draklive-install\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2010-04-07 20:15+0200\n"
+"Last-Translator: Iñigo Salvador Azurmendi <xalba@euskalnet.net>\n"
+"Language-Team: Basque <>\n"
+"Language: eu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../draklive-install:106
+#, fuzzy, c-format
+msgid "Unity Installer"
+msgstr "Live instalaketa"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Morroi honek banaketa bizia instalatzen lagunduko dizu."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Errorea"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Errore bat izan da"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr "Ez dago behar adina leku eskuragarri (%s eskuragarri%s behar denean)"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Neurri osoa kalkulatzen"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Fitxategiak ezin izan dira erro berrira kopiatu"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Zorionak"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Mesedez, gelditu zure konputagailua, atera zure sistema bizia, eta "
+"berrabiarazi zure konputagailua."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Jarraitu hala ere?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Irten gorde gabe"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Partizio-taula idatzi gabe irten?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "/etc/fstab aldaketak gorde nahi dituzu?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Berrabiarazi egin behar duzu partizio-taulako aldaketek eragina izateko"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"%s partizioa formateatu behar zenuke.\n"
+"Gainerantzean ez da %s muntaia puntuarentzat sarrerarik idatziko fstab-en.\n"
+"Irten hala ere?"
+
+#: ../draklive-install.desktop.in.h:1
+#, fuzzy
+msgid "Install Unity"
+msgstr "Instalatu disko zurrunean"
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Itxoin mesedez"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Kopiatzen ari da"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Instalatu zure Mandriva live sistema diskora"
