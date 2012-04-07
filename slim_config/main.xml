@@ -1,0 +1,77 @@
+<window title="SLiM Configuration Dialog" window_position="1" icon-name="preferences-desktop-display">
+	<vbox>
+		<notebook labels="AutoLogin|Messages|Themes">
+			<frame Configure Auto Login>
+				<checkbox use-underline="true" active="@@DEFAULT_USER_SET@@" tooltip-text="Check to enable all autologin features, including pre-filling in the username, jumping the cursor to the password field, and autologging in a user.">
+					<variable>AUTOLOGIN_ENABLE</variable>
+					<label>_Enable AutoLogin Functions?</label>
+				</checkbox>
+				<frame Select User:>
+					<combobox>
+						<variable>AUTOLOGIN_USER</variable>
+						@@USERS@@
+					</combobox>
+				</frame>
+				<frame Select Action:>
+					<radiobutton>
+						<variable>ALN_FILL</variable>
+						<label>Fill in User Name</label>
+						<default>@@FILL@@</default>
+					</radiobutton>
+					<radiobutton>
+						<variable>ALN_CURSOR_PUT</variable>
+						<label>Put Cursor at Password Field</label>
+						<default>@@PUT@@</default>
+					</radiobutton>
+					<radiobutton>
+						<variable>ALN_AUTO</variable>
+						<label>Auto Login This User</label>
+						<default>@@AUTO@@</default>
+					</radiobutton>
+				</frame>
+			</frame> # END Auto Login Section
+			<frame Messages>
+				<text use-markup="true" xalign="0">
+					<label>"<b>Welcome Message.</b> Available variables are %host and %domain."</label>
+				</text>
+				<entry>
+					<variable>WELCOME_MSG</variable>
+					<input>grep welcome_msg /etc/slim.conf | sed 's|welcome_msg[ \t]*\(.*\)|\1|'</input>
+				</entry>
+				<text use-markup="true" xalign="0">
+					<label>"<b>Session Message.</b> Prepended to the session name when pressing F1."</label>
+				</text>
+				<entry>
+					<variable>SESSION_MSG</variable>
+					<input>grep session_msg /etc/slim.conf | sed 's|session_msg[ \t]*\(.*\)|\1|'</input>
+				</entry>
+				<text use-markup="true" xalign="0">
+					<label>"<b>Shutdown Message:</b>"</label>
+				</text>
+				<entry>
+					<variable>SHUTDOWN_MSG</variable>
+					<input>grep shutdown_msg /etc/slim.conf | sed 's|shutdown_msg[ \t]*\(.*\)|\1|'</input>
+				</entry>
+				<text use-markup="true" xalign="0">
+					<label>"<b>Reboot Message:</b>"</label>
+				</text>
+				<entry>
+					<variable>REBOOT_MSG</variable>
+					<input>grep reboot_msg /etc/slim.conf | sed 's|reboot_msg[ \t]*\(.*\)|\1|'</input>
+				</entry>
+			</frame> # END Messages
+			<frame Themes>
+				<text>
+					<label>You can have as many themes enabled as you want. If you have more than one theme enabled, they will be shown at random.</label>
+				</text>
+				<frame Theme List>
+					<hbox>
+						@@THEME_BOXES@@
+					</hbox>
+				</frame>
+			</frame>
+		</notebook>
+		<button ok></button>
+		<button cancel></button>
+	</vbox>
+</window>
