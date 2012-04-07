@@ -1,0 +1,241 @@
+#!/bin/bash
+
+# Copyright (C) 2010, David Smid <david@unity-linux.org>
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation; either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+export TEXTDOMAIN=smart-utils
+
+shopt -u extquote
+
+PROGNAME=`basename $0`
+
+TEMP=`getopt -o hvtc --long help,verbose,test,clean -n $PROGNAME -- "$@"`
+
+eval set -- "$TEMP"
+
+while true ; do
+	case "$1" in
+		-h|--help) HELP=1 ; shift ;;
+		-v|--verbose) VERBOSE=1 ; shift ;;
+		-t|--test) VERBOSE=1; TEST=1 ; shift ;;
+		-c|--clean) CLEAN=1 ; shift ;;
+		--) shift ; break ;;
+		*) echo "Internal error!" ; exit 1 ;;
+	esac
+done
+
+SCSROOT=/etc/smart/channelsets/
+SCROOT=/etc/smart/channels
+SMROOT=/etc/smart/mirrors
+
+if [ "$HELP" == "1" -o ! -n "$1" ]
+then
+    printf $"Usage: %s [--help|-h] [--verbose|-v] [--test|-t] [-c|--clean] <channelset>\n\n" $0
+    printf $"Updates Smart channels belonging to <channelset> according\nto the configuration found in %s<channelset>/\n\n" "$SCSROOT"
+    printf $"Example:\n"
+    printf  "\t%s unity\n\n" $0
+    exit 1
+fi
+
+if [ "$EUID" != "0" -a -z "$TEST" ]
+then
+    printf $"Run as root.\n"
+    exit 2
+fi
+
+if [ "$VERBOSE" != "1" ]
+then
+    exec 1>/dev/null
+fi
+
+SCS="$1"
+SCSDIR="$SCSROOT""$SCS"
+SCSCONF="$SCSDIR"/channelset.conf
+
+if [ ! -d "$SCSDIR" ]
+then
+    printf $"Channel set directory '%s' doesn't exist.\n\n" "$SCSDIR" >&2
+    exit 3
+fi
+
+if [ ! -f "$SCSCONF" ]
+then
+    printf $"Channel set configuration file '%s' doesn't exist.\n\n" "$SCSCONF" >&2
+    exit 4
+fi
+
+if [ ! -d "$SCROOT" ]
+then
+    printf $"Channels directory '%s' doesn't exist.\n\n" "$SCROOT" >&2
+    exit 5
+fi
+
+if [ ! -d "$SMROOT" ]
+then
+    printf $"Mirrors directory '%s' doesn't exist.\n\n" "$SMROOT" >&2
+    exit 6
+fi
+
+DEFAULT_PRIORITY=10
+URL_PATTERN="{MIRROR}{PREFIX}{ARCH}/{CHANNEL}"
+
+. "$SCSCONF"
+
+declare -a MASTERSCSDIRS
+while [ -n "$MASTER" ]
+do
+    MASTERSCSDIR="$SCSROOT""$MASTER"
+    MASTERSCSCONF="$MASTERSCSDIR"/channelset.conf
+    MASTERSCSDIRS=( ${MASTERSCSDIRS[@]} "$MASTERSCSDIR" )
+    if [ ! -f "$MASTERSCSCONF" ]
+    then
+        printf $"Channel set configuration file '%s' doesn't exist.\n\n" "$MASTERSCSCONF" >&2
+        exit 9
+    fi
+    unset MASTER
+    . "$MASTERSCSCONF"
+done
+
+# Override any settings in MASTER configs
+. "$SCSCONF"
+
+if [ -z "$CHANNELS" ]
+then
+    printf $"No CHANNELS defined in '%s'.\n\n" "$SCSCONF" >&2
+    exit 7
+fi
+
+if [ "$CLEAN" == "1" ]
+then
+    for CHANNEL in $CHANNELS
+    do
+	if [ -n "$NAMECONV" ]
+	then
+	    CONVERTED_CHANNEL=$(sed -e $NAMECONV <<<${CHANNEL})
+	else
+	    CONVERTED_CHANNEL=${CHANNEL}
+	fi
+        CHANNEL_ALIAS=${SCS}-${CONVERTED_CHANNEL}
+	printf $"Removing channel '%s'...\n" "$CHANNEL_ALIAS"
+	rm -f "$SCROOT"/"$CHANNEL_ALIAS".channel
+    done
+    printf $"Removing mirrors file for %s...\n" "$SCS"
+    rm -f "$SMROOT"/"$SCS".mirrors
+    exit 0
+fi
+
+TYPE=${TYPE:-rpm-md}
+if [ -n "$HDLURL" ]
+then
+    ISHDLURL="hdlurl=${HDLURL}"
+fi
+
+MIRRORS=( $(find "$SCSDIR" -type f -name '*.mirror' | sort -n ) )
+for MASTERSCSDIR in "${MASTERSCSDIRS[@]}"
+do
+    [ -d "$MASTERSCSDIR" ] && MIRRORS=( ${MIRRORS[@]} $(find "$MASTERSCSDIR" -type f -name '*.mirror' | sort -n ) )
+done
+if [ -z "$MIRRORS" ]
+then
+    printf $"No \$N.mirror files found in '%s'.\n\n" "$SCSDIR" >&2
+    exit 8
+fi
+
+PRIMARY=1
+for MIRROR in ${MIRRORS[@]}
+do
+    MURL=$(head -n 1 "$MIRROR")
+    if [ $PRIMARY == "1" ]
+    then
+	for CHANNEL in $CHANNELS
+	do
+	    if [ -n "$NAMECONV" ]
+	    then
+		CONVERTED_CHANNEL=$(sed -e $NAMECONV <<<${CHANNEL})
+	    else
+		CONVERTED_CHANNEL=${CHANNEL}
+	    fi
+            CHANNEL_ALIAS=${SCS}-${CONVERTED_CHANNEL}
+	    CHANNEL_NAME="$(tr 'a-z' 'A-Z' <<<${SCS:0:1})$(tr '-' ' ' <<<${SCS:1}) $(tr 'a-z' 'A-Z' <<<${CONVERTED_CHANNEL:0:1})${CONVERTED_CHANNEL:1}"
+	    CHANNEL_URL=$(sed -e "s|{MIRROR}|$MURL|g; s|{PREFIX}|$PREFIX|g; s|{ARCH}|$ARCH|g; s|{CHANNEL}|$CHANNEL|g" <<<${URL_PATTERN})
+	    if [ -f "$SCROOT"/"$CHANNEL_ALIAS".channel ]
+	    then
+		printf $"Setting URL of existing channel '%s' to '%s'...\n" "$CHANNEL_ALIAS" "$CHANNEL_URL"
+		[ -n "$TEST" ] || sed	-e "s|^baseurl=.*\$|baseurl=$CHANNEL_URL|g " \
+					< "$SCROOT"/"$CHANNEL_ALIAS".channel > "$SCROOT"/"$CHANNEL_ALIAS".channel.$$
+	    else
+		if [ "${DISABLED//$CHANNEL/}" != "$DISABLED" ]
+		then
+		    ISDISABLED="disabled=yes"
+		    printf $"Creating new disabled channel '%s' with URL '%s'...\n" "$CHANNEL_ALIAS" "$CHANNEL_URL"
+		else
+		    ISDISABLED="disabled=no"
+		    printf $"Creating new channel '%s' with URL '%s'...\n" "$CHANNEL_ALIAS" "$CHANNEL_URL"
+		fi
+		[ -n "$TEST" ] || cat <<EOC > "$SCROOT"/"$CHANNEL_ALIAS".channel.$$
+[$CHANNEL_ALIAS]
+name=$CHANNEL_NAME
+type=$TYPE
+priority=$DEFAULT_PRIORITY
+baseurl=$CHANNEL_URL
+$ISDISABLED
+$ISHDLURL
+EOC
+	    fi
+	    [ -n "$TEST" ] || mv -f "$SCROOT"/"$CHANNEL_ALIAS".channel.$$ "$SCROOT"/"$CHANNEL_ALIAS".channel
+	done
+
+	[ -n "$TEST" ] || echo "$MURL" > "$SMROOT"/"$SCS".mirrors.$$
+	PRIMARY_MIRROR="$MURL"
+	PRIMARY=0
+    else
+        printf "%s: " "$SCS"
+	printf $"Adding mirror '%s'...\n" "$MURL"
+	[ -n "$TEST" ] || echo "    $MURL" >> "$SMROOT"/"$SCS".mirrors.$$
+    fi
+done
+[ -n "$TEST" ] || mv -f "$SMROOT"/"$SCS".mirrors.$$ "$SMROOT"/"$SCS".mirrors
+
+for CHANNEL in $OBSOLETE
+do
+    if [ -n "$NAMECONV" ]
+    then
+	CONVERTED_CHANNEL=$(sed -e $NAMECONV <<<$CHANNEL)
+    else
+	CONVERTED_CHANNEL=$CHANNEL
+    fi
+    CHANNEL_ALIAS=${SCS}-${CONVERTED_CHANNEL}
+    if [ -f "$SCROOT"/"$CHANNEL_ALIAS".channel ]
+    then
+	printf $"Removing obsolete channel '%s' ...\n" "$CHANNEL_ALIAS"
+        [ -n "$TEST" ] || rm -f "$SCROOT"/"$CHANNEL_ALIAS".channel
+    fi
+done
+
+while read
+do
+    ASCS="$REPLY"
+    ASCSCONF="$SCSROOT""$ASCS"/channelset.conf
+    unset MASTER
+    . "$ASCSCONF"
+    if [ "$MASTER" == "$SCS" ]
+    then
+        [ -n "$TEST" ] && OPTIONS="-t"
+        [ -n "$VERBOSE" ] && OPTIONS="$OPTIONS -v"
+        $0 $OPTIONS "$ASCS"
+    fi
+done < <(find "$SCSROOT" -maxdepth 1 -mindepth 1 -type d -exec test -f {}/channelset.conf \; -printf "%f\n" | sort)

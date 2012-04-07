@@ -1,0 +1,20 @@
+* lang.pm
+    This file should replace the /usr/lib/libDrakX/lang.pm. It actually does not belong as part of this package. that file is owned by drakxtools-backend
+
+* smart-replace-url
+    What is it and where is it supposed to go?
+
+* smart-report-url
+    What is it and where is it supposed to go?
+
+* smart-setup
+    Place in /usr/sbin
+
+* smart-setup-auto
+    Place in /usr/sbin
+
+* smart-update-channels
+    Place in /usr/sbin
+
+* smart.pm
+    Place in /usr/lib/libDrakX/

@@ -1,0 +1,152 @@
+#!/bin/sh
+
+# Copyright (C) 2008, David Smid <david@unity-linux.org>
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation; either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+function channel_list()
+{
+	smart channel --show | awk -f /dev/fd/99 99<<EOAWK
+
+	BEGIN {
+	    FS="[\\\\[\\\\]]"
+	    ORS=""
+	}
+
+	/^\[.*\]\$/ && searchurl {
+	    print "\n"
+	    searchurl=0
+	}
+
+	/^\[.*\]\$/ {
+	    if (\$2 ~ "$1" && \$2 !~ "$2" ) {
+		print \$2 "="
+		searchurl=1
+	    }
+	}
+
+	/^baseurl ?=/ && searchurl {
+	    split(\$0, kvpair, " ?= ?")
+	    print kvpair[2] "\n"
+	    searchurl=0
+	}
+
+	END {
+	    if (searchurl) {
+		print "\n"
+	    }
+	}
+EOAWK
+}
+
+export TEXTDOMAIN=smart-utils
+
+shopt -u extquote
+
+PROGNAME=`basename $0`
+
+TEMP=`getopt -o vhti:n:s --long verbose,help,test,id:,notid:,sync -n $PROGNAME -- "$@"`
+
+CHANNEL_CONFDIR=/etc/smart/channels
+
+eval set -- "$TEMP"
+
+while true ; do
+	case "$1" in
+		-v|--verbose) export VERBOSE=1 ; shift ;;
+		-h|--help) HELP=1 ; shift ;;
+		-t|--test) VERBOSE=1 ; TEST=1 ; shift ;;
+		-i|--id) shift; ID_REGEX="$1"; shift ;;
+		-n|--notid) shift; NID_REGEX="$1" ; shift ;;
+		-s|--sync) SYNC=1 ; shift ;;
+		--) shift ; break ;;
+		*) echo "Internal error!" ; exit 1 ;;
+	esac
+done
+
+if [ "$HELP" == "1" -o -z "$2" ]
+then
+    printf $"Usage: %s [--help|-h] [--verbose|-v] [--test|-t] [--sync|-s] [--id|-i channel_id_regex] [--notid|-n channel_id_regex] <old_url_regex> <replacement>\n\n" $0
+    printf $"Replaces channel URLs with a new one. Channels can be filtered by id regex. \n"
+    printf $"Regex groups can be referenced by \\N in replacement, where N is a group number. "
+    printf $"Open brackets in <old_url_regex> have to be escaped.\n"
+    printf $"@G in <replacement> is expanded into channel path guessed from the channel id. "
+    printf $"E.g. @G for channel with id unity-kde4-i586 is expanded into i586/kde4 .\n"
+    printf $"Use -t option to test changes without doing any channel updates.\n"
+    printf $"Use -s option to write modified channel configuration to /etc/smart/channels.\n\n"
+    printf $"Examples:\n"
+    printf  "\t%s -i unity distro[.]ibiblio[.]org/pub/linux/distributions/unity ftp.heanet.ie/mirrors/unity-linux\n\n" $0
+    printf  "\t%s -i unity -n plf '.*' http://ftp.heanet.ie/mirrors/unity-linux/repo/current/@G\n\n" $0
+    exit 1
+fi
+
+if [ "$EUID" != "0" -a -z "$TEST" ]
+then
+    printf $"Run as root.\n"
+    exit 2
+fi
+
+
+URL_REGEX="$1"
+
+REPLACEMENT="$2"
+
+if [ "$VERBOSE" != "1" ]
+then
+    exec 1>/dev/null
+fi
+
+
+if [ -z "$ID_REGEX" ]
+then
+    ID_REGEX=".*"
+fi
+
+if [ -z "$NID_REGEX" ]
+then
+    NID_REGEX='^$'
+fi
+
+CHANNELS=$( channel_list "$ID_REGEX" "$NID_REGEX" )
+
+for CHANNEL in ${CHANNELS[@]}
+do
+    IFS="=" read CHID CHURL <<<"$CHANNEL"
+    IFS="-" read DISTRO CHNAME ARCH <<<"$CHID"
+    [ "$DISTRO" == "unity" -a "$CHNAME" == "main" ] && CHNAME=unity
+    [ "$DISTRO" == "unity" -a "$CHNAME" == "plf" -a $ARCH == "i586" ] && ARCH=core
+    [ "$DISTRO" == "unity" -a "$CHNAME" == "plf" -a $ARCH == "x86_64" ] && ARCH=core64
+    EREPLACEMENT=$( sed -e "s|@G|$ARCH/$CHNAME|g" <<<"$REPLACEMENT" )
+    printf $"Processing channel: %s\n" $CHID
+    printf $"Old URL: %s\n" $CHURL
+    NEWURL=$( sed -e "s@${URL_REGEX}@${EREPLACEMENT}@g" <<<"$CHURL" )
+    if [ "$CHURL" != "$NEWURL" ]
+    then
+	printf $"New URL: %s\n" $NEWURL
+	if [ ! -n "$TEST" ]
+	then
+	    smart channel --set "$CHID" baseurl="$NEWURL"
+	    if [ -n "$SYNC" ]
+	    then
+		[ -d "$CHANNEL_CONFDIR"/old ] || mkdir -p "$CHANNEL_CONFDIR"/old
+		cp -f "$CHANNEL_CONFDIR"/"$CHID".channel "$CHANNEL_CONFDIR"/old/"$CHID".channel
+		smart channel --show "$CHID" > "$CHANNEL_CONFDIR"/"$CHID".channel.$$
+		mv -f "$CHANNEL_CONFDIR"/"$CHID".channel.$$ "$CHANNEL_CONFDIR"/"$CHID".channel
+	    fi
+	fi
+    fi
+    echo
+done

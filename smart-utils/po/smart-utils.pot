@@ -1,0 +1,155 @@
+# smart-utils
+# Copyright (C) 2010 David Smid
+# This file is distributed under the same license as the smart-utils package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: smart-utils 0.1\n"
+"Report-Msgid-Bugs-To: David Smid <david@unity-linux.org>\n"
+"POT-Creation-Date: 2010-02-03 13:07+0100\n"
+"PO-Revision-Date: 2010-02-03 13:07+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: smart-replace-url:82
+msgid "Usage: %s [--help|-h] [--verbose|-v] [--test|-t] [--sync|-s] [--id|-i channel_id_regex] [--notid|-n channel_id_regex] <old_url_regex> <replacement>\\n\\n"
+msgstr ""
+
+#: smart-replace-url:83
+msgid "Replaces channel URLs with a new one. Channels can be filtered by id regex. \\n"
+msgstr ""
+
+#: smart-replace-url:84
+msgid "Regex groups can be referenced by \\\\N in replacement, where N is a group number. "
+msgstr ""
+
+#: smart-replace-url:85
+msgid "Open brackets in <old_url_regex> have to be escaped.\\n"
+msgstr ""
+
+#: smart-replace-url:86
+msgid "@G in <replacement> is expanded into channel path guessed from the channel id. "
+msgstr ""
+
+#: smart-replace-url:87
+msgid "E.g. @G for channel with id unity-kde4-i586 is expanded into i586/kde4 .\\n"
+msgstr ""
+
+#: smart-replace-url:88
+msgid "Use -t option to test changes without doing any channel updates.\\n"
+msgstr ""
+
+#: smart-replace-url:89
+msgid "Use -s option to write modified channel configuration to /etc/smart/channels.\\n\\n"
+msgstr ""
+
+#: smart-replace-url:90
+msgid "Examples:\\n"
+msgstr ""
+
+#: smart-replace-url:98
+msgid "Run as root.\\n"
+msgstr ""
+
+#: smart-replace-url:133
+msgid "Processing channel: %s\\n"
+msgstr ""
+
+#: smart-replace-url:134
+msgid "Old URL: %s\\n"
+msgstr ""
+
+#: smart-replace-url:138
+msgid "New URL: %s\\n"
+msgstr ""
+
+#: smart-report-url:118
+msgid "Usage: %s [--help|-h] [--id|-i channel_id_regex] [--notid|-n channel_id_regex] [--chop|-c comma_separated_list]\\n\\n"
+msgstr ""
+
+#: smart-report-url:119
+msgid "Prints common part of channel URLs. Channels can be filtered by id regex. \\n"
+msgstr ""
+
+#: smart-report-url:120
+msgid "Use option -c to specify comma-separated list of path elements you want to chop from the result.\\n\\n"
+msgstr ""
+
+#: smart-report-url:121
+#: smart-url-usage:76
+#: smart-update-channels:61
+msgid "Example:\\n"
+msgstr ""
+
+#: smart-url-usage:74
+msgid "Usage: %s [--help|-h] [--id|-i channel_id_regex] [--notid|-n channel_id_regex] <channel_url_regex>\\n\\n"
+msgstr ""
+
+#: smart-url-usage:75
+msgid "Prints ids of channels whose URLs match with <channel_url_regex>. Channels can be filtered by id regex. \\n\\n"
+msgstr ""
+
+#: smart-update-channels:59
+msgid "Usage: %s [--help|-h] [--verbose|-v] [--test|-t] <channelset>\\n\\n"
+msgstr ""
+
+#: smart-update-channels:60
+msgid "Updates Smart channels belonging to <channelset> according\\nto the configuration found in %s<channelset>/\\n\\n"
+msgstr ""
+
+#: smart-update-channels:79
+msgid "Channel set directory '%s' doesn't exist.\\n\\n"
+msgstr ""
+
+#: smart-update-channels:85
+msgid "Channel set configuration file '%s' doesn't exist.\\n\\n"
+msgstr ""
+
+#: smart-update-channels:95
+msgid "No CHANNELS defined in '%s'.\\n\\n"
+msgstr ""
+
+#: smart-update-channels:102
+msgid "No \\$N.mirror files found in '%s'.\\n\\n"
+msgstr ""
+
+#: smart-update-channels:125
+msgid "Setting URL of existing channel '%s' to '%s'...\\n"
+msgstr ""
+
+#: smart-update-channels:131
+msgid "Creating new disabled channel '%s' with URL '%s'...\\n"
+msgstr ""
+
+#: smart-update-channels:134
+msgid "Creating new channel '%s' with URL '%s'...\\n"
+msgstr ""
+
+#: smart-update-channels:147
+msgid "Removing all existing mirrors of '%s'...\\n"
+msgstr ""
+
+#: smart-update-channels:152
+msgid "Adding mirror '%s'...\\n"
+msgstr ""
+
+#: smart-update-channels:169
+msgid "Removing obsolete channel '%s' ...\\n"
+msgstr ""
+
+msgid "Channels directory '%s' doesn't exist.\\n\\n"
+msgstr ""
+
+msgid "Mirrors directory '%s' doesn't exist.\\n\\n"
+msgstr ""
+
+msgid "Removing channel '%s'...\\n"
+msgstr ""
+
+msgid "Removing mirrors file for %s...\\n"
+msgstr ""

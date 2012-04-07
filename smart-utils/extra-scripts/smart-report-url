@@ -1,0 +1,136 @@
+#!/bin/sh
+
+# Copyright (C) 2008, David Smid <david@unity-linux.org>
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation; either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+#	    if (\$2 ~ /$1/ && ! \$2 ~ /$2/ ) {
+
+function channel_common_factor()
+{
+	smart channel --show | awk -f /dev/fd/99 99<<EOAWK
+
+	BEGIN {
+	    FS = "[\\\\[\\\\]]"
+	    ORS = ""
+	    first_url = 1
+	    split("$3", choplist, " *, *")
+	}
+
+	/^\[.*\]\$/ && searchurl {
+	    searchurl = 0
+	}
+
+	/^\[.*\]\$/ {
+	    if (\$2 ~ "$1" && \$2 !~ "$2" ) {
+		searchurl = 1
+	    }
+	}
+
+	/^baseurl ?=/ && searchurl {
+	    split(\$0, kvpair, " ?= ?")
+	    urlch_cnt = split(kvpair[2], urlchunks, "/")
+	    if (first_url) {
+		first_url = 0
+		for (idx in urlchunks) {
+		    common_factor[idx] = urlchunks[idx]
+		}
+		common_factor_chcnt = urlch_cnt
+	    } else {
+		del_rest = 0
+		new_common_factor_chcnt = common_factor_chcnt
+		for (i=1; i<=urlch_cnt || i<=common_factor_chcnt; i++) {
+		    if (del_rest) {
+			delete common_factor[i];
+		    }
+		    if (i<=urlch_cnt && i<=common_factor_chcnt) {
+			if (urlchunks[i] != common_factor[i]) {
+			    del_rest = 1
+			    if (new_common_factor_chcnt == common_factor_chcnt) {
+				new_common_factor_chcnt = i
+				common_factor[i] = ""
+			    }
+			}
+		    }
+		}
+		common_factor_chcnt = new_common_factor_chcnt
+	    }
+	    searchurl=0
+	}
+
+	END {
+	    for (i=1; i<=common_factor_chcnt; i++) {
+		chop = 0
+		for (idx in choplist) {
+		    if (common_factor[i] == choplist[idx]) {
+			chop = 1
+			break
+		    }
+		}
+		if (chop) {
+		    continue
+		}
+		print common_factor[i]
+		if (i < common_factor_chcnt) {
+			print "/"
+		}
+	    }
+	    print "\n"
+	}
+EOAWK
+}
+
+export TEXTDOMAIN=smart-utils
+
+shopt -u extquote
+
+PROGNAME=`basename $0`
+
+TEMP=`getopt -o hi:n:c: --long help,id:,notid:chop: -n $PROGNAME -- "$@"`
+
+eval set -- "$TEMP"
+
+while true ; do
+	case "$1" in
+		-h|--help) HELP=1 ; shift ;;
+		-i|--id) shift; ID_REGEX="$1"; shift ;;
+		-n|--notid) shift; NID_REGEX="$1" ; shift ;;
+		-c|--chop) shift; CHOPLIST="$1" ; shift ;;
+		--) shift ; break ;;
+		*) echo "Internal error!" ; exit 1 ;;
+	esac
+done
+
+if [ "$HELP" == "1" ]
+then
+    printf $"Usage: %s [--help|-h] [--id|-i channel_id_regex] [--notid|-n channel_id_regex] [--chop|-c comma_separated_list]\n\n" $0
+    printf $"Prints common part of channel URLs. Channels can be filtered by id regex. \n"
+    printf $"Use option -c to specify comma-separated list of path elements you want to chop from the result.\n\n"
+    printf $"Example:\n"
+    printf  "\t%s -i unity -n plf -c current,i586,x86_64\n\n" $0
+    exit 1
+fi
+
+if [ -z "$ID_REGEX" ]
+then
+    ID_REGEX=".*"
+fi
+
+if [ -z "$NID_REGEX" ]
+then
+    NID_REGEX='^$'
+fi
+
+channel_common_factor "$ID_REGEX" "$NID_REGEX" "$CHOPLIST"

@@ -1,0 +1,77 @@
+#!/usr/bin/perl
+
+# Copyright (C) 2010, Paul Grinberg <gri6507@unity-linux.org> and Gettinther <gettinther@unity-linux.org>
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation; either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public License
+#    along with this program; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+use strict;
+use warnings;
+use lib qw(/usr/lib/libDrakX);
+
+# i18n: IMPORTANT: to get correct namespace (drakx-kbd-mouse-x11 and drak3d instead of libDrakX)
+BEGIN { unshift @::textdomains, 'drakx-net', 'drakx-kbd-mouse-x11', 'drak3d', 'smart-utils' }
+
+use standalone;
+use common;
+use interactive;
+use lang;
+use smart;
+use Getopt::Long;
+
+
+my $in = undef;
+require lang;
+my $locale = lang::read();
+my $config_lock ='/etc/sysconfig/smart-setup-lock';
+my %conf = getVarsFromSh($config_lock);
+
+my $auto = '';
+GetOptions('auto' => \$auto);
+
+my $channelset;
+if (scalar(@ARGV) > 0) {
+    $channelset = $ARGV[0]
+} else {
+    my $arch = arch();
+    if ($arch =~ /i.86/) {
+	$arch = 'i586';
+    }
+    if ($arch =~ /arm/) {
+	$arch = 'armv5te';
+    }
+    $channelset = "unity-$arch";
+}
+
+if ($auto) {
+	if (lc(get_conf('SMART_SETUP')) eq 'auto') {
+	    smart::selectSmartAuto($channelset);
+	} else {
+	    print "Smart is set manually, please remove lock to run in auto mode \n";
+	    print "Set SMART_SETUP=auto in /etc/sysconfig/smart-setup-lock \n";
+	}
+} else {
+	$::isWizard = 1;
+	$in = 'interactive'->vnew;
+	any::set_wm_hints_if_needed($in);
+	setVarsInSh($config_lock, { SMART_SETUP => 'manual' });
+	smart::selectSmartChannel($in, $locale, $channelset);
+	$in->exit(0);
+}
+
+sub get_conf {
+	my ($name) = @_;
+	$conf{lc($name)} || $conf{uc($name)};
+}

@@ -1,0 +1,91 @@
+#!/bin/sh
+
+# Copyright (C) 2008, David Smid <david@unity-linux.org>
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation; either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+#	    if (\$2 ~ /$1/ && ! \$2 ~ /$2/ ) {
+
+function channel_url_usage()
+{
+	smart channel --show | awk -f /dev/fd/99 99<<EOAWK
+
+	BEGIN {
+	    FS = "[\\\\[\\\\]]"
+	    ORS = ""
+	}
+
+	/^\[.*\]\$/ && searchurl {
+	    searchurl = 0
+	}
+
+	/^\[.*\]\$/ {
+	    if (\$2 ~ "$1" && \$2 !~ "$2" ) {
+		searchurl = 1
+		chid = \$2
+	    }
+	}
+
+	/^baseurl ?=/ && searchurl {
+	    split(\$0, kvpair, " ?= ?")
+	    if ( kvpair[2] ~ "$3") {
+		print chid "\n"
+	    }
+	    searchurl=0
+	}
+
+EOAWK
+}
+
+export TEXTDOMAIN=smart-utils
+
+shopt -u extquote
+
+PROGNAME=`basename $0`
+
+TEMP=`getopt -o hi:n: --long help,id:,notid: -n $PROGNAME -- "$@"`
+
+eval set -- "$TEMP"
+
+while true ; do
+	case "$1" in
+		-h|--help) HELP=1 ; shift ;;
+		-i|--id) shift; ID_REGEX="$1"; shift ;;
+		-n|--notid) shift; NID_REGEX="$1" ; shift ;;
+		--) shift ; break ;;
+		*) echo "Internal error!" ; exit 1 ;;
+	esac
+done
+
+if [ "$HELP" == "1" -o -z "$1" ]
+then
+    printf $"Usage: %s [--help|-h] [--id|-i channel_id_regex] [--notid|-n channel_id_regex] <channel_url_regex>\n\n" $0
+    printf $"Prints ids of channels whose URLs match with <channel_url_regex>. Channels can be filtered by id regex. \n\n"
+    printf $"Example:\n"
+    printf  "\t%s -i unity -n plf ftp.heanet.ie\n\n" $0
+    exit 1
+fi
+
+if [ -z "$ID_REGEX" ]
+then
+    ID_REGEX=".*"
+fi
+
+if [ -z "$NID_REGEX" ]
+then
+    NID_REGEX='^$'
+fi
+
+channel_url_usage "$ID_REGEX" "$NID_REGEX" "$1"
