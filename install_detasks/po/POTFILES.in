@@ -1,0 +1,6 @@
+[encoding: UTF-8]
+applications/install-e17.desktop.in
+applications/install-gnome.desktop.in
+applications/install-kde4.desktop.in
+applications/install-lxde.desktop.in
+applications/install-xfce.desktop.in

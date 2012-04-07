@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+_Name=Install Gnome
+_Comment=Install Gnome Desktop Environment
+Exec=gksu -l '/usr/sbin/install_detasks task-gnome'
+Icon=task-gnome
+Terminal=false
+Type=Application
+StartupNotify=true

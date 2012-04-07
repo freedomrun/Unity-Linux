@@ -1,0 +1,64 @@
+#!/bin/sh
+
+_ () {
+        local TEXT=`gettext -d=$(basename "$0") "$1"`
+	shift
+	printf "$TEXT" "$@"
+}
+
+smartmsg () {
+        local TEXT=`gettext -d smart "$1"`
+	shift
+	printf "$TEXT" "$@" | head -n 1
+	# 			^Always extract the first line from multi-line messages
+}
+
+if [ $# -eq 0 ]; then
+	zenity --error --text="$(_ "Please pass the script a valid task-pkgname.")" --title="$(_ "Error")"
+	exit 1
+elif [ $# -gt 1 ]; then
+	zenity --error --text="$(_ "Please specify only one task on the command line.")" --title="$(_ "Error")"
+	exit 1
+fi
+
+dename=$(echo $1 | sed s/task-//)
+
+TITLE="$(_ "Unity-Linux Metapackage %s Installer" $1)"
+
+# First question: 
+zenity --title "$TITLE" --question --ok-label="$(_ "Yes")" --cancel-label="$(_ "Quit")" --text="$(_ "You are about to install the %s package.\n
+Do you want to continue?\n" $1)"
+[ $? -eq 1 ] && exit 1
+
+# test internet connect before trying to do a smart update
+ping google.com -c 5 | zenity --progress --title="$(_ "Testing")" --text="$(_ "Testing your internet connection...")" --pulsate --auto-close
+if [ ${PIPESTATUS[0]} -ne 0 ]; then
+	zenity --error --text="$(_ "Sorry, your internet connection is not working.\n")" --title="$(_ "Error")"
+	exit 1
+fi
+
+
+# update smart
+smart --gui update
+if [ $? -ne 0 ]; then
+	zenity --error --text="$(_ "Running smart update failed.\nPlease check your smart channels/mirrors and try again.\n")" --title="$(_ "Error")"
+	exit 1
+#else
+#	zenity --info --text="$(_ "smart update successful.")"
+fi
+
+# quit if task pkg not found
+if smart query $1 2>&1 1>/dev/null | grep -q ^$(smartmsg "error: %s\n" ""); then
+	zenity --error --text="$(_ "%s is not a valid task-pkgname." $1)" --title="$(_ "Error")"
+	exit 1
+fi
+
+# install task
+smart --gui install $1
+if [ $? -eq 0 ]; then
+	zenity --info --title="$TITLE" --text="$(_ "Installation Completed!\n
+In order to utilize the newly installed $1, please log out and select the session pertaining to the $dename desktop environment.")"
+else
+	zenity --info --title="$TITLE" --text="$(_ "Installation Cancelled\n")"
+fi
+exit 0

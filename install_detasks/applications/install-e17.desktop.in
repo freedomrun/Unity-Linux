@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+_Name=Install Enlightenment
+_Comment=Install Enlightenment Desktop Environment
+Exec=gksu -l '/usr/sbin/install_detasks task-e17'
+Icon=task-e17
+Terminal=false
+Type=Application
+StartupNotify=true

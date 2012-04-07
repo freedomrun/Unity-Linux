@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+_Name=Install KDE4
+_Comment=Install KDE4 Desktop Environment
+Exec=gksu -l '/usr/sbin/install_detasks task-kde4'
+Icon=task-kde4
+Terminal=false
+Type=Application
+StartupNotify=true

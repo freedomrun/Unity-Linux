@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-06-05 20:35+0200\n"
+"PO-Revision-Date: 2010-05-01 13:51-0600\n"
+"Last-Translator: Julio Poisot De María <oposit@tm.com.mx>\n"
+"Language-Team: i18n-es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+
+#: install_detasks:17
+msgid "Please pass the script a valid task-pkgname."
+msgstr "Por favor suministre al guión un metapaquete de tarea válido"
+
+#: install_detasks:17 install_detasks:20 install_detasks:36 install_detasks:44
+#: install_detasks:52
+msgid "Error"
+msgstr "Error"
+
+#: install_detasks:20
+msgid "Please specify only one task on the command line."
+msgstr "Por favor especifique una sola tarea en la línea de comandos"
+
+#: install_detasks:26
+msgid "Unity-Linux Metapackage %s Installer"
+msgstr "Instalador del metapaquete %s de Unity-Linux"
+
+#: install_detasks:29
+msgid "Yes"
+msgstr "Sí"
+
+#: install_detasks:29
+msgid "Quit"
+msgstr "Salir"
+
+#: install_detasks:29
+msgid ""
+"You are about to install the %s package.\n"
+"\n"
+"Do you want to continue?\n"
+msgstr ""
+"Esta a punto de instalar el paquete %s.\n"
+"\n"
+"¿Desea continuar?\n"
+
+#: install_detasks:34
+msgid "Testing"
+msgstr "Probando"
+
+#: install_detasks:34
+msgid "Testing your internet connection..."
+msgstr "Probando su conexión de internet"
+
+#: install_detasks:36
+msgid "Sorry, your internet connection is not working.\n"
+msgstr "Lo siento, su conexión de internet no esta funcionando\n"
+
+#: install_detasks:44
+msgid ""
+"Running smart update failed.\n"
+"Please check your smart channels/mirrors and try again.\n"
+msgstr ""
+"Falló la actualización de Smart.\n"
+"Por favor revise sus canales/espejos de Smart y vuelva a intentar.\n"
+
+#: install_detasks:52
+msgid "%s is not a valid task-pkgname."
+msgstr "%s no es un metapaquete de tarea válido"
+
+#: install_detasks:62
+msgid "Installation Cancelled\n"
+msgstr "Instalación cancelada\n"
+
+#: ../applications/install-e17.desktop.in.h:1
+msgid "Install Enlightenment"
+msgstr "Instalar Enlightenment"
+
+#: ../applications/install-e17.desktop.in.h:2
+msgid "Install Enlightenment Desktop Environment"
+msgstr "Instalar el entorno de escritorio Enlightenment"
+
+#: ../applications/install-gnome.desktop.in.h:1
+msgid "Install Gnome"
+msgstr "Instalar Gnome"
+
+#: ../applications/install-gnome.desktop.in.h:2
+msgid "Install Gnome Desktop Environment"
+msgstr "Instalar el entorno de escritorio Gnome"
+
+#: ../applications/install-kde4.desktop.in.h:1
+msgid "Install KDE4"
+msgstr "Instalar KDE4"
+
+#: ../applications/install-kde4.desktop.in.h:2
+msgid "Install KDE4 Desktop Environment"
+msgstr "Instalar el entorno de escritorio KDE4"
+
+#: ../applications/install-lxde.desktop.in.h:1
+msgid "Install LXDE"
+msgstr "Instalar LXDE"
+
+#: ../applications/install-lxde.desktop.in.h:2
+msgid "Install LXDE Desktop Environment"
+msgstr "Instalar el entorno de escritorio LXDE"
+
+#: ../applications/install-xfce.desktop.in.h:1
+msgid "Install XFCE"
+msgstr "Instalar XFCE"
+
+#: ../applications/install-xfce.desktop.in.h:2
+msgid "Install XFCE Desktop Environment"
+msgstr "Instalar el entorno de escritorio XFCE"
