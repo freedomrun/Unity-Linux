@@ -1,0 +1,758 @@
+<?xml version="1.0"?>
+<gconfschemafile>
+  <schemalist>
+    <schema>
+      <key>/schemas/desktop/gnome/url-handlers/smart/enabled</key>
+      <applyto>/desktop/gnome/url-handlers/smart/enabled</applyto>
+      <owner>smarturl</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Whether the specified command should handle "smart" URLs</short>
+        <long>True if the command specified in the "command" key should handle "smart" URLs.</long>
+      </locale>
+
+      <locale name="af">
+        <short>Of die gespesifiseerde bevel &quot;smart&quot;-URL&apos;e moet hanteer</short>
+        <long>Waar indien die bevel gespesifiseer in die &quot;command&quot;-sleutel &quot;smart&quot;-URL&apos;e moet hanteer.</long>
+      </locale>
+
+      <locale name="ar">
+        <short>إذا ما كان الأمر المحدّد سيستخدم لمعالجة مسارات &quot;smart&quot;</short>
+        <long>صحيح إذا كان الأمر المحدّد في المفتاح &quot;command&quot; سيستخدم لمعالجة مسارات &quot;smart&quot;.</long>
+      </locale>
+
+      <locale name="be@latin">
+        <short>Ci adčyniać spasyłki &quot;smart&quot; akreślenym zahadam</short>
+        <long>Praŭda, kali zahad, akreśleny dla kluča &quot;command&quot;, pavinny adčyniać spasyłki &quot;smart&quot;.</long>
+      </locale>
+
+      <locale name="bn">
+        <short>উল্লেখিত নির্দেশটি &quot;smart&quot; এর URL নিয়ন্ত্রণ করবে কিনা</short>
+        <long>সত্য যদি &quot;নির্দেশ&quot; কী-তে উল্লেখিত নির্দেশটি &quot;smart&quot; এর URL নিয়ন্ত্রণ করে।</long>
+      </locale>
+
+      <locale name="ca">
+        <short>Si l&apos;ordre especificada ha de gestionar URL «smart»</short>
+        <long>Cert si l&apos;ordre especificada a la clau «command» ha de gestionar URL «smart».</long>
+      </locale>
+
+      <locale name="ca@valencia">
+        <short>Si l&apos;orde especificada ha de gestionar URL «smart»</short>
+        <long>Cert si l&apos;orde especificada a la clau «command» ha de gestionar URL «smart».</long>
+      </locale>
+
+      <locale name="cs">
+        <short>Jestli má zadaný příkaz obsluhovat URL &quot;smart&quot;</short>
+        <long>Pravda, jestliže příkaz zadaný v klíči &quot;command&quot; má obsluhovat URL &quot;smart&quot;.</long>
+      </locale>
+
+      <locale name="da">
+        <short>Hvorledes den angivne kommando skal håndtere &quot;smart&quot;-adresser</short>
+        <long>Sand hvis kommandoen angivet i &quot;kommando&quot;-nøglen skulle håndtere &quot;smart&quot;-adresser.</long>
+      </locale>
+
+      <locale name="de">
+        <short>Legt fest, ob das angegebene Kommando „smart“-URLs verarbeiten soll</short>
+        <long>Aktivieren, wenn der Befehl, der im „command“-Schlüssel angegeben ist, „smart“-URLs verarbeiten soll.</long>
+      </locale>
+
+      <locale name="dz">
+        <short>གསལ་བཀོད་འབད་ཡོད་པའི་བརྡ་བཀོད་ཀྱིས་ &quot;smart&quot; ཡུ་ཨར་ཨེལ་ཚུ་ལེགས་སྐྱོང་འཐབ་རུང་ག</short>
+        <long>&quot;command&quot; ལྡེ་མིག་ནང་གསལ་བཀོད་འབད་ཡོད་པའི་བརྡ་བཀོད་ཀྱིས་ &quot;smart&quot; ཡུ་ཨར་ཨེལ་ཚུ་ལེགས་སྐྱོང་འཐབ་དགོཔ་ཨིན་པ་ཅིན་བདེན།</long>
+      </locale>
+
+      <locale name="el">
+        <short>Αν η εντολή που έχει οριστεί πρέπει να διαχειρίζεται τα &quot;smart&quot; URL</short>
+        
+      </locale>
+
+      <locale name="en_GB">
+        <short>Whether the specified command should handle &quot;smart&quot; URLs</short>
+        <long>True if the command specified in the &quot;command&quot; key should handle &quot;smart&quot; URLs.</long>
+      </locale>
+
+      <locale name="eo">
+        <short>Ĉu la donita komando devu trakti &quot;smart&quot; URL-ojn</short>
+        <long>Vera se la komando donita en la &quot;komando&quot; ŝlosilo devu trakti &quot;smart&quot; URL-ojn.</long>
+      </locale>
+
+      <locale name="es">
+        <short>Si la orden debería gestionar URLs «smart»</short>
+        <long>Cierto si la orden especificada en la tecla «command» debería gestionar URLs «smart».</long>
+      </locale>
+
+      <locale name="et">
+        <short>Kas määratud käsk peaks käsitlema &quot;smart&quot; URL-e või mitte</short>
+        <long>Kui märgitud, siis peaks &quot;command&quot; võtmes määratud käsk käsitlema &quot;smart&quot; URL-e.</long>
+      </locale>
+
+      <locale name="fi">
+        <short>Määritellyn komennon tulee käsitellä &quot;smart&quot;-URLt</short>
+        <long>Tosi, jos &quot;komento&quot;-avsmartessa määriteltyä komentoa tulisi käyttää &quot;smart&quot;-URLien käsittelyyn.</long>
+      </locale>
+
+      <locale name="fr">
+        <short>La commande décrite doit gérer les URL en « smart »</short>
+        <long>Indique si la commande décrite dans la clé « command » doit gérer les URL en « smart ».</long>
+      </locale>
+
+      <locale name="gl">
+        <short>Indica se o comando especificado debe manipular os URL &quot;smart&quot;</short>
+        <long>É verdadeiro se o comando especificado na chave &quot;command&quot; debe manipular os URL &quot;smart&quot;.</long>
+      </locale>
+
+      <locale name="he">
+        <short>האם הפקודה שצויינה צריכה לטפל בכתובות &quot;smart&quot;.</short>
+        <long>אמת אם הפקודה שהוגדרת לכפתור &quot;פקודה&quot; צריך לטפל בכתובות &quot;smart&quot;.</long>
+      </locale>
+
+      <locale name="hu">
+        <short>A megadott parancs kezelje-e az „smart” URL címeket</short>
+        <long>Ha igazra van állítva, a „command” kulcsban beállított parancs kezeli az „smart” URL címeket.</long>
+      </locale>
+
+      <locale name="id">
+        <short>Perlukah perintah yang ditetapkan menangani URL &quot;smart&quot; </short>
+        <long>Benar jika perintah yang ditetapkan dalam kunci &quot;command&quot; perlu menangani URL-URL&quot;smart&quot; .</long>
+      </locale>
+
+      <locale name="it">
+        <short>Se il comando specificato deve gestire gli URL &quot;smart&quot;</short>
+        <long>Vero, se il comando specificato nella chiave &quot;command&quot; deve gestire gli URL &quot;smart&quot;.</long>
+      </locale>
+
+      <locale name="ja">
+        <short>指定したコマンドで &quot;smart&quot; の URL を処理するかどうか</short>
+        <long>&quot;command&quot; キーで指定したコマンドで &quot;smart&quot; の URL を処理する場合は TRUE です。</long>
+      </locale>
+
+      <locale name="km">
+        <short>ថាតើ​ ពាក្យ​បញ្ជា​ដែល​បាន​បញ្ជាក់​គួរគ្រប់គ្រង URLs &quot;smart&quot; ។</short>
+        <long>ពិត ប្រសិនបើ​ពាក្យ​បញ្ជា​បានបញ្ជាក់​នៅ​​​គ្រាប់ចុច &quot;ពាក្យ​បញ្ជា&quot; គួរ​គ្រប់គ្រង URLs &quot;smart&quot; ។</long>
+      </locale>
+
+      <locale name="ko">
+        <short>지정한 명령으로 &quot;smart&quot; URL을 처리할까 말까</short>
+        <long>&quot;command&quot; 키로 지정한 명령으로 &quot;smart&quot; URL을 처리하는 경우에는 TRUE 입니다.</long>
+      </locale>
+
+      <locale name="lt">
+        <short>Ar nurodytoji komanda turėtų apdoroti „smart“ universaliuosius adresus</short>
+        <long>„True“, jeigu komanda, nurodyta „command“ rakte, turi apdoroti „smart“ universaliuosius adresus.</long>
+      </locale>
+
+      <locale name="mk">
+        <short>Дали одредената команда треба да се справува со URL на „smart“</short>
+        <long>Точно, ако командата одредена во клучот „команда“ треба да се справува со „smart“ URL.</long>
+      </locale>
+
+      <locale name="nb">
+        <short>Om den spesifike kommandoen skal håndtere «smart»-URLer</short>
+        <long>Sann hvis kommandoen spesifisert i «kommando»-nøkkelen skal håndtere «smart»-URLer.</long>
+      </locale>
+
+      <locale name="nl">
+        <short>Wanneer de opdracht &quot;smart&quot; URLs moet afhandelen</short>
+        <long>Waar indien de opdracht in de &quot;command&quot; sleutel &quot;smart&quot; URLs moet afhandelen.</long>
+      </locale>
+
+      <locale name="nn">
+        <short>Kor vidt den spesifiserte kommandoen skal handtera &quot;smart&quot;-adresser</short>
+        <long>Sann dersom kommandoen spesifisert i &quot;kommando&quot;-nøkkelen skal handtera &quot;smart&quot;-adresser.</long>
+      </locale>
+
+      <locale name="pa">
+        <short>ਕੀ ਦਿੱਤੀ ਕਮਾਂਡ &quot;smart&quot; URL ਨੂੰ ਹੈਂਡਲ ਕਰੇ।</short>
+        <long>ਸਹੀਂ, ਜੇ &quot;command&quot; ਕੀ ਵਿੱਚ ਦਿੱਤੀ ਕਮਾਂਡ &quot;smart&quot; URL ਹੈਂਡਲ ਕਰੇ।</long>
+      </locale>
+
+      <locale name="pt_BR">
+        <short>Diz se o comando especificado deve ser associado a URLs &quot;smart&quot;</short>
+        <long>Verdadeiro se o comando especificado na chave &quot;comando&quot; deve ser associado a URLs &quot;smart&quot;</long>
+      </locale>
+
+      <locale name="ro">
+        <short>Specifică dacă această comandă ar trebui să fie asociată URL-urilor „smart”</short>
+        <long>Adevărat când comanda specificată în cheia „command” ar trebui să fie asociată URL-urilor „smart”.</long>
+      </locale>
+
+      <locale name="ru">
+        <short>Должна ли указанная команда обрабатывать &quot;smart&quot; URL</short>
+        <long>Верно, если команде, объявленной в ключе &quot;command&quot;, нужно обращаться по &quot;smart&quot; адресам.</long>
+      </locale>
+
+      <locale name="sk">
+        <short>Či má zadaný príkaz obsluhovať adresy „smart“</short>
+        <long>Pravda, ak príkaz zadaný v kľúči „command“ má spracovávať URL adresy „smart“.</long>
+      </locale>
+
+      <locale name="sl">
+        <short>Ali naj navedeni ukaz upravlja z URL-ji &quot;smart&quot;</short>
+        <long>Resnično, če naj navedeni ukaz v polju &quot;ukaz&quot; (&quot;command&quot;) upravlja z URL-ji &quot;smart&quot;</long>
+      </locale>
+
+      <locale name="sq">
+        <short>Në duhet a jo të trajtojë URL-ra  &quot;smart&quot; urdhri i treguar</short>
+        <long>E vërtetë nëse urdhri i treguar te pjesa &quot;command&quot; do të duhej të trajtonte URL-ra &quot;smart&quot;.</long>
+      </locale>
+
+      <locale name="sr">
+        <short>Да ли да унесена команда руководи аим адресама</short>
+        <long>„Тачно“ уколико команда унесена у кључу „команда“ подржава „аим“ адресе.</long>
+      </locale>
+
+      <locale name="sr@latin">
+        <short>Da li da unesena komanda rukovodi smart adresama</short>
+        <long>„Tačno“ ukoliko komanda unesena u ključu „komanda“ podržava „smart“ adrese.</long>
+      </locale>
+
+      <locale name="sv">
+        <short>Om det specifika kommandot ska hantera &quot;smart&quot; URLer</short>
+        <long>Sant om kommandot i nyckeln &quot;kommando&quot; ska hantera &quot;smart&quot; URLer</long>
+      </locale>
+
+      <locale name="te">
+        <short>నిర్దిష్ట కమాండ్ &quot;smart&quot; URLs ను హ్యాండిల్ చేయాలా</short>
+        <long>&quot;command&quot; కీలో నిర్దేశించిన కమాండ్ &quot;smart&quot; URLs ను హ్యాండిల్ చేసేది నిజమేనా.</long>
+      </locale>
+
+      <locale name="tr">
+        <short>Belirtilen komut &quot;smart&quot; adreslerini yakalayabiliyor mu</short>
+        <long>&quot;komut&quot; içerisinde belirtilen komut kısayolu &quot;smart&quot; adreslerini yakalayabiliyorsa doğru.</long>
+      </locale>
+
+      <locale name="ur">
+        <short>خواہ  مختص كیا گیا كمانڈ &quot;smart&quot; URLs كو ہینڈل كرتا ہے۔</short>
+        <long>صحیح اگر كمانڈ &quot;command&quot; كلید میں مختص كی جاتی ہے &quot;smart&quot; URLs. ہینڈل كرنا چاہیے۔</long>
+      </locale>
+
+      <locale name="vi">
+        <short>Lệnh đã ghi rõ có nên quản lý địa chỉ URL kiểu « smart » hay không</short>
+        <long>Đúng nếu lệnh được ghi rõ trong koá « command » nên quản lý địa chỉ URL kiểu « smart ».</long>
+      </locale>
+
+      <locale name="zh_HK">
+        <short>指令是否應處理「smart」網址</short>
+        <long>如數值為「真」，則表示「command」欄的指令應處理「smart」網址。</long>
+      </locale>
+
+      <locale name="zh_TW">
+        <short>指令是否應處理「smart」網址</short>
+        <long>如數值為「真」，則表示「command」欄的指令應處理「smart」網址。</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/desktop/gnome/url-handlers/smart/command</key>
+      <applyto>/desktop/gnome/url-handlers/smart/command</applyto>
+      <owner>smarturl</owner>
+      <type>string</type>
+      <default>smarturl "%s"</default>
+      <locale name="C">
+        <short>The handler for "smart" URLs</short>
+        <long>The command used to handle "smart" URLs, if enabled.</long>
+      </locale>
+
+      <locale name="af">
+        <short>Die vatsel vir &quot;smart&quot;-URL&apos;e</short>
+        <long>Die bevel wat gebruik word om &quot;smart&quot;-URL&apos;e te hanteer, indien geaktiveer.</long>
+      </locale>
+
+      <locale name="ar">
+        <short>معالج مسارات &quot;smart&quot;</short>
+        <long>الأمر المستخدم لمعالجة مسارات &quot;smart&quot;، في حال تمكينها.</long>
+      </locale>
+
+      <locale name="be@latin">
+        <short>Adčynieńnie spasyłak &quot;smart&quot;</short>
+        <long>Zahad dziela adčynieńnia spasyłak &quot;smart&quot;, kali ŭklučanyja.</long>
+      </locale>
+
+      <locale name="bn">
+        <short>‌‌‌&quot;smart&quot; এর URL-এর জন্য নিয়ন্ত্রণকারী</short>
+        <long>যদি সক্রিয় থাকে, এই নির্দেশটি ‌‌&quot;smart&quot; এর URL নিয়ন্ত্রণ করতে ব্যবহার করা হয়।</long>
+      </locale>
+
+      <locale name="ca">
+        <short>Gestor per a URL «smart»</short>
+        <long>L&apos;ordre per a gestionar URL «smart», si s&apos;habilita.</long>
+      </locale>
+
+      <locale name="ca@valencia">
+        <short>Gestor per a URL «smart»</short>
+        <long>L&apos;orde per a gestionar URL «smart», si s&apos;habilita.</long>
+      </locale>
+
+      <locale name="cs">
+        <short>Obsluha URL &quot;smart&quot;</short>
+        <long>Příkaz používaný pro obsluhu URL &quot;smart&quot;, je-li povolen.</long>
+      </locale>
+
+      <locale name="da">
+        <short>Håndtering af &quot;smart&quot;-adresser</short>
+        <long>Kommandoen brugt til at håndtere &quot;smart&quot;-adresser, hvis aktiveret.</long>
+      </locale>
+
+      <locale name="de">
+        <short>Behandlungsroutine für „smart“-URLs</short>
+        <long>Der Befehl, der „smart“-URLs verarbeitet, wenn aktiviert.</long>
+      </locale>
+
+      <locale name="dz">
+        <short>&quot;smart&quot; ཡུ་ཨར་ཨེལ་ཚུའི་དོན་ལུ་ལེགས་སྐྱོང་པ།</short>
+        <long>ལྕོགས་ཅན་བཟོ་སྟེ་ཡོད་པ་ཅིན་ &quot;smart&quot; ཡུ་ཨར་ཨེལ་ཚུ་ལེགས་སྐྱོང་འཐབ་ནིའི་དོན་ལུ་ལག་ལེན་འཐབ་ཡོད་པའི་བརྡ་བཀོད།</long>
+      </locale>
+
+      <locale name="el">
+        <short>Διαχειριστής των &quot;smart&quot; URL</short>
+        <long>Η εντολή που χρησιμοποιείται για τη διαχείριση των &quot;smart&quot; URL, αν είναι ενεργοποιημένα.</long>
+      </locale>
+
+      <locale name="en_GB">
+        <short>The handler for &quot;smart&quot; URLs</short>
+        <long>The command used to handle &quot;smart&quot; URLs, if enabled.</long>
+      </locale>
+
+      <locale name="eo">
+        <short>La traktilo por &quot;smart&quot; URL-oj</short>
+        <long>La uzata komando por trakti &quot;smart&quot; URL-ojn, se enŝaltita.</long>
+      </locale>
+
+      <locale name="es">
+        <short>El manejador para URLs «smart»</short>
+        <long>La orden para gestionar URLs «smart», si se activan.</long>
+      </locale>
+
+      <locale name="et">
+        <short>&quot;smart&quot; URL-ide käsitleja</short>
+        <long>&quot;smart&quot; URL-ide käsitlemise käsk (kui on lubatud).</long>
+      </locale>
+
+      <locale name="fi">
+        <short>&quot;smart&quot;-URLien käsittelijä</short>
+        <long>Komento jota käytetään &quot;smart&quot;-URLien käsittelyyn, jos käytössä.</long>
+      </locale>
+
+      <locale name="fr">
+        <short>Le gestionnaire des URL en « smart »</short>
+        <long>Si activé, la commande utilisée pour gérer les URL en « smart »</long>
+      </locale>
+
+      <locale name="ga">
+        <short>An láimhseálaí le &quot;smart&quot; URLs</short>
+        
+      </locale>
+
+      <locale name="gl">
+        <short>O manipulador dos URL &quot;smart&quot;</short>
+        <long>O comando usado para manipular os URL &quot;smart&quot;, se está activado.</long>
+      </locale>
+
+      <locale name="he">
+        <short>המטפל בכתובות &quot;smart&quot;</short>
+        <long>הפקודה לטיפול בכתובות &quot;smart&quot;, אם הופעלה.</long>
+      </locale>
+
+      <locale name="hu">
+        <short>„smart” URL címek kezelője</short>
+        <long>Az „smart” URL címek kezelésére használt parancs, ha engedélyezve van.</long>
+      </locale>
+
+      <locale name="id">
+        <short>Penanganan untuk URL &quot;smart&quot; </short>
+        <long>Perintah yang digunakan untuk menangani URL &quot;smart&quot; , jika diaktifkan.</long>
+      </locale>
+
+      <locale name="it">
+        <short>Il gestore per gli URL &quot;smart&quot;</short>
+        <long>Il comando utilizzato per gestire gli URL &quot;smart&quot;, se abilitati.</long>
+      </locale>
+
+      <locale name="ja">
+        <short>&quot;smart&quot; 向けのハンドラ</short>
+        <long>&quot;smart&quot; の URL を処理する際に使用するコマンドです (利用可能であれば)。</long>
+      </locale>
+
+      <locale name="km">
+        <short>កម្មវិធី​គ្រប់គ្រង​សម្រាប់ URLs &quot;smart&quot;</short>
+        <long>ពាក្យ​បញ្ជា​បានប្រើ​ដើម្បី​គ្រប់គ្រង &quot;smart&quot; URLs ប្រសិន​បើ​បាន​បើក ។</long>
+      </locale>
+
+      <locale name="ko">
+        <short>&quot;smart&quot; 용 핸들</short>
+        <long>&quot;smart&quot; URL을 처리할 때 사용하는 명령입니다 (이용 가능한 경우).</long>
+      </locale>
+
+      <locale name="lt">
+        <short>Komanda „smart“ universaliųjų adresų apdorojimui</short>
+        <long>Komanda „smart“ universaliųjų adresų apdorojimui, jei aktyvuota.</long>
+      </locale>
+
+      <locale name="mk">
+        <short>Справувачот за „smart“ URL</short>
+        <long>Командата користена за справување со &quot;smart&quot; адреси.</long>
+      </locale>
+
+      <locale name="mn">
+        
+        <long>Идэвхтэй байвал, &quot;smart&quot; URLs-г удирдах ашиглах.</long>
+      </locale>
+
+      <locale name="nb">
+        <short>Håndtereren for «smart»-URLer</short>
+        <long>Kommando for å håndtere «smart»-URLer, hvis aktivert.</long>
+      </locale>
+
+      <locale name="nl">
+        <short>De afhandelaar voor &quot;smart&quot; URLs</short>
+        <long>De opdracht die gebruikt wordt om &quot;smart&quot; URLs af te handelen, indien ingeschakeld.</long>
+      </locale>
+
+      <locale name="nn">
+        <short>Handteraren av &quot;smart&quot;-adresser</short>
+        <long>Kommandoen for å handtera &quot;smart&quot;-adresser (dersom teken i bruk).</long>
+      </locale>
+
+      <locale name="pa">
+        <short>&quot;smart&quot; URL ਲਈ ਹੈਂਡਲਰ</short>
+        <long>&quot;smart&quot; URL ਹੈਂਡਲ ਕਰਨ ਲਈ ਵਰਤਣ ਵਾਸਤੇ ਕਮਾਂਡ, ਜੇ ਯੋਗ ਕੀਤੀ ਹੈ ਤਾਂ।</long>
+      </locale>
+
+      <locale name="pt_BR">
+        <short>Associar URLs &quot;smart&quot; a</short>
+        <long>O comando usado para lidar com URLs &quot;smart&quot;, se ativado.</long>
+      </locale>
+
+      <locale name="ro">
+        <short>Comanda asociată URL-urile „smart”</short>
+        <long>Comanda utilizată pentru URL-urile „smart” în caz de activare</long>
+      </locale>
+
+      <locale name="ru">
+        <short>Обработчик для &quot;smart&quot; URL</short>
+        <long>Команда, используемая для обработки &quot;smart&quot; URL, если включено.</long>
+      </locale>
+
+      <locale name="sk">
+        <short>Príkaz pre adresy „smart“</short>
+        <long>Príkaz na obsluhu adries typu „smart“, ak je povolené.</long>
+      </locale>
+
+      <locale name="sl">
+        <short>Upravljač za URL-je &quot;smart</short>
+        <long>Ukaz za ravnanje z URL-ji &quot;smart&quot;, če je to omogočeno.</long>
+      </locale>
+
+      <locale name="sq">
+        <short>Trajtuesi për URL-ra &quot;smart&quot;</short>
+        <long>Urdhri i përdorur për të trajtuar URL-ra &quot;smart&quot;, në qoftë i aktivizuar.</long>
+      </locale>
+
+      <locale name="sr">
+        <short>Руководилац аим адреса</short>
+        <long>Команда за рад са аим адресама, уколико је омогућено.</long>
+      </locale>
+
+      <locale name="sr@latin">
+        <short>Rukovodilac smart adresa</short>
+        <long>Komanda za rad sa smart adresama, ukoliko je omogućeno.</long>
+      </locale>
+
+      <locale name="sv">
+        <short>Hanteraren för &quot;smart&quot; URLer</short>
+        <long>Kommandot för att hantera &quot;smart&quot; URLer, om aktiverat.</long>
+      </locale>
+
+      <locale name="te">
+        <short>&quot;smart&quot; URLs కోసం హ్యాండిల్ చేసేది</short>
+        <long>URLs సాధ్యమైతే, &quot;smart&quot; హ్యాండిల్ చేయడానికి ఉపయోగించే కమాండ్.</long>
+      </locale>
+
+      <locale name="tr">
+        <short>&quot;smart&quot; adresleri için yakalayıcı</short>
+        <long>Bu komut etkinleştirilirse &quot;smart&quot; adreslerini açmak için kullanılır.</long>
+      </locale>
+
+      <locale name="ur">
+        <short>&quot;smart&quot; URLs كے لیے ہینڈل كرنے  والا</short>
+        <long>كمانڈ  ہینڈل كرنے كے لیے استعمال كرتے ہیں  &quot;smart&quot; URLs، اگر ممكن ہو</long>
+      </locale>
+
+      <locale name="vi">
+        <short>Bộ quản lý địa chỉ URL « smart »</short>
+        <long>Lệnh dùng để quản lý địa chỉ URL « smart », nếu bật.</long>
+      </locale>
+
+      <locale name="zh_CN">
+        <short>“smart”URL 的处理程序</short>
+        <long>如果启用的话，用于处理“smart”URL 的命令。</long>
+      </locale>
+
+      <locale name="zh_HK">
+        <short>處理「smart」網址的指令</short>
+        <long>處理「smart」網址的指令（如有啟用）</long>
+      </locale>
+
+      <locale name="zh_TW">
+        <short>處理「smart」網址的指令</short>
+        <long>處理「smart」網址的指令（如有啟用）</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/desktop/gnome/url-handlers/smart/needs_terminal</key>
+      <applyto>/desktop/gnome/url-handlers/smart/needs_terminal</applyto>
+      <owner>smarturl</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Run the command in a terminal</short>
+        <long>True if the command used to handle this type of URL should be run in a terminal.</long>
+      </locale>
+
+      <locale name="af">
+        <short>Loop die bevel in &apos;n terminaal</short>
+        <long>Waar indien die bevel wat hierdie tipe URL hanteer in &apos;n terminaal moet loop.</long>
+      </locale>
+
+      <locale name="ar">
+        <short>شغّل الأمر في مرقاب</short>
+        <long>صحيح إذا كان الأمر المستخدم لمعالجة هذا النوع من المسارات سيشتغل في مرقاب.</long>
+      </locale>
+
+      <locale name="be@latin">
+        <short>Vykanaj zahad u terminale</short>
+        <long>Praŭda, kali zahad dziela adčynieńnia spasyłak hetaha typu pavinny vykonvacca ŭ terminale.</long>
+      </locale>
+
+      <locale name="bn">
+        <short>নির্দেশটি টার্মিনালে চালান</short>
+        <long>সত্য হবে যদি এই ধরনের URL নিয়ন্ত্রণ করতে ব্যবহৃত নির্দেশটি টার্মিনালে চলে। </long>
+      </locale>
+
+      <locale name="ca">
+        <short>Executa l&apos;ordre en un terminal</short>
+        <long>Cert si l&apos;ordre emprada per aquest tipus d&apos;URL s&apos;ha d&apos;executar en un terminal.</long>
+      </locale>
+
+      <locale name="ca@valencia">
+        <short>Executa l&apos;orde en un terminal</short>
+        <long>Cert si l&apos;orde emprada per este tipus d&apos;URL s&apos;ha d&apos;executar en un terminal.</long>
+      </locale>
+
+      <locale name="cs">
+        <short>Spustit příkaz v terminálu</short>
+        <long>Pravda, jestliže příkaz používaný pro obsluhu tohoto typu URL má běžet v terminálu.</long>
+      </locale>
+
+      <locale name="da">
+        <short>Kør kommandoen i en terminal</short>
+        <long>Sand hvis kommandoen brugt til at håndtere denne type af adresse skal køres i en terminal.</long>
+      </locale>
+
+      <locale name="de">
+        <short>Befehl in einem Terminal ausführen</short>
+        <long>Aktivieren, wenn der Befehl, der benutzt wird um diese Art von URL zu verarbeiten, in einem Terminal ausgeführt werden soll.</long>
+      </locale>
+
+      <locale name="dz">
+        <short>ཊར་མི་ནཱལ་ནང་བརྡ་བཀོད་གཡོག་བཀོལ།</short>
+        <long>འ་ནི་དབྱེ་བའི་ཡུ་ཨར་ཨེལ་ལེགས་སྐྱོང་འཐབ་ནིའི་དོན་ལུ་ལག་ལེན་འཐབ་ཡོད་པའི་བརྡ་བཀོད་འདི་ཊར་མི་ནཱལ་ནང་གཡོག་བཀོལ་འབད་དགོཔ་ཨིན་པ་ཅིན་བདེན།</long>
+      </locale>
+
+      <locale name="el">
+        <short>Εκτέλεση εντολής σε τερματικό</short>
+        <long>Ενεργό αν αν η εντολή που χρησιμοποιείται για να διαχειριστεί αυτού τα URL αυτού του τύπου πρέπει να τρέχει σε τερματικό.</long>
+      </locale>
+
+      <locale name="en_GB">
+        <short>Run the command in a terminal</short>
+        <long>True if the command used to handle this type of URL should be run in a terminal.</long>
+      </locale>
+
+      <locale name="eo">
+        <short>Eku komandon en terminalo</short>
+        <long>Vera se la komando uzata por trakti tiun tipon de URL-o devu esti lanĉita en terminalo.</long>
+      </locale>
+
+      <locale name="es">
+        <short>Ejecutar la orden en un terminal</short>
+        <long>Cierto si la orden especifica para gestionar este tipo de URLs debería ejecutarse en un terminal.</long>
+      </locale>
+
+      <locale name="et">
+        <short>Käsu käivitamine terminalis</short>
+        <long>Kui märgitud, siis seda liiki URL-ide jaoks kasutatav käsk käivitatakse terminalis.</long>
+      </locale>
+
+      <locale name="fa">
+        <short>فرمان در در پایانه اجرا کنید</short>
+        
+      </locale>
+
+      <locale name="fi">
+        <short>Suorita komento päätteessä</short>
+        <long>Tosi, jos tämäntyyppisen URL:n käsittelyyn käytettävä komento tulisi ajaa päätteessä.</long>
+      </locale>
+
+      <locale name="fr">
+        <short>Lancer la commande dans un terminal.</short>
+        <long>Indique si la commande utilisée pour gérer ce type d&apos;URL doit être lancée dans un terminal.</long>
+      </locale>
+
+      <locale name="gl">
+        <short>Executar o comando nun terminal</short>
+        <long>É verdadeiro se o comando usado para manipular este tipo de URL debe ser executado nun terminal.</long>
+      </locale>
+
+      <locale name="he">
+        <short>הפעל את הפקודה בתוך טרמינל</short>
+        <long>אמת אם הפקודה לטיפול בסוג זה של כתובת צריכה לרוץ בטרמינל.</long>
+      </locale>
+
+      <locale name="hu">
+        <short>Parancs futtatása terminálban</short>
+        <long>Ha igazra van állítva, az ilyen típusú URL címeket kezelő parancsnak terminálban kell futnia.</long>
+      </locale>
+
+      <locale name="id">
+        <short>Jalankan perintah dalam terminal</short>
+        <long>Benar jika perintah yang digunakan untuk menangani jenis URL ini dijalankan dalamterminal.</long>
+      </locale>
+
+      <locale name="it">
+        <short>Esegui il comando in un terminale</short>
+        <long>Vero. se il comando utilizzato per gestire questo tipo di URL deve essere eseguito in un terminale.</long>
+      </locale>
+
+      <locale name="ja">
+        <short>端末からコマンドを起動する</short>
+        <long>この種類の URL を処理するために使用するコマンドを端末から起動する場合は TRUE です。</long>
+      </locale>
+
+      <locale name="km">
+        <short>រត់​ពាក្យ​បញ្ជា​នៅ​ក្នុង​ស្ថានីយ</short>
+        <long>ពិត ប្រសិនបើ​ពាក្យ​បញ្ជា​បាន​បញ្ជាក់​នៅ​​គ្រាប់ចុច &quot;ពាក្យ​បញ្ជា&quot; គួរ​​រត់​នៅ​ក្នុង​ស្ថានីយ ។</long>
+      </locale>
+
+      <locale name="ko">
+        <short>터미널로부터 명령 수행</short>
+        <long>이 형식의 URL을 처리하기 위해 사용하는 명령을 터미널로부터 시작하는 경우에는 TRUE 입니다.</long>
+      </locale>
+
+      <locale name="lt">
+        <short>Vykdyti komandą terminale</short>
+        <long>„True“, jeigu komanda, turinti apdoroti šio tipo universaliuosius adresus, turi būti leidžiama terminale.</long>
+      </locale>
+
+      <locale name="mk">
+        <short>Извршете ја командата во терминал</short>
+        <long>Точно, ако командата која се употребува за справување со овој тип на URL треба да биде извршена во терминал.</long>
+      </locale>
+
+      <locale name="mn">
+        <short>Терминалаас командыг ажиллуулах</short>
+        
+      </locale>
+
+      <locale name="nb">
+        <short>Kjør kommandoen i en terminal</short>
+        <long>Sann hvis kommandoen som skal håndtere denne type URLer skal kjøres i en terminal.</long>
+      </locale>
+
+      <locale name="nl">
+        <short>Voer het commando uit in een terminal</short>
+        <long>Waar indien de opdracht die gebruikt wordt om dit type URLs af te handelen moet uitgevoerd worden in een terminal.</long>
+      </locale>
+
+      <locale name="nn">
+        <short>Kjør kommandoen i eit terminalvindauge</short>
+        <long>Sann dersom kommandoen som skal handtera denne adressetypen bør kjørast i ein terminal.</long>
+      </locale>
+
+      <locale name="pa">
+        <short>ਇੱਕ ਟਰਮੀਨਲ ਵਿੱਚ ਕਮਾਂਡ ਚਲਾਓ</short>
+        <long>ਸਹੀਂ, ਜੇ ਕਮਾਂਡ ਨੂੰ ਇਸ ਟਾਈਪ ਦੇ URL ਨੂੰ ਹੈਂਡਲ ਕਰਨ ਲਈ ਟਰਮੀਨਲ ਤੋਂ ਚਲਾਉਣਾ ਹੈ।</long>
+      </locale>
+
+      <locale name="pt_BR">
+        <short>Execute o comando num terminal</short>
+        <long>Verdadeiro se o comando usado para lidar com este tipo de URL deve ser executado num terminal.</long>
+      </locale>
+
+      <locale name="ro">
+        <short>Pornește comanda într-un terminal</short>
+        <long>Adevărat când comanda asociată acestui tip de URL ar trebui pornită într-un terminal.</long>
+      </locale>
+
+      <locale name="ru">
+        <short>Выполнить команду в терминале</short>
+        <long>Верно, если команда, использующаяся для обращения по ссылке такого типа, должна быть запущена в терминале.</long>
+      </locale>
+
+      <locale name="sk">
+        <short>Spustiť príkaz v termináli</short>
+        <long>Pravda, ak bude príkaz používaný na spracovanie tohto druhu adries spustený v termináli.</long>
+      </locale>
+
+      <locale name="sl">
+        <short>Zaženi ukaz v sistemskem oknu</short>
+        <long>Resnično, če naj bo ukaz, ki naj ravna s to vrsto URL-ja, zagnan v konzoli.</long>
+      </locale>
+
+      <locale name="sq">
+        <short>Xhiroje urdhrin në terminal</short>
+        <long>E vërtetë nëse urdhri i përdorur për trajtimin e këtij lloji URL-je do të duhej xhiruar në një terminal.</long>
+      </locale>
+
+      <locale name="sr">
+        <short>Покрени команду у терминалу</short>
+        <long>„Тачно“ уколико би команда за рад са овим типом адреса требала бити покренута у терминалу.</long>
+      </locale>
+
+      <locale name="sr@latin">
+        <short>Pokreni komandu u terminalu</short>
+        <long>„Tačno“ ukoliko bi komanda za rad sa ovim tipom adresa trebala biti pokrenuta u terminalu.</long>
+      </locale>
+
+      <locale name="sv">
+        <short>Kör kommandot i en terminal</short>
+        <long>Sant om kommandot som används för att hantera denna sortens URLer ska köras i en terminal.</long>
+      </locale>
+
+      <locale name="te">
+        <short>టెర్మినల్ లో ఓ కమాండ్ ను పంపండి</short>
+        <long>ఈ తరహా URL ను హ్యాండిల్ చేయడానికి ఉపయోగించిన కమాండ్ టెర్మినల్ లో పనిచేయాలన్నది నిజమేనా.</long>
+      </locale>
+
+      <locale name="tr">
+        <short>Komutu bir terminalde çalıştır.</short>
+        <long>Bu komut bir uçbirimde çalıştırılabilen adresleri yakalayabiliyorsa doğru.</long>
+      </locale>
+
+      <locale name="ur">
+        <short>ٹرمینل میں كمانڈ رن كیجیے</short>
+        <long>صحیح اگر  كمانڈ اس ٹائپ كے URL كو ہینڈل كرنے لیے استعمال كیا جاتا ہے ٹرمینل میں رن كرنا ضروری ہے۔</long>
+      </locale>
+
+      <locale name="vi">
+        <short>Chạy lệnh trong thiết bị cuối</short>
+        <long>Đúng nếu lệnh được dùng để quản lý địa chỉ URL kiểu này nên được chạy trong thiết bị cuối.</long>
+      </locale>
+
+      <locale name="zh_CN">
+        <short>在终端中运行命令</short>
+        
+      </locale>
+
+      <locale name="zh_HK">
+        <short>在終端機執行指令</short>
+        <long>如數值為「真」，則表示處理這種網址的指令須在終端機執行。</long>
+      </locale>
+
+      <locale name="zh_TW">
+        <short>在終端機執行指令</short>
+        <long>如數值為「真」，則表示處理這種網址的指令須在終端機執行。</long>
+      </locale>
+    </schema>
+  </schemalist>
+</gconfschemafile>

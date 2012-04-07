@@ -1,0 +1,149 @@
+#!/bin/sh
+
+# Copyright (C) 2008, David Smid <david@smidovi.eu>
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation; either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+export TEXTDOMAIN=smarturl
+
+shopt -u extquote
+
+PROGNAME=`basename $0`
+PROGDIR=`dirname $0`
+
+ARGCNT=$#
+
+TEMP=`getopt -o ruh --long register,unregister,help -n $PROGNAME -- "$@"`
+
+eval set -- "$TEMP"
+
+while true ; do
+	case "$1" in
+		-r|--register) export REGISTER=1 ; shift ;;
+		-u|--unregister) export UNREGISTER=1 ; shift ;;
+		-h|--help) HELP=1 ; shift ;;
+		--) shift ; break ;;
+		*) echo "Internal error!" ; exit 1 ;;
+	esac
+done
+
+if [ "$HELP" == "1" -o "$ARGCNT" == "0" ]
+then
+    printf $"Usage: %s [--help|-h] [--register|-r] [--unregister|-u] <URI>\n\n" $0
+    printf $"Protocol handler for 'smart' protocol.\nAllows URIs in form: 'smart:[//]install=<package>[,package[,...]]'\n"
+    printf $"<package> can be a bare package name or a full package URL.\nIn both cases dependencies should be taken care of.\n\n"
+    exit 1
+fi
+
+if [ "$UNREGISTER" == "1" ]
+then
+# Firefox
+    for FIREFOX_INSTALL in `find /usr/lib/ -path "/usr/lib/firefox*/greprefs"`
+    do
+	rm -f $FIREFOX_INSTALL/smarturl.js 2>/dev/null
+    done
+
+# Konqueror
+    rm -f /usr/share/services/smart.protocol 2>/dev/null
+
+# Opera
+    if [ -f /etc/opera6rc ]
+    then
+	grep "^[^;].*smarturl" /etc/opera6rc >/dev/null 2>&1
+	if [ "$?" == "0" ]
+	then
+	    sed -i.old -e '/\[Trusted Protocols\]/d; /smart="0,0,".*smarturl""/d' /etc/opera6rc
+	fi
+    fi
+    exit
+fi
+
+
+if [ "$REGISTER" == "1" ]
+then
+# Firefox
+    for FIREFOX_INSTALL in `find /usr/lib/ -path "/usr/lib/firefox*/greprefs"`
+    do
+	cat <<EOT > $FIREFOX_INSTALL/smarturl.js
+pref("network.protocol-handler.app.smart", "${PROGDIR}/smarturl");
+pref("network.protocol-handler.warn-external.smart", false);
+navigator.registerProtocolHandler("smart",
+                                  "/usr/bin/smarturl %s",
+                                  "Smart");
+EOT
+    done
+
+# Konqueror
+    cat <<EOT2 > /usr/share/services/smart.protocol
+[Protocol]
+exec=${PROGDIR}/smarturl '%u'
+protocol=smart
+input=none
+output=none
+helper=true
+listing=false
+reading=false
+writing=false
+makedir=false
+deleting=false
+Icon=smart.png
+EOT2
+
+# Opera
+    if [ -f /etc/opera6rc ]
+    then
+	grep "^[^;].*smarturl" /etc/opera6rc >/dev/null 2>&1
+	if [ "$?" != "0" ]
+	then
+	    cat <<EOT3 >> /etc/opera6rc
+[Trusted Protocols]
+smart="0,0,"${PROGDIR}/smarturl""
+EOT3
+	fi
+    fi
+    exit
+fi
+
+
+
+ARGS=${@#smart://}
+
+ARGS=${ARGS#smart:}
+
+ARGS=" --${ARGS//&/ --}"
+
+ARGS=${ARGS//=/ }
+
+eval set -- "$ARGS"
+
+while true ; do
+	case "$1" in
+		-i|--install)
+		    shift
+		    smart-root --gui install ${1//,/ }
+		    shift 
+		    ;;
+
+		-r|--remove)
+		    shift
+		    smart-root --gui remove ${1//,/ }
+		    shift 
+		    ;;
+
+		--) shift ; break ;;
+		*) echo "Internal error!" ; exit 1 ;;
+	esac
+done
