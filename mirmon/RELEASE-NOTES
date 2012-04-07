@@ -1,0 +1,52 @@
+All versions of mirmon use the same state file format, config file format
+and icon set. You can upgrade safely by just replacing program 'mirmon'.
+
+--- mirmon 2.1 -- 28 jan 2010 ----------------------------------------
+
+o the algoritm to balance the probe load over the hourly mirmon runs
+  is improved ; from completely skewed to balanced takes some 5 days.
+
+o mirmon only reports changes in the mirror_list (inserts and deletes)
+  unless in quiet mode ; option -v now shows progress when probing.
+
+o added some documentation ; fixed some doc bugs.
+
+--- mirmon 2.0 -- 9 jan 2010 ----------------------------------------
+
+o The code was completely reorganized ; hence the bump in the
+  major version number.
+
+o the code is now modularised. The distribution contains 'Mirmon.pm',
+  an OO interface for mirmon objects. Program 'mirmon' still contains
+  all the code ; it is split into 'Mirmon.pm' and 'mirmon.pl'.
+
+o For Mirmon.pm, html and man (source and formatted) pages were added.
+
+o configuration option 'htm_top' : the supplied text is no longer placed
+  between <P> and </P> in the report ; to keep the www validator happy.
+
+o the report is smaller ; html code for the age histogram is improved.
+
+o Formatted man pages (mirmon.txt and mirmon.pm.txt) are now created
+  with pod2man and man instead of pod2text.
+
+o program probe passes options -v and -q to rsync and wget.
+
+o documentation : better guidelines in the 'installation' section.
+
+--- mirmon 1.39 -- 24 dec 2009 --------------------------------------
+
+o the mirror list can now have rsync urls like
+    rsync://rsync.apache.org/apache-dist/
+
+o the mirmon distro now contains a sample program 'probe' ;
+  a simple Perl program for probing ftp, http and rsync mirrors.
+
+o a new directive 'no-add-slash' prevents mirmon from
+  adding a trailing slash to urls, when one is missing.
+
+o the distro now contains a mirmon.1 man page source.
+
+o internal note : source management changed from rcs to svn.
+
+---------------------------------------------------------------------
