@@ -1,0 +1,82 @@
+/mnt/disk/unity-linux/projects/buildsystem
+
+1) Create a list of buildable packages
+
+2) User selects one/or more.
+
+3) Apache creates a tmp job file.
+
+4) Apache submits job file to queue as builduser
+
+5) as pkgs are updated, the db tbl needs to be updated with each pkg.
+   split into two parts. 1) updates the db, 2) is the script that gets the info
+   we can rewrite #2 to work with polling, hook scripts, svn or git.
+
+Theory of Operation
+   Fred has an svn(git) account and checks in a change to package foo.  This change is either a completely new package or a change to an existing one. After he commits his change he waits until the BS has been updated to reflect the changes.  After the BS has been updated it updates its pkg_commits table to reflect that a foo has a new commit.  Fred logs into avail.php and selects foo from the list of buildable packages.  After submitting, he goes to queue.php and sees that foo is in the queue. After foo is built, Fred gets an email saying it's built.  Fred logs into history.php and sees that foo has been built.
+
+
+Questions:
+)  We need a way to easily add check scripts to the build process.  Are the results posted on the status page?  first guess is yes.
+       pre-checks  - before the actual build
+       post-checks - after the actual build
+
+)   no .spec file - don't even show in avail pkgs (not buildable)?
+)   multiple .spec files - don't even show in avail pkgs (not buildable)?
+)   .spec filename doesn't match pkgname (this is ok, just go find it.  report?)
+)   .spec file is missing summary
+)   .spec file is missing version
+)   back to back commits should only show latest commit for build?
+)   A package con only be queued for building:
+        1) if it's not currently in the queue
+        2) if this svn commit of it has not already been successfully built
+)   only the latest svn revision of a package can be submitted to the queue
+
+)   If SGE isn't running, the PHP script should detect this and report error.
+
+
+/etc/sudoers:
+apache    ALL=(ALL) NOPASSWD: /var/www/secure/BS/buildpkg
+builduser ALL=(ALL) NOPASSWD: /usr/bin/bldchrt 
+
+
+---
+create database if not exists BS;
+
+create table pkg_commits (
+id MEDIUMINT NOT NULL AUTO_INCREMENT,
+svn_ver mediumint,
+pkg_ver varchar(20),
+pkg_name varchar(30),
+committer varchar(30),
+commit_time datetime,
+pkg_summary varchar(100),
+log_msg varchar(100)
+);
+
+create table build_stats (
+id MEDIUMINT NOT NULL AUTO_INCREMENT,
+pkg_name varchar(30), 
+svn_ver mediumint, 
+committer varchar(20), 
+start_time datetime, 
+status enum ('Built', 'Failed', 'Obsolete'), 
+job_id integer
+);
+
+grant insert,delete,select on BS.pkg_commits to 'update_avail'@'localhost' identified by 'update_avail';
+grant insert,select on BS.build_stats to 'build_user'@'localhost' identified by 'build_user';
+
+---------------
+update status page
+every time chk_for_new_commits.sh runs
+even if no new pkgs avail, update the tbl so we know the cronjob ran
+id timestamp updatesavail scriptrunsuccess scriptoutput
+
+create table dbupdate_stats ( 
+id MEDIUMINT NOT NULL AUTO_INCREMENT primary key, 
+TS timestamp default current_timestamp, 
+updatesavail boolean, 
+scriptrunsuccess boolean, 
+scriptoutput text 
+);

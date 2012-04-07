@@ -1,0 +1,23 @@
+#!/bin/bash
+# This script needs to be outside of apache's tree.
+# It is called from schedulepkg.sh to submit jobs to the queue as builduser.
+# This probably isn't the best way to do this.
+
+whoami
+if [ "$1" == "" ]
+then
+   echo No jobfile supplied. Exitting.
+   exit
+fi
+
+if [ -f $1 ]
+then
+   source /opt/SGE/default/common/settings.sh
+   cd /var/www/secure/BS/build_logs
+   qsub -cwd -S /bin/bash -V $1
+
+else
+   echo No jobfile supplied. Exitting.
+   exit
+fi
+
