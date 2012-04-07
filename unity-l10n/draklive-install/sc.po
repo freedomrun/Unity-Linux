@@ -1,0 +1,277 @@
+# translation of DrakX-sc.po to Sardu
+# Copyright (C) 2005 Free Software Foundation, Inc.
+# Antoni Pistis <antonio.pistis@virgilio.it>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: DrakX-sc\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2005-09-14 11:29+0100\n"
+"Last-Translator: Antoni Pistis <antonio.pistis@virgilio.it>\n"
+"Language-Team: Sardu\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../draklive-install:106
+#, c-format
+msgid "Unity Installer"
+msgstr ""
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr ""
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Faddina"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Faddina"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr ""
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr ""
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Cumprimentus"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Sigu comuncas?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Bessi sentza de sarvai"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Bessu sentza de scriri sa tàula de is pratziduras?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Bolis sarvai is mudas de /etc/fstab"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Depis torrai a allui po fai balli is mudas a sa tàula de is pratziduras"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Iast a depi formatai sa pratzidura %s.\n"
+"De ki no no fait a scriri nudda in fstab po su puntu de càrrigu%s.\n"
+"Bessu comuncas?"
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Please wait"
+#~ msgstr "Abeta"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Còpia in cursu"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "Sçobera is pratziduras ki bolis formatai"
+
+#~ msgid "No partition available"
+#~ msgstr "Nisçuna pratzidura a disposta"
+
+#~ msgid "Scanning partitions to find mount points"
+#~ msgstr "Controllu is pratziduras po agatai is puntus de càrrigu"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "Sçobera is puntus de càrrigu"
+
+#~ msgid "Partitioning"
+#~ msgstr "Pratzimentu"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "Dòpia su puntu de càrrigu %s"
+
+#~ msgid ""
+#~ "Some hardware on your computer needs ``proprietary'' drivers to work.\n"
+#~ "You can find some information about them at: %s"
+#~ msgstr ""
+#~ "A cancu parti hardware serbint driver ``proprietàrius''po traballai.\n"
+#~ "Podis agatai cancu sceda apitzus a: %s"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "Depis tenni una pratzidura root.\n"
+#~ "Po custu, crea una pratzidura (o crica in d-una ki jai dui est).\n"
+#~ "Apustis sçobera s'atzioni ``Puntu de càrrigu'' e assetiaddu a `/'"
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "No tenis una pratzidura de swap.\n"
+#~ "\n"
+#~ "Sigu comuncas?"
+
+#~ msgid "You must have a FAT partition mounted in /boot/efi"
+#~ msgstr "Depis tenni una pratzidura FAT carrigada in /boot/efi"
+
+#~ msgid "Use free space"
+#~ msgstr "Imprea spàtziu lìberu"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr "No dui at spàtziu abasta po ponni pratziduras noas"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "Imprea is pratziduras ki jai dui funt"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "No dui at pratzidura de da podi impreai"
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "Imprea sa pratzidura Windows po loopback"
+
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "Cali pratzidura bolis impreai po Linux4Win?"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "Sçobera is mesuras"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "Mesura de sa pratzidura root in MB: "
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "Mesura de sa pratzidura swap in MB: "
+
+#~ msgid ""
+#~ "There is no FAT partition to use as loopback (or not enough space left)"
+#~ msgstr ""
+#~ "No dui at pratzidura FAT de impreai po loopback (no abarrat spàtziu "
+#~ "abasta)"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "Imprea su spàtziu lìberu in sa pratzidura Windows"
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "Calli pratzidura bolis arremesurai?"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "S'arremesuradori FAT no podit manijai sa pratzidura, \n"
+#~ "dui est sa faddina ki sighit: %s"
+
+#~ msgid "Resizing"
+#~ msgstr "Arremesuru"
+
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "Càrculu sa mesura de sa pratzidura Windows"
+
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "Ita mesura bolis apoderai po sa pratzidura Windows"
+
+#~ msgid "partition %s"
+#~ msgstr "pratzidura %s"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "Arremesuru sa pratzidura Windows"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "Arremesuradura FAT faddia: %s"
+
+#~ msgid "There is no FAT partition to resize (or not enough space left)"
+#~ msgstr "No dui at pratzidura FAT de arremesurai (no abarrat spàtziu abasta)"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Srèxina Windows(TM)"
+
+#, fuzzy
+#~ msgid "Erase and use entire disk"
+#~ msgstr "Burra totu su discu"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr ""
+#~ "Tenis prus de unu discu tostau, cali est ki nci bolis aposentai linux?"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "Pratziduramentu discu personalisau"
+
+#~ msgid "Use fdisk"
+#~ msgstr "Imprea fdisk"
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "No potzu agatai spàtziu po s'aposentadura"
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr ""
+#~ "Su wizard de pratziduramentu DrakX at agatau is solutzionis ki sighint:"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "Pratziduramentu faddiu: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "Alluu s'arretza"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "Studu s'arretza"

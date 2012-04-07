@@ -1,0 +1,154 @@
+# translation of pt_BR.po to Brazilian portuguese
+# translation of pt_BR.po to
+# tradução de DrakX-pt_BR.po para Português do Brasil
+# DRAKX PT_BR PO FILE
+# Copyright (C) 2003, 2004, 2005, 2009 Free Software Foundation, Inc.
+# Lisiane Sztoltz Teixeira <lisiane@mandriva.com>
+#
+# Andrei Bosco Bezerra Torres <andrei_bosco@yahoo.com.br>, 2000, 2003.
+# Bruno Dorfman Buys <brunobuys@zipmail.com.br>, 2002.
+# Tiago da Cruz Bezerra <tiagocruz18@uol.com.br>,2002 2003, 2004.
+# Ricardo de Castilho <cast_brasil@ig.com.br>, 2003.
+# Carlinhos Cecconi <carlinux@terra.com.br>, 2003, 2004.
+# Deivi Lopes Kuhn <deivikuhn@yahoo.com.br>, 2003, 2004.
+# Cristiano Otto Von Trompczynski <cris@mandriva.com>, 2005.
+# Arthur R. Mello <renato@conectiva.com.br>, 2005.
+# Arthur Renato Mello <renato@conectiva.com.br>, 2005.
+# Sergio Rafael Lemke <sergio@mandriva.com.br>, 2009, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: pt_BR\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2010-04-12 12:18-0300\n"
+"Last-Translator: Sergio Rafael Lemke <sergio@mandriva.com.br>\n"
+"Language-Team: Brazilian Portuguese <cooker-i18n@mandrivalinux.org>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../draklive-install:106
+#, fuzzy, c-format
+msgid "Unity Installer"
+msgstr "Instalador Live"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Este assistente vai lhe ajudar a instalar a distribuição live."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Erro"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Ocorreu um erro"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+"Sem espaço suficiente disponível (%s disponíveis mas %s são necessários)"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Calculando tamanho total..."
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Não foi possível copiar os arquivos para a nova raiz"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Parabéns"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Por favor, desligue o computador, remova o CD Mandriva Live e reinicie."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Continuar Mesmo Assim ?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Sair sem salvar"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Sair sem gravar a tabela de partições ?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Você quer salvar as modificações em /etc/fstab ?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Você precisa reiniciar o computador para que as modificações na tabela de "
+"partições entre em vigor"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Você deve formatar a partição %s.\n"
+"Caso contrário, nenhuma entrada para o ponto de montagem %s será gravada em "
+"fstab.\n"
+"Sair mesmo assim ?"
+
+#: ../draklive-install.desktop.in.h:1
+#, fuzzy
+msgid "Install Unity"
+msgstr "Instalar no Disco Rígido"
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Aguarde..."
+
+#~ msgid "Copying in progress"
+#~ msgstr "Cópia em progresso..."
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Instalar seu sistema Mandriva live para o HD"

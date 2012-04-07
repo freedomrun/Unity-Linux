@@ -1,0 +1,209 @@
+# translation of DrakX-fr.po to Français
+# Translation file of Mandriva Linux graphic install
+# Copyright (C) 1999 Mandriva
+#
+# Veuillez ne pas mettre à jour ce fichier à moins d'être
+# certain tant de vos traductions que de votre grammaire et
+# de votre orthographe. Ces dernières sont trop souvent
+# approximatives. Elles nécessitent alors des relectures et
+# des corrections qui n'ont d'autre conséquence que de faire
+# perdre du temps à tout le monde (à vous si votre travail est
+# imparfait et aux relecteurs qui doivent rechercher puis corriger
+# vos éventuelles fautes).
+#
+# VEUILLEZ RESPECTER LA TYPOGRAPHIE FRANÇAISE !
+# Les majuscules doivent être accentuées si besoin est. Respectez
+# les espaces nécessaires pour la ponctuation (espace après la virgule et
+# le point, espace insécables avant les points d'interrogation,
+# d'exclamation, les deux-points et le point virgule, espace aussi après
+# le point virgule).
+# N'enlevez pas l'espace qui suit un signe de ponctuation en fin de
+# phrase; vous devez respecter la version originale.  Dans ce type de
+# cas, il est extrèmement probable que le programme va afficher
+# quelque chose d'autre à la fin.  En enlevant l'espace, vous allez
+# accoller deux mots.
+#
+# ESPACES INSÉCABLES
+# Vous devez utiliser un espace insécable (c'est un espace qui ne peut
+# pas servir de rupture à la ligne) avant le point d'exclamation, le
+# point d'interrogation, le deux-points, le point virgules, et pour les
+# "quantités", entre le nombre et l'unité abbrégée (par exemple "10 g").
+# L'espace normal en ISO et UTF8 est le caractere 0x20 tandis que l'espace
+# insécable est le caractère 0xA0. Sous Emacs en utilisant le po mode
+# livré avec gettext >= 0.10.40-4mdk vous pouvez voir celui-ci avec un
+# fond de couleur spécial. Sous Vi celui-ci est normalement affiché
+# précédé du caractère pipe "|". Pour le taper sous la plupart des
+# éditeurs, vous pouvez utiliser la touche "Compose" puis en tapant
+# deux espaces. Si vous n'avez pas de touche compose, vous pouvez
+# donner cette fonction à la touche "Windows" droite de votre clavier
+# avec la commande suivante :
+#   xmodmap -e 'keycode 116 = Multi_key'
+#
+# Les guillemets françaises sont « et » et non ". La guillemet ouvrante
+# « est suivie d'un espace insécable et la guillemet fermante » est
+# précédée du même type d'espace. Pour le taper, vous pouvez utiliser
+# la combinaison Compose < <, et Compose > > (ou alt-z et alt-x).
+#
+# Enfin, traduisez INTELLIGEMMENT et non mot à mot. Certaines traductions
+# n'ont aucun sens en français.
+#
+# MOTS À ÉVITER
+#  - application. Ce terme n'étant pas compris par le grand public, il est
+#    préférable de le remplacer par le mot "programme".
+#
+# Nous vous remercions de votre compréhension.
+#
+#
+#
+# Stéphane Teletchéa, 2005.
+# David BAUDENS <baudens@mandriva.com>, 1999-2004.
+# David ODIN <odin@mandriva.com>, 2000.
+# Pablo Saratxaga <pablo@mandriva.com>, 2001, 2005.
+# KAtiOS <katios@nolabel.net>, 2001.
+# Guillaume Cottenceau <gc@mandriva.com>, 2001-2002.
+# Thierry Vignaud <tvignaud@mandriva.com>, 2001-2004.
+# Christophe Combelles <ccomb@free.fr>, 2002,2003.
+# Adrien REZER <monsieurdidi@free.fr>, 2003.
+# RICHARD Nicolas <richardnicolas22@yahoo.fr>, 2004.
+# Lecureuil Nicolas <n1c0l4s.l3@wanadoo.fr>, 2004.
+# Teletchéa <steletch@free.fr>, 2004, 2005.
+# Christophe Berthelé <cpjc@free.fr>, 2005, 2006, 2008.
+# Didier Hérisson <didier.herisson@angstrom.uu.se>, 2005.
+# Nicolas Lécureuil <neoclust@mandriva.org>, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: DrakX-fr\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2008-03-22 14:10+0100\n"
+"Last-Translator: Christophe Berthelé <cpjc@free.fr>\n"
+"Language-Team: French <cooker-i18n@mandrivalinux.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2;plural=(n>1);\n"
+
+#: ../draklive-install:106
+#, c-format
+msgid "Unity Installer"
+msgstr ""
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Cet assistant va vous aider à installer une distribution live."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Erreur"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Une erreur est survenue"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr "Espace disponible insuffisant (%s disponibles pour %s nécessaires)"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Calcul de la taille totale en cours"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Impossible de copier les fichiers vers la nouvelle racine"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Félicitations"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Veuillez arrêter votre ordinateur, enlever votre système live, et redémarrer "
+"votre ordinateur."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Désirez-vous tout de même continuer ?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Quitter sans sauvegarder"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Désirez-vous réellement quitter sans écrire la table des partitions ?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Désirez-vous sauvegarder les modifications dans /etc/fstab"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Vous devez redémarrer pour que les modifications apportées à la\n"
+"table des partitions soient prises en compte"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Vous devriez formater la partition %s.\n"
+"Sinon aucune entrée pour le point de montage %s ne sera écrite dans la "
+"fstab.\n"
+"Quitter malgré tout ?"
+
+#: ../draklive-install.desktop.in.h:1
+#, fuzzy
+msgid "Install Unity"
+msgstr "Installation sur disque dur"
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Veuillez patienter"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Copie en cours"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Installer votre Mandriva Live sur un disque"

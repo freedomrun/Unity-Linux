@@ -1,0 +1,151 @@
+# translation of DrakX-tr.po to Turkish
+# Copyright (C) 2000,2003 Free Software Foundation, Inc.
+# Copyright (c) 2000 Mandriva
+# ############################################
+#
+#
+# #############################################
+#
+# Ömer Fadıl USTA <omer_fad@hotmail.com> , 1999-2003.
+# Tuncay YENİAY <tuncayyeniay@mynet.com>,2002.
+# Nazmi Savga <nsavga@doruk.net.tr>,2001.
+# Durmuş Celep <durmusc_tr@yahoo.com>,2002.
+# Erçin EKER <erc.caldera@gmx.net>, 2003.
+# Atilla ÖNTAŞ <atilla_ontas@mandriva.org>, 20, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: DrakX-tr\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2010-04-10 03:37+0200\n"
+"Last-Translator: Atilla ÖNTAŞ <atilla_ontas@mandriva.org>\n"
+"Language-Team: Turkish < cooker-i18n@mandrivalinux.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: gtranslator 1.9.5\n"
+
+#: ../draklive-install:106
+#, fuzzy, c-format
+msgid "Unity Installer"
+msgstr "Çalışan CD Yükleme"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Bu sihirbaz size çalışan cd kurulumu yapmanızda yardımcı olacaktır."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Hata"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Bir hata oluştu"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr "Yeterli boş alan yok (%s boş alan var, %s gerekli)"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Toplam boyut hesaplanıyor"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Dosyalar yeni köke kopyalanamıyor"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Tebrikler"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Lütfen bilgisayarınızı durdurunuz. Çalışan CD sistemi çıkartıp yeniden "
+"başlatınız."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Yine de devam edilsin mi?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Kaydetmeden çıkış yap"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Bölümlendirme tablosunu kaydetmeden mi çıkıyorsunuz?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "/etc/fstab değişikliklerini kaydetmek istiyor musunuz ?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Bölümlendirme tablosundaki değişikliklerin geçerli olması için makinenizi "
+"yeniden başlatmalısınız."
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"%s bölümü silinmeli\n"
+"Aksi halde fstab içerisine %s bağlantı noktası eklenmeyecek.\n"
+"Yine de çıkmak istiyor musunuz?"
+
+#: ../draklive-install.desktop.in.h:1
+#, fuzzy
+msgid "Install Unity"
+msgstr "Sabit diske kur"
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Çalışan CD"
+
+#~ msgid "Please wait"
+#~ msgstr "Lütfen bekleyin"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Kopyalama sürüyor"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Mandriva Çalışan CD sisteminizi diske yükleyin"

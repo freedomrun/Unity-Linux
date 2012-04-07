@@ -1,0 +1,157 @@
+# translation of pt.po to Português
+#
+# Latest versions of po files are at http://www.mandrivalinux.com/l10n/pt.php3
+#
+# Copyright (C) 2000 Mandriva
+#
+# Fernando Moreira <fmoreira@netc.pt>, 1999.
+# Jorge Costa <Jorgercosta@netc.pt>, 2001.
+# José JORGE <jose.jorge@oreka.com>, 2002,2003.
+# Jose Jorge <jjorge@free.fr>, 2003, 2004, 2005.
+# Jose Carlos D. S. Saraiva <jose.d.s.saraiva@clix.pt>, 2004.
+# Zé <mmodem00@netvisao.pt>, 2004, 2005, 2006.
+# Américo José Melo <mmodem00@netvisao.pt>, 2004, 2005.
+# Ze <mmodem00@netvisao.pt>, 2004.
+# José Melo <mmodem00@gmail.com>, 2005.
+# José Melo <mmodme00@gmail.com>, 2005.
+# Jose JORGE <jjorge@free.fr>, 2005.
+# Zé <mmodem00@gmail.com>, 2006, 2007, 2008, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: pt\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2010-04-05 16:04+0100\n"
+"Last-Translator: Zé <mmodem00@gmail.com>\n"
+"Language-Team: Portuguese <kde-i18n-doc@kde.org>\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+#: ../draklive-install:106
+#, fuzzy, c-format
+msgid "Unity Installer"
+msgstr "Instalação 'Live'"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Este assistente irá ajudá-lo a instalar a distribuição 'live'."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Erro"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Ocorreu um erro"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+"Sem espaço suficiente disponível (%s disponível enquanto precisa de %s)"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "A calcular o tamanho total"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Incapaz de copiar ficheiros para a nova raíz"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Parabéns"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Por favor desligue o seu computador, remova o seu sistema 'live', e reinicie "
+"o seu computador."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Continuar mesmo assim?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Sair sem gravar"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Sair sem escrever a tabela de partições?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Deseja gravar as modificações em /etc/fstab?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Precisa reiniciar para que as modificações na tabela de partições sejam "
+"aplicadas"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Deve formatar a partição %s.\n"
+"Caso contrário não será escrita nenhuma entrada para o ponto\n"
+"de montagem %s em fstab.\n"
+"Sair mesmo assim?"
+
+#: ../draklive-install.desktop.in.h:1
+#, fuzzy
+msgid "Install Unity"
+msgstr "Instalar no Disco Rígido"
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Por favor aguarde"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Cópia em progresso"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Instalar o sistema Mandriva Live no disco"

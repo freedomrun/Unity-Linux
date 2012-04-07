@@ -1,0 +1,342 @@
+# translation of ko(metanav).po to ahb hong-bae
+# Korean translation of drakbootdisk.
+# Copyright (C) 2001, 2007 Free Software Foundation, Inc.
+#
+# changes asked by HP people -- pablo 2003-01-23
+#
+# Jaegeum Choe <baedaron@hananet.net>, 2001.
+# meta <hbahn@metq.com>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: ko(metanav)\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2007-06-16 13:00+0900\n"
+"Last-Translator: meta <hbahn@metq.com>\n"
+"Language-Team: ahb hong-bae <ko@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: ../draklive-install:106
+#, c-format
+msgid "Unity Installer"
+msgstr ""
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "설치도우미가 당신이 Live배포판을 설치하는 것을 도와줄 것입니다."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "오류"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "오류 발생"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "전체 크기 계산중"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr ""
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "축하합니다."
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr "시스템에서 설치 CD를 제거하고 컴퓨터를 재시작하십시오"
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "계속하시겠습니까?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "저장하지 않고 종료합니다."
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "파티션 테이블을 만들지 않고 종료합니까"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "「/etc/fstab」의 변경사항을 저장합니까?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr "파티션 테이블 변경사항을 적용하기 위해 재시작해주십시오"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"파티션 %s를 초기화(format)해야 합니다. \n"
+"그렇지 않으면 마운트 위치 %s는 fstab에 저장되지 않을 것입니다. \n"
+"\n"
+"종료합니까?"
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Please wait"
+#~ msgstr "기다려 주세요"
+
+#~ msgid "Copying in progress"
+#~ msgstr "복사 진행중"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "포맷할 파티션을 선택하세요"
+
+#~ msgid "Check bad blocks?"
+#~ msgstr "배드 블럭 검사를 합니까?"
+
+#~ msgid ""
+#~ "Failed to check filesystem %s. Do you want to repair the errors? (beware, "
+#~ "you can lose data)"
+#~ msgstr ""
+#~ "%s에서 파일시스템 검사에 실패하였습니다. 오류를 수정하시겠습니까? \n"
+#~ " : 데이터를 잃을 수도 있습니다.)"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr "스왑 메모리가 부족합니다. 추가해주십시오."
+
+#~ msgid "No partition available"
+#~ msgstr "사용가능한 파티션이 없습니다."
+
+#~ msgid "Scanning partitions to find mount points"
+#~ msgstr "파티션을 검색하여 마운트 위치를 찾습니다."
+
+#~ msgid "Choose the mount points"
+#~ msgstr "마운트 위치 선택"
+
+#~ msgid "Partitioning"
+#~ msgstr "하드 나누는 중(partitioning)"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "마운트 지점 %s에서 충돌"
+
+#~ msgid ""
+#~ "Some hardware on your computer needs 'proprietary' drivers to work.\n"
+#~ "You can find some information about them at: %s"
+#~ msgstr ""
+#~ "시스템상에 「상업용」드라이버를 요구하는 하드웨어가 존재합니다. \n"
+#~ "다음을 참조하세요:%s"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "관리 파티션이 필요합니다. 파티션을 생성하세요. (또는 기존 파티션 클릭)\n"
+#~ " 그 다음, '마운트 위치'를 선택하고 '/'로 설정하세요."
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "스왑 파티션이 없습니다.\n"
+#~ "\n"
+#~ "계속 진행합니까?"
+
+#~ msgid "You must have a FAT partition mounted in /boot/efi"
+#~ msgstr "FAT파티션이 필요합니다. (「/boot/efi」에 마운트)"
+
+#~ msgid "Use free space"
+#~ msgstr "빈 공간 사용"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr "새 파티션을 만들 수 없습니다. - 공간 부족"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "기존 파티션 사용"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "존재하는 파티션이 없습니다."
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "윈도우즈 파티션을 루프백으로 사용"
+
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "Linux4Win으로 사용할 파티션은 어느 것입니까?"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "크기 선택"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "관리 파티션 크기(MB): "
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "스왑 파티션 크기(MB): "
+
+#~ msgid ""
+#~ "There is no FAT partition to use as loopback (or not enough space left)"
+#~ msgstr "루프백으로 사용할 FAT 파티션이 없습니다. (또는 디스크 공간 부족.)"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "윈도우즈 파티션의 빈 공간을 사용하시오."
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "어떤 파티션의 크기를 조정하시겠습니까?"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "FAT 크기 조정기가 파티션을 처리할 수 없습니다.\n"
+#~ "다음의 오류가 발생했습니다: %s"
+
+#~ msgid "Resizing"
+#~ msgstr "크기조정중.."
+
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "윈도우즈 파티션 크기 계산중."
+
+#~ msgid ""
+#~ "Your Windows partition is too fragmented. Please reboot your computer "
+#~ "under Windows, run the ``defrag'' utility, then restart the Mandriva "
+#~ "Linux installation."
+#~ msgstr ""
+#~ "윈도우즈 파티션이 조각져 있습니다. \n"
+#~ "윈도우즈로 컴퓨터를 재시작하고, 디스크 조각모음을 실행하십시오.\n"
+#~ "그 후 맨드리바 리눅스로 재시작하십시오."
+
+#~ msgid ""
+#~ "WARNING!\n"
+#~ "\n"
+#~ "DrakX will now resize your Windows partition. Be careful: this\n"
+#~ "operation is dangerous. If you have not already done so, you\n"
+#~ "first need to exit the installation, run \"chkdsk c:\" from a\n"
+#~ "Command Prompt under Windows (beware, running graphical program\n"
+#~ "\"scandisk\" is not enough, be sure to use \"chkdsk\" in a\n"
+#~ "Command Prompt!), optionally run defrag, then restart the\n"
+#~ "installation. You should also backup your data.\n"
+#~ "When sure, press Ok."
+#~ msgstr ""
+#~ "경고!\n"
+#~ "\n"
+#~ "드레이크X가 윈도우즈 파티션의 크기를 재조정합니다.\n"
+#~ " - 주의:  이 작업은 위험합니다. \n"
+#~ "아직 준비가 덜 되었다면, 설치를 중단하고 윈도우의 명령 프롬프트에서 "
+#~ "'chkdsk c:'를 실행하십시오. \n"
+#~ "(주의 : scandisk와 같은 그래픽 프로그램은 충분하지 않습니다. \n"
+#~ "반드시 명령프롬프트에서 'chkdsk'를 사용하십시오!)\n"
+#~ "가능하면 디스크조각모음을 하시고 난 후 설치를 재개하십시오. \n"
+#~ "또한 자료도 따로 받아두십시오\n"
+#~ "모든 것이 준비되었다면 확인을 누르세요."
+
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "윈도우즈 파티션의 크기를 정해주십시오."
+
+#~ msgid "partition %s"
+#~ msgstr "파티션 %s"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "윈도우즈 파티션 재조정"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "FAT 크기조정 실패: %s"
+
+#~ msgid ""
+#~ "To ensure data integrity after resizing the partition(s), \n"
+#~ "filesystem checks will be run on your next boot into Windows(TM)"
+#~ msgstr ""
+#~ "파티션을 재조정한 후 데이터 무결성을 확인하기 위해, \n"
+#~ "다음 Windows(TM)부팅시 파일 시스템을 점검할 것입니다."
+
+#~ msgid "There is no FAT partition to resize (or not enough space left)"
+#~ msgstr ""
+#~ "루프백으로 사용하거나 크기를 조정할 FAT 파티션이 없습니다. (또는 디스크 공"
+#~ "간이 부족합니다.)"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "윈도우즈(TM) 제거"
+
+#~ msgid "Erase and use entire disk"
+#~ msgstr "(파티션)삭제하고 전체 디스크 사용"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr ""
+#~ "하드 디스크 드라이브가 하나 이상 있습니다. 어느 것에 리눅스를 설치하시겠습"
+#~ "니까?"
+
+#~ msgid "ALL existing partitions and their data will be lost on drive %s"
+#~ msgstr "%s 드라이브상에 존재하는 모든 파티션과 자료들이 손실됩니다."
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "사용자 정의 파티션 나누기"
+
+#~ msgid "Use fdisk"
+#~ msgstr "fdisk 사용"
+
+#~ msgid ""
+#~ "You can now partition %s.\n"
+#~ "When you are done, do not forget to save using `w'"
+#~ msgstr ""
+#~ "이제 %s의 파티션 작업을 할 수 있습니다.\n"
+#~ "마친 후, 'w'를 눌러 저장하십시오."
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "설치에 필요한 공간을 찾을 수 없습니다."
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr "드레이크X 파티션 설치도우미가 다음의 솔루션을 발견했습니다:"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "파티션 나누기 실패: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "네트워크 활성화 중..."
+
+#~ msgid "Bringing down the network"
+#~ msgstr "네트워크 해제 중..."

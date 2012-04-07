@@ -1,0 +1,356 @@
+# Translation of draklive-install messages to Russian
+# Copyright (C) 1999-2008 Mandriva
+# Pavel Maryanov <acid_jack@ukr.net>, 2002, 2003, 2005, 2006, 2008.
+# Alice Lafox <alice@lafox.com.ua>, 2003.
+# Alice Lafox <alice@lafox.net>, 2004, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: draklive-install\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2008-03-21 02:52+0200\n"
+"Last-Translator: Pavel Maryanov <acid_jack@ukr.net>\n"
+"Language-Team: Russian <gnu@mx.ru>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Language: ru_RU\n"
+
+#: ../draklive-install:106
+#, fuzzy, c-format
+msgid "Unity Installer"
+msgstr "Установщик LiveCD/DVD"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Этот мастер поможет вам установить live-дистрибутив."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Ошибка"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Произошла ошибка"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr "Недостаточно свободного места (доступно — %s, нужно — %s)"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Вычисляется общий размер"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Не удаётся скопировать файлы в новый корень"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Поздравляем"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Выключите компьютер, удалите свою live-систему и перезапустите компьютер."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Всё равно продолжить?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Выйти без сохранения"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Выйти без записи таблицы разделов?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Хотите сохранить изменения в /etc/fstab?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Вам нужно перезагрузиться, чтобы изменения таблицы разделов вступили в силу"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Вам следует отформатировать раздел %s.\n"
+"Иначе в fstab не будет записи о точке монтирования %s.\n"
+"Всё равно выйти?"
+
+#: ../draklive-install.desktop.in.h:1
+#, fuzzy
+msgid "Install Unity"
+msgstr "Установка на жесткий диск"
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Подождите, пожалуйста"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Выполняется копирование"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Установить Mandriva LiveCD на жёсткий диск"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "Выберите разделы, которые вы хотите отформатировать"
+
+#~ msgid "Check bad blocks?"
+#~ msgstr "Проверить плохие блоки?"
+
+#~ msgid ""
+#~ "Failed to check filesystem %s. Do you want to repair the errors? (beware, "
+#~ "you can lose data)"
+#~ msgstr ""
+#~ "Проверка файловой системы %s завершилась неудачей. Хотите исправить "
+#~ "ошибки (осторожно, вы можете потерять данные)?"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr ""
+#~ "Не хватает swap-пространства для завершения установки. Пожалуйста, "
+#~ "увеличьте немного его размер."
+
+#~ msgid "No partition available"
+#~ msgstr "Разделы не доступны"
+
+#~ msgid "Scanning partitions to find mount points"
+#~ msgstr "Выполняется проверка разделов на наличие точек монтирования"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "Выберите точки монтирования"
+
+#~ msgid "Partitioning"
+#~ msgstr "Разметка диска"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "Дублирование точки монтирования %s"
+
+#~ msgid ""
+#~ "Some hardware on your computer needs ``proprietary'' drivers to work.\n"
+#~ "You can find some information about them at: %s"
+#~ msgstr ""
+#~ "Для некоторых устройств вашего компьютере для нормальной их работы\n"
+#~ "необходимы \"проприетарные\" драйверы.\n"
+#~ "Вы можете найти различную информацию о них на: %s"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "У вас должен быть корневой раздел.\n"
+#~ "Для этого создайте раздел (или выберите уже существующий).\n"
+#~ "Затем выберите действие \"Точка монтирования\" и установите ее в `/'"
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "У вас отсутствует раздел для свопинга\n"
+#~ "\n"
+#~ "Хотите продолжить?"
+
+#~ msgid "You must have a FAT partition mounted in /boot/efi"
+#~ msgstr "У вас должен быть раздел FAT, примонтированный на /boot/efi"
+
+#~ msgid "Use free space"
+#~ msgstr "Использовать свободное пространство"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr "Недостаточно свободного места для размещения новых разделов"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "Использовать существующие разделы"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "Нет существующих для использования разделов"
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "Использовать раздел Windows для loopback"
+
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "Какой раздел вы хотите использовать для Linux4Win?"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "Укажите размеры"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "Размер корневого раздела в MB: "
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "Размер раздела для свопинга в MB: "
+
+#~ msgid ""
+#~ "There is no FAT partition to use as loopback (or not enough space left)"
+#~ msgstr ""
+#~ "Отсутствует раздел FAT для использования в качестве loopback (или не "
+#~ "хватает места)"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "Использовать свободное место на разделе Windows"
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "Размер какого из разделов вы хотите изменить?"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "Программа изменения размера FAT не может обработать ваш раздел.\n"
+#~ "Возникла следующая ошибка: %s"
+
+#~ msgid "Resizing"
+#~ msgstr "Изменение размера"
+
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "Вычисляется размер раздела Windows"
+
+#~ msgid ""
+#~ "Your Windows partition is too fragmented. Please reboot your computer "
+#~ "under Windows, run the ``defrag'' utility, then restart the Mandriva "
+#~ "Linux installation."
+#~ msgstr ""
+#~ "Ваш раздел Windows слишком фрагментирован. Перезагрузите компьютер под "
+#~ "Windows, запустите утилиту \"defrag\", а затем повторно запустите "
+#~ "установку Mandriva Linux."
+
+#~ msgid ""
+#~ "WARNING!\n"
+#~ "\n"
+#~ "DrakX will now resize your Windows partition. Be careful: this\n"
+#~ "operation is dangerous. If you have not already done so, you\n"
+#~ "first need to exit the installation, run \"chkdsk c:\" from a\n"
+#~ "Command Prompt under Windows (beware, running graphical program\n"
+#~ "\"scandisk\" is not enough, be sure to use \"chkdsk\" in a\n"
+#~ "Command Prompt!), optionally run defrag, then restart the\n"
+#~ "installation. You should also backup your data.\n"
+#~ "When sure, press Ok."
+#~ msgstr ""
+#~ "ПРЕДУПРЕЖДЕНИЕ!\n"
+#~ "\n"
+#~ "Сейчас DrakX изменит размер вашего раздела Windows. Будьте\n"
+#~ "осторожны: эта операция опасна. Если вы еще этого не сделали,\n"
+#~ "вам стоит выйти из инсталляции, запустить \"chkdsk c:\" в\n"
+#~ "командной строке под Windows (имейте в виду, что запуска \n"
+#~ "графической программы \"scandisk\" недостаточно, обязательно\n"
+#~ "запустите \"chkdsk\" в командной строке), по желанию выполнить\n"
+#~ "дефрагментацию (defrag), затем начать установку снова. \n"
+#~ "Вы также должны сделать резервную копию данных.\n"
+#~ "Если уверены, нажмите Ok."
+
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "Какой объём вы хотите оставить для Windows"
+
+#~ msgid "partition %s"
+#~ msgstr "раздел %s"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "Изменяется размер раздела Windows"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "Не удалось изменить размер FAT: %s"
+
+#~ msgid ""
+#~ "To ensure data integrity after resizing the partition(s), \n"
+#~ "filesystem checks will be run on your next boot into Windows(TM)"
+#~ msgstr ""
+#~ "Для гарантии целостности данных после изменения размера \n"
+#~ "раздела(ов), проверка файловой системы будет запущена при\n"
+#~ "следующей загрузке в Windows(TM)"
+
+#~ msgid "There is no FAT partition to resize (or not enough space left)"
+#~ msgstr "Отсутствует раздел FAT для изменения размера (или не хватает места)"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Удалить Windows(TM)"
+
+#~ msgid "Erase and use entire disk"
+#~ msgstr "Очистить и использовать весь диск"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr ""
+#~ "У вас есть несколько жёстких дисков. На какой из них вы хотите установить "
+#~ "Linux?"
+
+#~ msgid "ALL existing partitions and their data will be lost on drive %s"
+#~ msgstr "ВСЕ существующие разделы и их данные будут потеряны на диске %s"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "Ручная разметка диска"
+
+#~ msgid "Use fdisk"
+#~ msgstr "Используйте fdisk"
+
+#~ msgid ""
+#~ "You can now partition %s.\n"
+#~ "When you are done, do not forget to save using `w'"
+#~ msgstr ""
+#~ "Теперь вы можете разметить %s.\n"
+#~ "По окончании не забудьте сохранить изменения с помощью команды `w'"
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "Невозможно найти пространство для установки"
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr "Мастер разметки диска DrakX нашел следующие решения:"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "Не удалось разметить диск: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "Поднимается сеть"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "Опускается сеть"
+
+#~ msgid "none"
+#~ msgstr "отсутствует"

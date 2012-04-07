@@ -1,0 +1,140 @@
+# Icelandic translation of draklive-install.po
+# Copyright (C) 1999,2003, 2005, 2006, 2009 Free Software Foundation, Inc.
+# Copyright (C) 1999 Mandriva
+#
+#
+# Jóhann Þorvarðarson <johann.torvardarson@lais.is>, 1999-2000.
+# Þórarinn (Tony) R. Einarsson <thori@mindspring.com>, 1999-2000.
+# Pjetur G. Hjaltason <pjetur@pjetur.net>, 2003, 2005, 2006, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: draklive-install\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2009-03-10 00:54+0000\n"
+"Last-Translator: Pjetur G. Hjaltason <pjetur@pjetur.net>\n"
+"Language-Team: Icelandic <kde-isl@molar.is>\n"
+"Language: is\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../draklive-install:106
+#, fuzzy, c-format
+msgid "Unity Installer"
+msgstr "Live innsetning"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Þessi ráðgjafi mun hjálpa þér við að setja inn live dreifinguna."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Villa"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Villa kom upp"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr "Ekki nægilegt pláss (%s til, þegar þörf er á %s)"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Reikna heildarstærð"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Get ekki afritað skrár í nýja rót"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Til hamingju"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr "Stöðvaðu tölvuna, fjarlægðu live kerfið, og endurræstu tölvuna þína."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Halda samt áfram?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Hætta án þess að vista"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Hætta án þess að skrifa sneiðatöfluna?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Viltu vista /etc/fstab breytingar"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Þú verður að ræsa tölvuna aftur svo breytingar á sneiðatöflunni taki gildi"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Þú ættir að forsníða disksneiðina %s.\n"
+"Annars verður engin færsla fyrir tengipunkt %s skráð í fstab.\n"
+"Hætta samt?"
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Augnablik"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Afritun í gangi"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Setja Mandriva-live kerfi á disk"

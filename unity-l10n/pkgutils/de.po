@@ -1,0 +1,1174 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-31 11:30+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 1.8.0\n"
+
+#: bldchrt:93
+msgid " (one day)"
+msgstr ""
+
+#: bldchrt:95
+#, sh-format
+msgid ""
+"Usage: %s [OPTION]... [PKGNAME]...\n"
+"Build packages from command line args in the svn inside specified chroot\n"
+"\n"
+"Mandatory arguments to long options are mandatory for short options too.\n"
+"  -a, --arch=[32|64]        Build packages in svn for specified arch\n"
+"  -b, --bpopts=OPTS         bldpkg options (see \"bldpkg -h\" for help)\n"
+"  -c, --command=COMMAND     Pass a command to the chroot environment(s)\n"
+"  -m, --min                 Minimize both 32 & 64 chroot environments\n"
+"                            to equalize packages installed\n"
+"  -p, --pwd                 Use $PWD instead of svn dir\n"
+"  -B, --bldlog              Write build status log %s\n"
+"  -A, --age=SECONDS         Age of lockfile in seconds [default=%s]\n"
+"  -s, --svndir=PATH         Path to svn base folder %s\n"
+"  -S, --altsvn=PATH         Path to alternate svn base folder %s  \n"
+"      --path32=PATH         Path to 32bit chroot folder\n"
+"      --path64=PATH         Path to 64bit chroot folder\n"
+"      --pathplf32=PATH      Path to PLF 32bit chroot folder\n"
+"      --pathplf64=PATH      Path to PLF 64bit chroot folder\n"
+"      --repo32=PATH         Path to 32bit local repo\n"
+"      --repo64=PATH         Path to 64bit local repo\n"
+"      --repoplf32=PATH      Path to PLF 32bit local repo\n"
+"      --repoplf64=PATH      Path to PLF 64bit local repo\n"
+"  -x, --exit                Exit when any build fails\n"
+"  -q, --quiet               Provide less detailed output\n"
+"  -h, --help                Display this help and exit\n"
+"  -u, --usage               Display typical usage and exit"
+msgstr ""
+
+#: bldchrt:128
+msgid ""
+"\n"
+"Examples:\n"
+"%s\t\t    Builds package in svn 32bit chroot\n"
+"%s\t\t    Builds package in svn 64bit chroot\n"
+"%s\t\t    Builds package in svn for both 32bit & 64bit chroots\n"
+"%s\t    Execute command in chroot, use quotes to\n"
+"\t\t\t    include commands containing spaces\n"
+"\t\t\t    (command will execute before any\n"
+"\t\t\t    packages are built)\n"
+"%s    Options for bldpkg script, use quotes to\n"
+"\t\t\t    include multiple options containing spaces\n"
+"%s\t\t    Remove all unique pkgs from both 32bit & 64bit chroots\n"
+"\t\t\t    i.e. minimize both chroot environments\n"
+"%s\t\t    Consider current dir as top dir of svn\n"
+"\t\t\t    (good for testing pkgs outside svn)\n"
+"\n"
+"Note: default lock file is /path/to/chroot%s"
+msgstr ""
+
+#: bldchrt:167 bldpkg:208 jailme:94
+#: slinkin:80 svninst:159
+msgid ""
+"Can't write to config file '%s'!\n"
+"Please edit this script and change the value of\n"
+"variable '%s' to a file which you have\n"
+"write permissions to, e.g. '%s'\n"
+"(Script is located at '%s')"
+msgstr ""
+
+#: bldchrt:201 bldpkg:246 jailme:127
+#: slinkin:114 svninst:193
+msgid "Please enter full path to %s base folder: "
+msgstr ""
+
+#: bldchrt:203 bldchrt:226 jailme:129
+#: slinkin:116 svninst:195
+msgid "Nothing entered, quitting...\n"
+msgstr ""
+
+#: bldchrt:207 slinkin:120 svninst:199
+msgid "Please change the %s base folder with the -s option\nQuitting...\n"
+msgstr ""
+
+#: bldchrt:216 jailme:138 slinkin:129
+#: svninst:208
+msgid "Using %s base folder '%s'\n"
+msgstr ""
+
+#: bldchrt:224
+msgid "Please enter full path to chroot %s base folder: "
+msgstr ""
+
+#: bldchrt:230
+msgid ""
+"Please change the chroot %s base folder with the %s option\nQuitting...\n"
+msgstr ""
+
+#: bldchrt:238
+msgid "Using chroot %s base folder '%s'\n"
+msgstr ""
+
+#: bldchrt:250
+msgid "Using repo %s base folder '%s'\n"
+msgstr ""
+
+#: bldchrt:266
+msgid "### Can't write to dir '%s', quitting ###\n"
+msgstr ""
+
+#: bldchrt:281
+msgid ""
+"You are using a 32bit host, all 64bit\n"
+"chroot operations will be disabled\n"
+msgstr ""
+
+#: bldchrt:288
+msgid ""
+"--min option not allowed in 32bit host\n"
+"Quitting..."
+msgstr ""
+
+#: bldchrt:291
+msgid "--min option not allowed in 32bit host"
+msgstr ""
+
+#: bldchrt:297
+msgid ""
+"You must add --arch=32 (or -a32) to your\n"
+"command line arguments for a 32bit host\n"
+"Quitting..."
+msgstr ""
+
+#: bldchrt:301
+msgid "Missing option --arch=32"
+msgstr ""
+
+#: bldchrt:311 jailme:170
+msgid ""
+"Can't find %s base directory:\n"
+"'%s'\n"
+"Please change the path with the %s option"
+msgstr ""
+
+#: bldchrt:315
+msgid "Can't find %s base directory: %s"
+msgstr ""
+
+#: bldchrt:330
+msgid ""
+"Both %s and PLF %s chroot paths are set to:\n"
+"'%s'\n"
+"You must use different paths for these\n"
+"Please change one of them using either\n"
+"the %s or %s option"
+msgstr ""
+
+#: bldchrt:336
+msgid "Same path for %s and PLF %s chroot: %s"
+msgstr ""
+
+#: bldchrt:367
+msgid ""
+"Can't find %s chroot directory:\n"
+"'%s'\n"
+"Please change the path with the %s option"
+msgstr ""
+
+#: bldchrt:371
+msgid "Can't find %s chroot directory: %s"
+msgstr ""
+
+#: bldchrt:465
+msgid "Lockfile %s valid until %s"
+msgstr ""
+
+#: bldchrt:466
+msgid "### %s, quitting ###\n"
+msgstr ""
+
+#: bldchrt:507
+msgid "Wait..."
+msgstr ""
+
+#: bldchrt:547
+msgid "An error occurred while mounting the filesystems"
+msgstr ""
+
+#: bldchrt:549 bldchrt:586
+msgid "fail"
+msgstr ""
+
+#: bldchrt:551
+msgid "Filesystems successfully mounted"
+msgstr ""
+
+#: bldchrt:584
+msgid "An error occurred while unmounting the filesystems"
+msgstr ""
+
+#: bldchrt:588
+msgid "Filesystems successfully unmounted"
+msgstr ""
+
+#: bldchrt:597 bldchrt:602 bldchrt:608
+#: bldchrt:754 bldchrt:759 bldchrt:766
+msgid "### Entering %s chroot ###\n"
+msgstr ""
+
+#: bldchrt:624
+msgid "### Quitting due to failed build ###\n"
+msgstr ""
+
+#: bldchrt:653
+msgid "Invalid arch option '%s', quitting.\n"
+msgstr ""
+
+#: bldchrt:689
+msgid "svn base folder changed to '%s'\n"
+msgstr ""
+
+#: bldchrt:696
+msgid "Alternate svn base folder changed to '%s'\n"
+msgstr ""
+
+#: bldchrt:706
+msgid "Chroot %s base folder changed to '%s'\n"
+msgstr ""
+
+#: bldchrt:716
+msgid "Repo %s base folder changed to '%s'\n"
+msgstr ""
+
+#: bldchrt:725
+msgid "Run %s as root or with sudo, quitting.\n"
+msgstr ""
+
+#: bldchrt:741
+msgid ""
+"The --pwd option and the \".\" argument\n"
+"are exclusive, skipping '%s'\n"
+msgstr ""
+
+#: bldpkg:137
+msgid ""
+"\n"
+"Examples:\n"
+"%s foo bar\t\t    Builds packages foo & bar\n"
+"%s .\t\t    Builds package in current dir\n"
+"%s -a\t\t    Builds all packages in svn\n"
+"%s -f LISTFILE\t    Builds all packages listed in LISTFILE\n"
+"%s -s /path/to/svn      Sets path to svn folder\n"
+"%s -n ...\t\t    No prompting, output is logged to\n"
+"\t\t\t    LOGFILE (unless -w n used)\n"
+"%s -l ...\t\t    BuildRequires pkgs remain installed,\n"
+"\t\t\t    use rmp to remove them later\n"
+"%s -bx ...\t\t    Extended build option, runs -bi -t\n"
+"\t\t\t    followed by -bb -t\n"
+"\n"
+"Default logging is non-interactive mode only, unless -w used."
+msgstr ""
+
+#: bldpkg:215
+msgid "ERROR: Can't write to config file: %s"
+msgstr ""
+
+#: bldpkg:248
+msgid "Nothing entered, quitting..."
+msgstr ""
+
+#: bldpkg:249 bldpkg:253
+msgid "ERROR: Missing value for %s base folder"
+msgstr ""
+
+#: bldpkg:262
+msgid "Using %s base folder '%s'"
+msgstr ""
+
+#: bldpkg:263
+msgid "INFO: %s base folder: %s"
+msgstr ""
+
+#: bldpkg:282
+msgid ""
+"Can't write to '%s'. Please check the\n"
+"%s macro in '%s'.\n"
+"Quitting..."
+msgstr ""
+
+#: bldpkg:287
+msgid "ERROR: Can't write to %s: %s"
+msgstr ""
+
+#: bldpkg:298
+msgid ""
+"Can't write to log file '%s'!\n"
+"Please edit this script and change the value of\n"
+"variable logfile to a file which you have\n"
+"write permissions to, e.g. '%s'\n"
+"(Script is located at '%s')"
+msgstr ""
+
+#: bldpkg:315
+msgid "Bad argument '%s' to -w option, logging is off."
+msgstr ""
+
+#: bldpkg:316
+msgid "ERROR: Bad argument to -w option: %s"
+msgstr ""
+
+#: bldpkg:323 slinkin:222
+msgid ""
+"Can't read '%s' macros file. Please make sure\n"
+"you have '%s' with %%_topdir macro defined.\n"
+"Quitting..."
+msgstr ""
+
+#: bldpkg:328
+msgid "ERROR: Can't read macros file: %s"
+msgstr ""
+
+#: bldpkg:340
+msgid "Can't write to dir '%s', quitting."
+msgstr ""
+
+#: bldpkg:341
+msgid "ERROR: Can't write to dir: %s"
+msgstr ""
+
+#: bldpkg:349
+msgid "### Removing cached package files ###"
+msgstr ""
+
+#: bldpkg:350
+msgid "INFO: Removing cached package files"
+msgstr ""
+
+#: bldpkg:378
+msgid "Multiple specfiles"
+msgstr ""
+
+#: bldpkg:380
+msgid "Multiple specfiles found:"
+msgstr ""
+
+#: bldpkg:382 bldpkg:408
+msgid "Skipping '%s'"
+msgstr ""
+
+#: bldpkg:383
+msgid "INFO: Multiple specfiles in %s: %s"
+msgstr ""
+
+#: bldpkg:384 bldpkg:409
+msgid "ERROR: Skipping %s"
+msgstr ""
+
+#: bldpkg:385
+msgid "Multiple specfiles in %s: %s"
+msgstr ""
+
+#: bldpkg:388
+msgid "No specfile found in '%s'"
+msgstr ""
+
+#: bldpkg:389
+msgid "INFO: Missing specfile: %s"
+msgstr ""
+
+#: bldpkg:392
+msgid "Using specfile '%s'"
+msgstr ""
+
+#: bldpkg:393
+msgid "INFO: Using specfile: %s"
+msgstr ""
+
+#: bldpkg:394
+msgid "Using specfile: %s"
+msgstr ""
+
+#: bldpkg:407
+msgid "Missing specfile"
+msgstr ""
+
+#: bldpkg:427
+msgid "### Leaving installed BuildRequires for %s in %s ###"
+msgstr ""
+
+#: bldpkg:428
+msgid "INFO: Left installed BuildRequires: %s"
+msgstr ""
+
+#: bldpkg:430
+msgid "### Removing installed BuildRequires for %s ###"
+msgstr ""
+
+#: bldpkg:437
+msgid "Successfully removed BuildRequires"
+msgstr ""
+
+#: bldpkg:439
+msgid "Failed to remove BuildRequires"
+msgstr ""
+
+#: bldpkg:447
+msgid "### Cleaning %s ###"
+msgstr ""
+
+#: bldpkg:448
+msgid "INFO: Cleaning %s ###"
+msgstr ""
+
+#: bldpkg:453
+msgid "### Exiting due to failed build for %s ###"
+msgstr ""
+
+#: bldpkg:454
+msgid "ERROR: Build failed: %s"
+msgstr ""
+
+#: bldpkg:463
+msgid "Failed to build package"
+msgstr ""
+
+#: bldpkg:466 bldpkg:483 bldpkg:525
+#: bldpkg:601 bldpkg:617 bldpkg:634
+#: bldpkg:671 bldpkg:676 bldpkg:686
+#: bldpkg:740
+msgid "ERROR: %s"
+msgstr ""
+
+#: bldpkg:470
+msgid "Succeeded in building package"
+msgstr ""
+
+#: bldpkg:473
+msgid "INFO: %s"
+msgstr ""
+
+#: bldpkg:481
+msgid "Failed to install repsys"
+msgstr ""
+
+#: bldpkg:502 bldpkg:531
+msgid "Can't find dir '%s', skipping."
+msgstr ""
+
+#: bldpkg:503 bldpkg:532
+msgid "ERROR: Can't find dir: %s"
+msgstr ""
+
+#: bldpkg:504 bldpkg:533
+msgid "Can't find dir: '%s'"
+msgstr ""
+
+#: bldpkg:523
+msgid "Missing path in '%s', skipping '%s'"
+msgstr ""
+
+#: bldpkg:545
+msgid "### Starting %s ###"
+msgstr ""
+
+#: bldpkg:555
+msgid "Using new changelog, rev %s, entries"
+msgstr ""
+
+#: bldpkg:599
+msgid "Can't read current pkg revision"
+msgstr ""
+
+#: bldpkg:615
+msgid "Can't get current changelog"
+msgstr ""
+
+#: bldpkg:673
+msgid "Failed %s section"
+msgstr ""
+
+#: bldpkg:683
+msgid "Failed to install BuildRequires"
+msgstr ""
+
+#: bldpkg:685
+msgid "### Failed to install BuildRequires for %s ###"
+msgstr ""
+
+#: bldpkg:714
+msgid "### Installing BuildRequires for %s ###"
+msgstr ""
+
+#: bldpkg:743
+msgid "Missing dependencies"
+msgstr ""
+
+#: bldpkg:745
+msgid "Missing dependencies for %s: %s"
+msgstr ""
+
+#: bldpkg:746
+msgid "ERROR: %s: pkg %s"
+msgstr ""
+
+#: bldpkg:754
+msgid "### Starting build for %s ###"
+msgstr ""
+
+#: bldpkg:756
+msgid "######## Extended Build Mode ########"
+msgstr ""
+
+#: bldpkg:792
+msgid "Can't read file '%s', skipping."
+msgstr ""
+
+#: bldpkg:793
+msgid "ERROR: Can't read file: %s"
+msgstr ""
+
+#: bldpkg:804
+msgid ""
+"Can't change dir to '%s'!\n"
+"Please change the path with the -s option\n"
+"or by editing file '%s'."
+msgstr ""
+
+#: bldpkg:809
+msgid "Can't change dir to svn dir: %s"
+msgstr ""
+
+#: bldpkg:820
+msgid "Built: %s  Failed: %s  Fixed: %s  Out of %s packages"
+msgstr ""
+
+#: bldpkg:821
+msgid "INFO: Built: %s  Failed: %s  Fixed: %s  Out of %s packages"
+msgstr ""
+
+#: bldpkg:828
+msgid "%s: -b: unknown option"
+msgstr ""
+
+#: bldpkg:829
+msgid "ERROR: Unknown option: -b"
+msgstr ""
+
+#: bldpkg:832
+msgid "%s: -b%s: unknown option"
+msgstr ""
+
+#: bldpkg:833
+msgid "ERROR: Unknown option: -b%s"
+msgstr ""
+
+#: bldpkg:836
+msgid "### Ignoring extra option -b%s ###"
+msgstr ""
+
+#: bldpkg:837
+msgid "INFO: Ignoring extra option -b%s"
+msgstr ""
+
+#: bldpkg:915
+msgid "Svn base folder changed to '%s'"
+msgstr ""
+
+#: bldpkg:916
+msgid "INFO: Svn base folder changed to '%s'"
+msgstr ""
+
+#: bldpkg:924
+msgid "Alternate svn base folder changed to '%s'"
+msgstr ""
+
+#: bldpkg:925
+msgid "INFO: Alternate svn base folder changed to '%s'"
+msgstr ""
+
+#: cs:66
+msgid "Delete backup? %s"
+msgstr ""
+
+#: freeme:30
+msgid "Please run %s as normal user, not superuser (root)\n"
+msgstr ""
+
+#: i586:121
+msgid "Disabling channel(s): "
+msgstr ""
+
+#: i586:121
+msgid "Enabling channel(s): "
+msgstr ""
+
+#: jailme:61
+msgid ""
+"Usage: %s [OPTION]...\n"
+"Set up for entering chroot environment\n"
+"\n"
+"Mandatory arguments to long options are mandatory for short options too.\n"
+"  -s, --svndir=PATH         Path to svn base folder %s\n"
+"  -S, --altsvn=PATH         Path to alternate svn base folder %s\n"
+"  -A, --usealtsvn           Use alternate svn base folder\n"
+"  -h, --help                Display this help and exit"
+msgstr ""
+
+#. TRANSLATORS: do not translate %%packager, it's an rpm macro name
+#: jailme:147
+msgid "Use '%%packager %s'? %s"
+msgstr ""
+
+#: jailme:148 jailme:155
+msgid "Quitting...\n"
+msgstr ""
+
+#. TRANSLATORS: do not translate %%packager, it's an rpm macro name
+#: jailme:154
+msgid "No %%packager macro, continue? %s"
+msgstr ""
+
+#: lo:25
+msgid ""
+"Usage: %s LINKFILE\n"
+"Change dir to corresponding /S dir of LINKFILE,\n"
+"where LINKFILE is a link to a spec file in /F source dir"
+msgstr ""
+
+#: lo:34
+msgid "Can't find file '%s'\n"
+msgstr ""
+
+#: lo:43
+msgid "Can't find folder\n"
+msgstr ""
+
+#: mkrepo:76
+msgid "(%s more lines)"
+msgstr ""
+
+#: mkrepo:82
+msgid "\nCurrent ~/.rpmmacros file contains:\n"
+msgstr ""
+
+#: mkrepo:92
+msgid ""
+"Usage: %s [OPTION]...\n"
+"Create a local repository including folder\n"
+"structure, .rpmrc and .rpmmacros files\n"
+"\n"
+"Mandatory arguments to long options are mandatory for short options too.\n"
+"  -d, --distribution=DIST    Distribution  %s\n"
+"  -s, --distsuffix=SUFFIX    Distribution suffix %s\n"
+"  -r, --release=YYYY         Mandriva release %s\n"
+"  -v, --vendor=VENDOR        Vendor %s\n"
+"  -p, --packager=NAME        Packager info %s\n"
+"  -n, --nodebug=Y            No debug packages %s\n"
+"  -b, --basedir=DIR          Base folder for src tree %s\n"
+"  -x, --extra                Extra information is displayed\n"
+"  -u, --usage                Display typical usage and exit\n"
+"  -h, --help                 Display this help and exit\n"
+"\n"
+"Use a - as the argument to d,s,r,v,p,n,b to remove an existing macro."
+msgstr ""
+
+#: mkrepo:111
+msgid ""
+"\n"
+"Examples:\n"
+"        mkrepo --distsuffix=myos --nodebug=y\n"
+"        mkrepo -p \"Joe Cool <jc@example.net>\"\n"
+"        mkrepo -r-  (removes %%release macro if it exists)"
+msgstr ""
+
+#: mkrepo:142
+msgid "\nThese changes will be written to ~/.rpmmacros:\n"
+msgstr ""
+
+#: mkrepo:176
+msgid "File %s backed up as %s.old"
+msgstr ""
+
+#: mkrepo:178
+msgid "Failed to create backup of %s"
+msgstr ""
+
+#: mkrepo:187
+msgid "Run %s from a console please."
+msgstr ""
+
+#: mkrepo:197
+msgid "\nPlease use this command as normal user, not root.\n"
+msgstr ""
+
+#: mkrepo:202
+msgid "Cannot change directory to your home directory... quitting.\n"
+msgstr ""
+
+#: mkrepo:214
+msgid ""
+"Try again without using all of \"/|#!=_~:\" in your arguments... quitting.\n"
+msgstr ""
+
+#: mkrepo:244
+msgid "\nExtra parameter(s) \"%s\" ignored...\n"
+msgstr ""
+
+#: mkrepo:260
+msgid "ERROR: You do not have write permission to \"%s\"\n"
+msgstr ""
+
+#: mkrepo:261
+msgid "Check the -b (--basedir) argument and try again... quitting.\n"
+msgstr ""
+
+#: mkrepo:276
+msgid "\nUsing %s as base for src tree.\n"
+msgstr ""
+
+#: mkrepo:278 svnadd:78
+msgid "Continue? %s"
+msgstr ""
+
+#: mkrepo:279
+msgid "\nOperation cancelled.\n"
+msgstr ""
+
+#: mkrepo:317
+msgid "created link"
+msgstr ""
+
+#: pinfo:38
+msgid ""
+"Usage: %s [OPTION]... [PKGNAME]...\n"
+"Create PKGNAME%s file for building packages imported from cooker.\n"
+"\n"
+"Mandatory arguments to long options are mandatory for short options too.\n"
+"  -a, --ask           Ask to svn up each package\n"
+"  -f, --force         Force svn up, even if package present\n"
+"  -s, --skip          Skip svn up, even if package missing\n"
+"  -p, --path=PATH     Path in mdv svn [default=%s]\n"
+"      --url=URL       Url for mdv cooker svn\n"
+"  -u, --usage         Display typical usage and exit\n"
+"  -h, --help          Display this help and exit"
+msgstr ""
+
+#: pinfo:83
+msgid "Can't read svn path from '%s', quitting"
+msgstr ""
+
+#: pinfo:84 pinfo:88
+msgid "Folder '%s' not found, quitting"
+msgstr ""
+
+#: pinfo:87
+msgid "Can't read altsvn path from '%s', quitting"
+msgstr ""
+
+#: pinfo:141 pinfo:143
+msgid "Update of '%s' failed, quitting"
+msgstr ""
+
+#: pinfo:142
+msgid "Can't change dir to '%s', quitting"
+msgstr ""
+
+#: pinfo:144
+msgid "Update of '%s' complete\n"
+msgstr ""
+
+#: rmp:54
+#, sh-format
+msgid ""
+"Usage: %s [OPTION]... [FILE]...\n"
+"Remove packages using smart from listfiles, like the\n"
+"*.<env>.%s files generated by the bldpkg script\n"
+"\n"
+"Mandatory arguments to long options are mandatory for short options too.\n"
+"  -a, --all     Remove pkgs listed in /tmp/*.<env>.%s files\n"
+"  -p, --pwd     Remove pkgs listed in /tmp/$PWD.<env>.%s\n"
+"      --plf     Use the plf versions of the %s listfiles\n"
+"  -k, --keep    Keep the listfiles (default is to remove them)\n"
+"  -h, --help    Display this help and exit\n"
+"\n"
+"Note: <env> here means 32, 64, plf32 or plf64"
+msgstr ""
+
+#: rmvpkg:37
+msgid ""
+"Usage: %s [FILE]...\n"
+"\n"
+"Remove packages listed in FILE, where FILE\n"
+"is a file generated by the saddpkg script\n"
+"\"Save list of files\" option."
+msgstr ""
+
+#: rmvpkg:119
+msgid "Are you sure? %s"
+msgstr ""
+
+#: rmvpkg:123
+msgid "Can't create tmp file '%s', quitting.\n"
+msgstr ""
+
+#: rmvpkg:134
+msgid "Please enter root "
+msgstr ""
+
+#: rmvpkg:138
+msgid "Operation aborted.\n"
+msgstr ""
+
+#: saddpkg:56
+msgid ""
+"Usage: %s SPECFILE | RPMFILE\n"
+"\n"
+"Uses smart to install missing dependencies in SPECFILE or RPMFILE"
+msgstr ""
+
+#: saddpkg:73
+msgid "Save list of files? %s"
+msgstr ""
+
+#: slinkin:53
+msgid ""
+"Usage: %s [OPTION]... [PKGNAME]...\n"
+"Create links in SPECS and SOURCES folders to PKGNAME svn files\n"
+"-or-\n"
+"Unlink files in SPECS and SOURCES folders\n"
+"\n"
+"Mandatory arguments to long options are mandatory for short options too.\n"
+"  -s, --svndir=DIR    Set svn base folder\n"
+"  -u, --unlink        Unlink all files in SPECS\n"
+"                      and SOURCES folders\n"
+"  -q, --quiet         Provide less detailed output\n"
+"  -h, --help          Display this help and exit"
+msgstr ""
+
+#: slinkin:133
+msgid "Missing %s folder\n"
+msgstr ""
+
+#: slinkin:150
+msgid "Skipping empty folder '%s'\n"
+msgstr ""
+
+#: slinkin:166
+msgid "Created %s links\n"
+msgstr ""
+
+#: slinkin:173
+msgid "Unlinking files in '%s'\n"
+msgstr ""
+
+#: slinkin:178
+msgid "Missing "
+msgstr ""
+
+#: slinkin:183
+msgid " folder '%s'\n"
+msgstr ""
+
+#: slinkin:215
+msgid "Svn base folder changed to '%s'\n"
+msgstr ""
+
+#: slinkin:234
+msgid ""
+"Can't write to '%s'. Please check the\n"
+"%%_topdir macro in '%s'.\n"
+"Quitting..."
+msgstr ""
+
+#: splog:56
+msgid ""
+"Usage: %s [OPTION]... [SPECFILE]...\n"
+"  or:  %s [OPTION]... -m SPECFILE1 SPECFILE2\n"
+"Tag SPECFILE %s with current date,\n"
+"packager and version-release info.\n"
+"In the 2nd form, same as above but also\n"
+"merge %s from SPECFILE2 into SPECFILE1.\n"
+"\n"
+"Mandatory arguments to long options are mandatory for short options too.\n"
+"  -d, --distribution=DIST    Distribution [%s]\n"
+"  -p, --packager=NAME        Packager info [%s]\n"
+"  -b, --bump                 Bump release number by one\n"
+"  -i, --import               Use import tag [- import for %s]\n"
+"  -n, --newver               Use new version tag [- new version %%version]\n"
+"  -r, --rebuild              Use rebuild tag [- rebuild]\n"
+"  -t, --tag=TAG              Use custom tag (Can be repeated)\n"
+"  -g, --notag                Don't add any new tag (overrides dpinrts)\n"
+"  -s, --nosuffix             Don't add distsuffix & mandriva_release [%s]\n"
+"  -l, --limit=NUMBER         Limit changelog to NUMBER most recent entries\n"
+"  -m, --merge                Merge %s from SPECFILE2 into SPECFILE1\n"
+"  -v, --verbose              Verbose, more detailed output\n"
+"  -q, --quiet                No output, except errors\n"
+"  -u, --usage                Display typical usage and exit\n"
+"  -h, --help                 Display this help and exit"
+msgstr ""
+
+#: splog:82
+msgid ""
+"\n"
+"Examples:\n"
+"        %s -p \"Joe Cool <jc@example.net>\"\n"
+"        %s -t \"- add BR foo\" -t \"- bugfix\"\n"
+"        %s    (Default tag \"%s\")\n"
+"        %s -m unity.spec mdv.spec\n"
+"\n"
+"Note: When using -m, exactly two SPECFILE arguments must be given.\n"
+"      The %s entries from the 2nd SPECFILE will be merged into\n"
+"      the first SPECFILE. No changes are made to the 2nd SPECFILE."
+msgstr ""
+
+#: splog:95
+msgid ""
+"\n"
+"Consider adding the %%packager macro to your\n"
+"%s file."
+msgstr ""
+
+#: splog:102
+msgid ""
+"\n"
+"Consider adding the %%distsuffix macro to your\n"
+"%s file."
+msgstr ""
+
+#: splog:108
+msgid ""
+"\n"
+"Consider adding the %%mandriva_release macro to your\n"
+"%s file."
+msgstr ""
+
+#: splog:270
+msgid "Can't evaluate release, please change manually.\n"
+msgstr ""
+
+#: splog:276
+msgid "Warning: recursive definition of release, result may be invalid.\n"
+msgstr ""
+
+#: splog:277
+msgid "Please check the release value manually.\n"
+msgstr ""
+
+#: splog:286
+msgid "Current release: %s"
+msgstr ""
+
+#. TRANSLATORS: try to right-align 'Current line: ' and '    New line: ' by adding initial blank spaces
+#: splog:288
+msgid "Current line: "
+msgstr ""
+
+#. TRANSLATORS: try to right-align 'Current line: ' and '    New line: ' by adding initial blank spaces
+#: splog:291
+msgid "    New line: "
+msgstr ""
+
+#: splog:293
+msgid "Replace? %s"
+msgstr ""
+
+#: splog:299
+msgid "release '%s' is not an integer, please change manually.\n"
+msgstr ""
+
+#: splog:412
+msgid "Delete? %s"
+msgstr ""
+
+#: splog:420
+msgid "Deleting line '%s'\n"
+msgstr ""
+
+#: splog:438
+msgid "Can't read '%s'... skipping\n"
+msgstr ""
+
+#: splog:445
+msgid "'%s' is not a spec file... skipping\n"
+msgstr ""
+
+#: splog:448
+msgid "No %s found in '%s'"
+msgstr ""
+
+#: splog:453
+msgid "Can't read '%s', skipping '%s'\n"
+msgstr ""
+
+#: splog:456
+msgid ", using log file '%s'\n"
+msgstr ""
+
+#: splog:481
+msgid "\nChanging dir to '%s'\n"
+msgstr ""
+
+#: splog:520
+msgid "Adding suffix '%s'\n"
+msgstr ""
+
+#: splog:537
+msgid "Tag added to '%s':"
+msgstr ""
+
+#: splog:561
+msgid "Restoring dir to %s\n"
+msgstr ""
+
+#: splog:646
+msgid "Distribution? "
+msgstr ""
+
+#: splog:652
+msgid "Packager? "
+msgstr ""
+
+#: svnadd:35
+msgid ""
+"Usage: %s [FILE]...\n"
+"\n"
+"Add files & folders listed in FILE to svn\n"
+"\n"
+"Note: Generate FILE with 'svn st | tee ../FILE'"
+msgstr ""
+
+#: svnadd:101
+msgid "Commit now? %s"
+msgstr ""
+
+#: svninst:61
+msgid ""
+"Usage: %s [OPTION]... [SRCNAME|PKGNAME]...\n"
+"Extract SRCNAME rpm (*.src.rpm) and\n"
+"move all files to svn folders F, P, S\n"
+"-or-\n"
+"Make new PKGNAME folder structures in svn folder\n"
+"\n"
+"Mandatory arguments to long options are mandatory for short options too.\n"
+"  -d, --default       Defaults with no prompting\n"
+"  -f, --folder=NAME   svn subfolder (e.g. kde4)\n"
+"  -r, --remove        Remove src.rpm after installing\n"
+"  -s, --svndir=DIR    Path to svn base folder %s\n"
+"  -v, --verbose       Verbose mode\n"
+"  -h, --help          Display this help and exit\n"
+"  -u, --usage         Display typical usage and exit"
+msgstr ""
+
+#: svninst:82
+msgid ""
+"\n"
+"Examples:\n"
+"%s pkg.src.rpm      Installs package pkg to svn\n"
+"%s foo bar          Makes svn folders for foo & bar\n"
+"%s -r pkg.src.rpm   Deletes original src.rpm after\n"
+"                         installing it to svn folders\n"
+"%s -s /path/to/svn  Sets svn base folder\n"
+"%s -d ...           No prompting, skips all pkgs which\n"
+"                         already exist in svn folder\n"
+"\n"
+"NOTE: If SRCNAME is a URI then %s will attempt to\n"
+"      download the file using wget, then install it."
+msgstr ""
+
+#: svninst:112
+msgid ""
+"Can't find command '%s'\n"
+"Please install package '%s'\n"
+"and run %s again"
+msgstr ""
+
+#: svninst:125
+msgid "\nCan't write to %s folder, quitting\n"
+msgstr ""
+
+#: svninst:134
+msgid ""
+"\n"
+"Can't write to svn base folder '%s'\n"
+"Change the base folder with the -s option"
+msgstr ""
+
+#: svninst:225
+msgid "Do you want to download '%s'? %s"
+msgstr ""
+
+#: svninst:226 svninst:311
+msgid "OK, skipping '%s'\n"
+msgstr ""
+
+#: svninst:241
+msgid "Error getting '%s', skipping\n"
+msgstr ""
+
+#: svninst:299
+msgid "Error getting '%s' package name, skipping\n"
+msgstr ""
+
+#: svninst:307
+msgid "'%s' is already in svn,"
+msgstr ""
+
+#. TRANSLATORS: First %s stands for something like: 'Package X' is already in svn,
+#: svninst:310
+msgid "%s overwrite? %s"
+msgstr ""
+
+#. TRANSLATORS: First %s stands for something like: 'Package X' is already in svn,
+#: svninst:317
+msgid "%s skipping '%s'\n"
+msgstr ""
+
+#: svninst:323
+msgid "\nExtracting files from '%s' "
+msgstr ""
+
+#: svninst:331
+msgid "Error extracting files, skipping '%s'\n"
+msgstr ""
+
+#: svninst:339
+msgid "\nPackage name='%s'\n"
+msgstr ""
+
+#: um:27
+msgid "Unlinking '%s'\n"
+msgstr ""
+
+#: unmet:60
+msgid ""
+"Usage: %s [OPTION]... [PKGNAME]...\n"
+"List unsatisfied dependencies for PKGNAME, or entire repo\n"
+"\n"
+"  -a, --all       List all unsatisfied dependencies\n"
+"  -p, --pkgonly   List only package names (overrides --all)\n"
+"  -h, --help      Display this help and exit"
+msgstr ""
+
+#: xzc:25
+msgid ""
+"Usage: %s [FILE]...\n"
+"Recompress .gz & .bz2 files in the .xz format\n"
+"\n"
+"Mandatory arguments to long options are mandatory for short options too.\n"
+"\n"
+"  -f, --force       Force overwrite of output file\n"
+"  -n, --noprompt    No prompts, don't overwrite output file\n"
+"                      (unless -f used also)\n"
+"  -r, --remove      Remove original file after conversion\n"
+"  -q, --quiet       Suppress informative messages\n"
+"  -h, --help        Display this help message and quit\n"
+"\n"
+"Note: %s is NOT meant for tarballs and will not\n"
+"process files with .tar.gz or .tar.bz2 extensions"
+msgstr ""

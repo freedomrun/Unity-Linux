@@ -1,0 +1,365 @@
+# translation of draklive-install-tg.po to Tajik Language
+# Copyright (C) 2001,2002,2003,2004, 2005, 2006 Free Software Foundation, Inc.
+# 2004, infoDev, a World Bank organization
+# 2004, Khujand Computer Technologies, Inc.
+# 2004, KCT1, NGO
+# 2005, Youth Opportunities, NGO
+# Abrorova Hiromon, 2004
+# Roger Kovacs <rkovacs@khujand.org>, 2003.
+# Dilshod Marupov <dma165@hotmail.com>, 2003, 2004.
+# Murod Marupov <abdullovich@khujand.org>, 2004.
+# Bahromhon Bobojonov <bahrambabajanov@hotmail.com>, 2004.
+# Victor Ibragimov <youth_opportunities@tajikngo.org>, 2005, 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: draklive-install-tg\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2006-11-17 16:24-0500\n"
+"Last-Translator: Victor Ibragimov <youth_opportunities@tajikngo.org>\n"
+"Language-Team: Tajik Language\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.10.2\n"
+
+#: ../draklive-install:106
+#, c-format
+msgid "Unity Installer"
+msgstr ""
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Ин устод ба Шумо ёрӣ мерасад барои корандозии дистрибутиви фаъолона."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Хатогӣ"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Хатогӣ рух дод"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Ҳисобкунии андозаи ҳамагӣ"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr ""
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Табрикот"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Лутфан, компютерро хомуш кунед, системаи фаъолона дур кунед ва компютерро "
+"боз фаъол созед."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Ба ҳар ҳол давом диҳем?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Нигоҳ надошта баромадан"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Ҷадвали бахшро нанавишта бароем?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Шумо /etc/fstab таъғирёбиҳоро нигоҳ доштан"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Шумо бояд аз сари нав худборшавиро ба роҳ монед, то ки тағир додани қисмҳо "
+"амалӣгардад"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Шумо бояд бахши %s-ро шаклбандӣ намоед.\n"
+"Дар дигар ҳолат дар fstab ягон навиштаҷот барои нуқтаи насбшавии %s навишта "
+"намешавад.\n"
+"Ба ҳар ҳол бароям?"
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva-и Фаъолона"
+
+#~ msgid "Please wait"
+#~ msgstr "Лутфан интизор шавед"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Нусхабардорӣ дар раванди иҷроиш қарор дорад"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "Бахшҳоеро, ки шаклбандӣ кардан мехоҳед, интихоб намоед"
+
+#~ msgid "Check bad blocks?"
+#~ msgstr "Блокҳои бадро тафтиш кунам?"
+
+#~ msgid ""
+#~ "Failed to check filesystem %s. Do you want to repair the errors? (beware, "
+#~ "you can lose data)"
+#~ msgstr ""
+#~ "Тафтиши системи файлии %s бемуваффақият анҷом ёфт. Шумо хоҳиши ислоҳ "
+#~ "намудани хатогиҳоро доред? (эҳтиёт шавед, чунки шумо метавонед додаҳоро "
+#~ "аз даст диҳед)"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr ""
+#~ "swap-фазо барои ба итмом расонидани коргузорӣ кофӣ нест, лутфан илова "
+#~ "намоед"
+
+#~ msgid "No partition available"
+#~ msgstr "Ягон бахшбандӣ дастрас нест"
+
+#~ msgid "Scanning partitions to find mount points"
+#~ msgstr "Барои ёфтани нуқтаҳои насб қисмҳо пуйиш мегардад"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "Нуқтаи насбкуниро интихоб намоед"
+
+#~ msgid "Partitioning"
+#~ msgstr "Ҷузъбандӣ"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "Дунусха кардани нуқтаи насбшавӣ %s"
+
+#~ msgid ""
+#~ "Some hardware on your computer needs ``proprietary'' drivers to work.\n"
+#~ "You can find some information about them at: %s"
+#~ msgstr ""
+#~ "Якчанд сахтафзор дар компютери шумо барои кор кардан ба ронандаҳои "
+#~ "``худ'' мӯҳтоҷ аст.\n"
+#~ "Шумо ахборотро оиди онҳо дар %s ёфта метавонед"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "Шояд шумо қисми решагиро дошта бошед.\n"
+#~ "Барои ин қисмеро офаред (ё ба мавҷудбуда ангушт занед).\n"
+#~ "Сониян, амалиёти ``Нуқтаи васлшавӣ ва барпо сохтани онро дар `/'-ро "
+#~ "интихоб намоед"
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "Шумо бахши мубодила надоред.\n"
+#~ "\n"
+#~ "Ба ҳар ҳол давом диҳем?"
+
+#~ msgid "You must have a FAT partition mounted in /boot/efi"
+#~ msgstr "Шояд шумо қисми FAT-ро дошта бошед, ки дар /boot/efi васл шудааст"
+
+#~ msgid "Use free space"
+#~ msgstr "Ҷои озодро истифод бурдан"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr "Барои ҷойгир намудани қисмҳои нав ҷои изофа кофӣ нест"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "Бахшбандиҳои ҳозир бударо истифода баред"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "Барои истифодабарӣ ягон қисми мавҷудбуда нест"
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "Қисми Windows-ро барои loopback истифода бурдан"
+
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "Кадом қисмро шумо барои Linux4Win истифода бурдан мехоҳед?"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "Андозаҳоро интихоб намоед"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "Андозаи қисми решагӣ дар MB: "
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "Андозаи қисми swap дар MB: "
+
+#~ msgid ""
+#~ "There is no FAT partition to use as loopback (or not enough space left)"
+#~ msgstr ""
+#~ "Қисми FAT барои истифодаи loopback мавҷуд нест (ё ин ки ҷой кофӣ нест)"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "Фазои холиро дар бахши Windows истифода баред"
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "Андозаи кадоме аз қисмҳоро шумо тағир додан мехоҳед?"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "Барномаи тағирдиҳии андозаи FAT ин қисмро кор карда бароварда "
+#~ "метавонад, \n"
+#~ "хатогии зерин ба амал омад: %s"
+
+#~ msgid "Resizing"
+#~ msgstr "Бозандозагириӣ"
+
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "Андозаи бахшбандии Windows ҳисоб шуда истодааст"
+
+#~ msgid ""
+#~ "Your Windows partition is too fragmented. Please reboot your computer "
+#~ "under Windows, run the ``defrag'' utility, then restart the Mandriva "
+#~ "Linux installation."
+#~ msgstr ""
+#~ "Қисми Windows-и шумо бениҳоят тика гардидааст. Лутфан, компютери худро "
+#~ "дар зери Windows аз сари нав оғоз намоед, ``defrag''-ро ба кор андозед ва "
+#~ "сониян такроран коргузории Mandriva Linux-ро мавриди истифодабарӣ қарор "
+#~ "диҳед."
+
+#~ msgid ""
+#~ "WARNING!\n"
+#~ "\n"
+#~ "DrakX will now resize your Windows partition. Be careful: this\n"
+#~ "operation is dangerous. If you have not already done so, you\n"
+#~ "first need to exit the installation, run \"chkdsk c:\" from a\n"
+#~ "Command Prompt under Windows (beware, running graphical program\n"
+#~ "\"scandisk\" is not enough, be sure to use \"chkdsk\" in a\n"
+#~ "Command Prompt!), optionally run defrag, then restart the\n"
+#~ "installation. You should also backup your data.\n"
+#~ "When sure, press Ok."
+#~ msgstr ""
+#~ "ОГОҲӢ!\n"
+#~ "\n"
+#~ "Ҳоло DrakX андозаи қисми Windows-и шуморо тағир медиҳад.\n"
+#~ "Эҳтиёт бошед, ки ин амалиёт хатарнок аст. Агар шумо инро иҷро\n"
+#~ "карда набошед, онгоҳ ба шумо лозим аст. то ки коргузориро тарк намоед,\n"
+#~ "\"chkdsk c:\"-ро дар сатри фармони дар зери Windows буда корандозӣ\n"
+#~ "кунед (дар назар доред, ки корандозии барномаи графикии \"scandisk\"\n"
+#~ "кофӣ нест, лекин ҳатман \"chkdsk\"-ро дар Эъломи Фармонӣ истифода "
+#~ "баред!)\n"
+#~ "Интихобан defrag-ро корандозӣ намоед, сониян коргузориро боз оғоз "
+#~ "намоед.\n"
+#~ "Инчунин шумо бояд додаҳои худро нигоҳ доред.\n"
+#~ "Вақте ки боварӣ ҳосил кардед ба Ok ангушт занед."
+
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "Шумо кадом ҳаҷмро барои Windows доштан мехоҳед"
+
+#~ msgid "partition %s"
+#~ msgstr "ҷузъбандии %s"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "Андозаи қисми Windows тағир меёбад"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "Тағир додани андозаи FAT бемуваффақият анҷом ёфт: %s"
+
+#~ msgid ""
+#~ "To ensure data integrity after resizing the partition(s), \n"
+#~ "filesystem checks will be run on your next boot into Windows(TM)"
+#~ msgstr ""
+#~ "Барои кафолат додани яклухтии додаҳо баъд аз тағироти андозаи қисм(ҳо), \n"
+#~ "санҷиши системи файлӣ ҳангоми худборшавии навбатӣ дар Windows(TM) "
+#~ "корандозӣ хоҳад гардид"
+
+#~ msgid "There is no FAT partition to resize (or not enough space left)"
+#~ msgstr ""
+#~ "Барои тағири андозаи бахши FAT мавҷуд нест (ё ки ҷои кофӣ намондааст)"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Windows(TM)-ро хориҷ намоед"
+
+#~ msgid "Erase and use entire disk"
+#~ msgstr "Тамоми дискро тоза намоед ва истифода баред"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr ""
+#~ "Шумо зиёда аз як диски сахт доред. Дар кадоме аз онҳо шумо коргузории "
+#~ "Linux-ро ба амал оварданӣ ҳастед?"
+
+#~ msgid "ALL existing partitions and their data will be lost on drive %s"
+#~ msgstr ""
+#~ "ҲАМАИ қисмҳои мавҷуд буда ва додаҳои онҳо дар гардони %s гум мешаванд"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "Ҷузъбандии дастии диск"
+
+#~ msgid "Use fdisk"
+#~ msgstr "fdisk-ро истифода намудан"
+
+#~ msgid ""
+#~ "You can now partition %s.\n"
+#~ "When you are done, do not forget to save using `w'"
+#~ msgstr ""
+#~ "Акнун шумо метавонед %s-ро бахшбандӣ намоед.\n"
+#~ "Баъд аз итмоми он ба воситаи истифодаи `w' нигоҳ доштанро фаромӯш накунед"
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "Ягон ҷой барои коргузорӣ пайдо карда натавониста истодаам"
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr "Устоди ҷузъбандии DrakX ба қарорҳои зерин омад:"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "Ҷузъбандӣ бемувафаққият анҷом ёфт: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "Шабака оварда мешавад"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "Шабака фаромада истодааст"

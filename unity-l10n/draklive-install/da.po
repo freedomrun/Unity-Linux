@@ -1,0 +1,144 @@
+# translation of da.po to dansk
+# translation of da.po to
+# translation of da1.po to Danish
+# translation of da.po to Danish
+# translation of DrakX-da.po to Danish
+# Copyright (C) 2000,2003, 2004, 2005, 2006, 2008 Free Software Foundation, Inc.
+# Troels Liebe Bentsen <tlb@iname.com> 2000.
+# Keld Simonsen <keld@dkuug.dk>, 2000-2003, 2004, 2005, 2008.
+# Keld Simonsen <keld@rap.dk>, 2005, 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: da\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2008-03-20 14:24+0100\n"
+"Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
+"Language-Team: dansk <dansk@dansk-gruppen.dk>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.10.2\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+#: ../draklive-install:106
+#, fuzzy, c-format
+msgid "Unity Installer"
+msgstr "Live-installering"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr ""
+"Denne guide vil hjælpe dig med at installere den fritstående distribution."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Fejl"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Der er opstået en fejl"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr "Ikke nok plads tilgængeligt (%s tilgængeligt mens %s er krævet)"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Beregner total størrelse"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Kan ikke kopiere filer til ny rod"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Tillykke"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Luk din maskine ned, fjern det fritstående system, og genstart din maskine."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Fortsæt alligevel?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Afslut uden at gemme"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Afslut uden at skrive partitionstabellen?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Ønsker du at gemme /etc/fstab-ændringerne?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr "Du skal genstarte for at aktivere ændringerne i partitionstabellen"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Du bør formatere partition %s.\n"
+"Ellers vil der ikke blive skrevet noget indgangspunkt for monteringspunktet "
+"%s i fstab.\n"
+"Afslut alligevel?"
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Vent venligst"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Kopiering udføres"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Installér Mandriva live-systemet til disk"

@@ -1,0 +1,223 @@
+#
+# Alastair McKinstry <mckinstry@computer.org>, 2002
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: DrakX\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2005-09-12 18:04+0200\n"
+"Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
+"Language-Team: Irish <ga@li.org>\n"
+"Language: ga\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../draklive-install:106
+#, c-format
+msgid "Unity Installer"
+msgstr ""
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr ""
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Earráid"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Tharla earráid"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr ""
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr ""
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Comhghairdeas"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Lean ar aghaidh ar aon nós?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Éalaigh gan sabháil"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Éalaigh gan an clár-ranna a scríobh?"
+
+#: ../draklive-install:505
+#, fuzzy, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "An bhfuil tú ag iarraidh an cumraíocht a thrial?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Is gá an ríomhaire a atosnú sula gcuirfear na hathruithe sa ranntábla i "
+"bhfeidhm"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Please wait"
+#~ msgstr "Fan tamall"
+
+#, fuzzy
+#~ msgid "Copying in progress"
+#~ msgstr "Pointe taca dublach %s"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "Roghnaigh na ranna atá le formáidiú"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr "Nil dothain spas malartu chun insealbhu, chuir leis an spas"
+
+#~ msgid "No partition available"
+#~ msgstr "níl aon ranna saora ann"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "Roghnaigh na pointí feistithe"
+
+#, fuzzy
+#~ msgid "Partitioning"
+#~ msgstr "Printéir"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "Pointe taca dublach %s"
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "Níl aon ranna malairte agat\n"
+#~ "\n"
+#~ "x1Lean ar aghaidh ar aon nós?"
+
+#~ msgid "Use free space"
+#~ msgstr "Úsáid spás saor"
+
+#, fuzzy
+#~ msgid "There is no existing partition to use"
+#~ msgstr "Ag iarraidh an clár-ranna a tarrtháil"
+
+#, fuzzy
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "Cén rann a bhfuil tú ag iarraidh úsáid mar rann fréamhach"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "Roghnaigh an méid nua"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "Méid i MB do Rhann Fréamhach:"
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "Méid i MB do rhann malairte:"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "Úsáid an spás saor ar an rann Windows"
+
+#~ msgid "Resizing"
+#~ msgstr "Ag athméadú"
+
+#, fuzzy
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "Cruthaigh rann nua"
+
+#~ msgid "partition %s"
+#~ msgstr "rann %s"
+
+#, fuzzy
+#~ msgid "Resizing Windows partition"
+#~ msgstr "Ag ríomhadh teorainn na córais-comhadlanna FAT"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "Theip ar uathathmhéadú FAT: %s"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Dealaigh Windows(TM)"
+
+#, fuzzy
+#~ msgid "Erase and use entire disk"
+#~ msgstr "Glan diosca ina iomlán"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "Rannú diosca saincheaptha"
+
+#~ msgid "Use fdisk"
+#~ msgstr "Úsáid fdisk"
+
+#, fuzzy
+#~ msgid "I can not find any room for installing"
+#~ msgstr "Ní féidir liom rann eile a cur isteach"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "Theip ar rannú: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "Ag tosnú suas an ghréasán"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "Ag dúnadh síos an ghreasán"
+
+#~ msgid "none"
+#~ msgstr "Ar bith"

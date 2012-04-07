@@ -1,0 +1,359 @@
+# translation of draklive-install-uz.po to Uzbek
+# Copyright (C) 2003, 2004, 2006 Free Software Foundation, Inc.
+# Copyright (C) 2003 Mandriva.
+#
+# Mashrab Kuvatov <kmashrab@uni-bremen.de>, 2003, 2004, 2006.
+# Nurali Abdurahmonov <mavnur@gmail.com>, 2006, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: draklive-install-uz\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2009-12-18 20:48+0500\n"
+"Last-Translator: Nurali Abdurahmonov <mavnur@gmail.com>\n"
+"Language-Team: American English <kde-i18n-doc@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../draklive-install:106
+#, fuzzy, c-format
+msgid "Unity Installer"
+msgstr "LiveCD/DVD oʻrnatuvchisi"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Ushbu usta Mandriva Linux tizimini oʻrnatishda yordam beradi."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Xato"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Xato roʻy berdi"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr "Xotira yetarli emas (mavjud — %s, kerak — %s)"
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Umumiy hajm hisoblanmoqda"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Fayllardan yangi root'ga nusxa koʻchirib boʻlmadi"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Tabriklaymiz"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Kompyuterni oʻchiring, kompakt-diskni olib tashlab kompyuterni yana yoqing."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Bunga qaramasdan davom etishni istaysizmi?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Saqlamasdan chiqish"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Diskning qismlar jadvalini saqlamasdan chiqishni istaysizmi?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "/etc/fstab fayliga kiritilgan oʻzgarishlarni saqlashni istaysizmi?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Diskning qismlar jadvaliga kiritilgan oʻzgarishlar kuchga kirishi uchun "
+"kompyuterni oʻchirib-yoqish kerak."
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"%s disk qismini format qilish kerak.\n"
+"Aks holda %s ulanish nuqtasi fstab'da qayd etilmaydi.\n"
+"Shunga qaramasdan chiqishni istaysizmi?"
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Iltimos kutib turing"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Nusxa olish davom etmoqda"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Mandriva Live tizimini kompyuterning diskiga oʻrnatish"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "Format qilish uchun diskning qismlarini tanlang"
+
+#~ msgid "Check bad blocks?"
+#~ msgstr "Xato bloklarni tekshiraymi?"
+
+#~ msgid ""
+#~ "Failed to check filesystem %s. Do you want to repair the errors? (beware, "
+#~ "you can lose data)"
+#~ msgstr ""
+#~ "%s fayl tizimini tekshirish muvaffaqiyatsiz tugadi. Xatolarni tuzatishni "
+#~ "istaysizmi? (esingizda tursin, siz maʼlumotni yoʻqotishingiz mumkin)"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr ""
+#~ "Oʻrnatishni bajarish uchun yetarli svop xotirasi mavjud emas, iltimos uni "
+#~ "qoʻshing"
+
+#~ msgid "No partition available"
+#~ msgstr "Diskning qismi yoʻq"
+
+#~ msgid "Scanning partitions to find mount points"
+#~ msgstr "Ulash nuqtalarini topish uchun diskning qismlari tekshirilmoqda"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "Ulash nuqtalarini tanlang"
+
+#~ msgid "Partitioning"
+#~ msgstr "Diskni boʻlish"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "Bir xil ulash nuqtalari %s"
+
+#~ msgid ""
+#~ "Some hardware on your computer needs ``proprietary'' drivers to work.\n"
+#~ "You can find some information about them at: %s"
+#~ msgstr ""
+#~ "Kompyuterning baʼzi asbob-uskunasi erkin boʻlmagan drayverni talab "
+#~ "qiladi.\n"
+#~ "Ular haqida baʼzi maʼlumotni quyidagi joydan olsa boʻladi: %s"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "Sizda diskning tub qismi boʻlishi shart.\n"
+#~ "Buning uchun, diskda yangi qism yarating (yoki borini tanlang).\n"
+#~ "Keyin, \"Ulash nuqtasi\" amali yordamida ulash nuqtasi sifatida \"/\"ni "
+#~ "koʻrsating"
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "Diskning svop qismi koʻrsatilmagan.\n"
+#~ "\n"
+#~ "Bunga qaramasdan davom etishni istaysizmi?"
+
+#~ msgid "You must have a FAT partition mounted in /boot/efi"
+#~ msgstr "Sizda /boot/efi nuqtasiga ulangan diskning FAT qismi boʻlishi shart"
+
+#~ msgid "Use free space"
+#~ msgstr "Boʻsh joydan foydalanish"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr "Yangi qism yaratish uchun diskda yetarli joy yoʻq"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "Diskda bor qismlardan foydalanish"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "Foydalanish uchun diskning qismi mavjud emas"
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "Loopback uchun diskning Windows qismini ishlatish"
+
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "Linux4Win uchun diskning qaysi qismini ishlatishni istaysiz?"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "Hajmni tanlash"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "Diskning tub qismi Mb'da: "
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "Diskning svop qismi Mb'da: "
+
+#~ msgid ""
+#~ "There is no FAT partition to use as loopback (or not enough space left)"
+#~ msgstr ""
+#~ "Loopback sifatida ishlatish uchun diskda FAT qism yoʻq (yoki yetarli joy "
+#~ "yoʻq)"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "Diskning Windows qismidagi boʻsh joydan foydalanish"
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "Diskning qaysi qismining hajmini oʻzgartirishni istaysiz?"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "Diskning FAT qismining hajmini oʻzgartirish dasturi koʻrsatilgan\n"
+#~ "diskning qismi ustida ishlaolmadi. Quyidagi xato roʻy berdi:\n"
+#~ "%s"
+
+#~ msgid "Resizing"
+#~ msgstr "Hajm oʻzgartirilmoqda"
+
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "Diskning Windows qismining hajmi hisoblanmoqda"
+
+#~ msgid ""
+#~ "Your Windows partition is too fragmented. Please reboot your computer "
+#~ "under Windows, run the ``defrag'' utility, then restart the Mandriva "
+#~ "Linux installation."
+#~ msgstr ""
+#~ "Diskning Windows qismi juda ham fragmentlashgan. Iltimos kompyuterni "
+#~ "Windows ostida oʻchirib-yoqing va \"defrag\" dasturini ishga tushiring. "
+#~ "Shundan soʻng Mandriva Linux oʻrnatishni qayta ishga tushiring."
+
+#~ msgid ""
+#~ "WARNING!\n"
+#~ "\n"
+#~ "DrakX will now resize your Windows partition. Be careful: this\n"
+#~ "operation is dangerous. If you have not already done so, you\n"
+#~ "first need to exit the installation, run \"chkdsk c:\" from a\n"
+#~ "Command Prompt under Windows (beware, running graphical program\n"
+#~ "\"scandisk\" is not enough, be sure to use \"chkdsk\" in a\n"
+#~ "Command Prompt!), optionally run defrag, then restart the\n"
+#~ "installation. You should also backup your data.\n"
+#~ "When sure, press Ok."
+#~ msgstr ""
+#~ "DIQQAT!\n"
+#~ "\n"
+#~ "Diskni boʻlish vositasi koʻrsatilgan diskning Windows\n"
+#~ "qismlarining hajmini oʻzgartirish arafasida. Esingizda\n"
+#~ "tursin, bu xavfli amaldir. Uni davom etish uchun birinchidan,\n"
+#~ "Windows OTda \"defrag\" vositasini ishga tushirish kerak. Soʻng,\n"
+#~ "\"chkdsk\" vositasi yordamida diskni albatta tekshirish kerak.\n"
+#~ "Diskning Windows qismidagi maʼlumotdan har ehtimolga qarshi\n"
+#~ "nusxa olish ham tavsiya qilinadi.\n"
+#~ "\n"
+#~ "Agar davom etishga ishonchingiz komil boʻlsa, \"Ok\" tugmasini\n"
+#~ "bosing."
+
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "Windows uchun qancha joy qoldirmoqchisiz"
+
+#~ msgid "partition %s"
+#~ msgstr "diskning %s qismi"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "Diskning Windows qismining hajmini oʻzgartirish"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr ""
+#~ "Diskning FAT qismining hajmini oʻzgartirish muvaffaqiyatsiz tugadi: %s"
+
+#~ msgid ""
+#~ "To ensure data integrity after resizing the partition(s), \n"
+#~ "filesystem checks will be run on your next boot into Windows(TM)"
+#~ msgstr ""
+#~ "Diskdagi maʼlumot butunligini tekshirish uchun disk qismining\n"
+#~ "hajmi oʻzgartirilganda, Windows ishga tushishidan oldin kerakli\n"
+#~ "tekshiruv bajariladi."
+
+#~ msgid "There is no FAT partition to resize (or not enough space left)"
+#~ msgstr ""
+#~ "Hajmini oʻzgartirish uchun diskda FAT qism mavjud emas (yoki yetarli joy "
+#~ "mavjud emas)"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Windows OTni oʻchirish"
+
+#~ msgid "Erase and use entire disk"
+#~ msgstr "Butun diskni oʻchirib ishlatish"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr ""
+#~ "Sizda bittadan koʻp qattiq disk mavjud. Ularni qaysiga Mandriva Linux "
+#~ "OTni oʻrnatishni istaysiz?"
+
+#~ msgid "ALL existing partitions and their data will be lost on drive %s"
+#~ msgstr "%s diskning barcha qismlari va ulardagi barcha maʼlumot oʻchiriladi"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "Diskni boshqacha boʻlish"
+
+#~ msgid "Use fdisk"
+#~ msgstr "Fdisk dasturidan foydalanish"
+
+#~ msgid ""
+#~ "You can now partition %s.\n"
+#~ "When you are done, do not forget to save using `w'"
+#~ msgstr ""
+#~ "Endi siz %s diskni boʻlishingiz mumkin.\n"
+#~ "Tugatgach \"w\" bilan saqlash esingizdan chiqmasin."
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "Oʻrnatish uchun yetarli joy topilmadi"
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr "Diskni boʻlish vositasi quyidagi yechimlarni topdi:"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "Diskni boʻlish muvaffaqiyatsiz tugadi: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "Tarmoq ishga tushirilmoqda"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "Tarmoq oʻchirilmoqda"

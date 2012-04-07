@@ -1,0 +1,342 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Copyright (c) 2000 Mandriva.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: draklive-install\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2007-09-27 22:47+0200\n"
+"Last-Translator: Māris Laureckis <marisl@e-no.lv>\n"
+"Language-Team: Latgalian <marisl@e-no.lv>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../draklive-install:106
+#, c-format
+msgid "Unity Installer"
+msgstr ""
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr ""
+"Itys paliegs jiusim paleidzēs instalēt distribuceju nu CD iz cītū disku."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Kliuda"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Atkluota kliuda"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Teik izskaitļuots kūpejais izmārs"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr ""
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Apsveicam"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Lyudzu, apstuodynojit jiusu datoru, izjemit jiusu live sistemu , i "
+"puorstartejit datoru."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Tūmār turpynuot?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Izīt bez saglobuošonys"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Izīt naīrokstūt sadaļu tabulu?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Voi gribit saglobuot /etc/fstab izmainis"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Lai sadaļu tabulys izmainis stuotūs spākā, jiusim juopuorstartej dators"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Jiusim vajadzātu formatēt sadali %s.\n"
+"Sovaižuok fstab nabyus īroksts par monteišonys punktu %s.\n"
+"Tūmār izīt?"
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Lyudzu pagaidit"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Nūteik kopeišona"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "Izavielejit sadalis, kūrys gribit formatēt"
+
+#~ msgid "Check bad blocks?"
+#~ msgstr "Puorbaudeit būjuotūs blokus?"
+
+#~ msgid ""
+#~ "Failed to check filesystem %s. Do you want to repair the errors? (beware, "
+#~ "you can lose data)"
+#~ msgstr ""
+#~ "Naizadeve puorbaudeit failsistemu %s. Voi gribit lobuot kliudys? "
+#~ "(uzamonit, jius varit zaudēt datus)"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr "Instaleišonys pabeigšonai napīteik swap vītys, palelynojit tū"
+
+#~ msgid "No partition available"
+#~ msgstr "Nav pīejamu sadaļu"
+
+#~ msgid "Scanning partitions to find mount points"
+#~ msgstr "Puormekleju sadalis, lai atrostu monteišonys punktus"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "Izavielejit monteišonys punktus"
+
+#~ msgid "Partitioning"
+#~ msgstr "Diska sadaleišona"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "Dublēt monteišonys punktu %s"
+
+#~ msgid ""
+#~ "Some hardware on your computer needs ``proprietary'' drivers to work.\n"
+#~ "You can find some information about them at: %s"
+#~ msgstr ""
+#~ "Dažu jiusu datora aparaturys darbeibai napīcīšami ``firmys'' draiveri.\n"
+#~ "Papyldus informaceju varit atrast ite: %s"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "Jiusim ir napīcīšoma saknis sadaļa.\n"
+#~ "Itam nūlyukam izveidojit sadali (voi uzklikškinit iz jau asūšys).\n"
+#~ "Tod izavielejit darbeibu ``Monteišonys punkts'' i uzstuodit tū iz `/'"
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "Jiusim nav swap sadalis\n"
+#~ "\n"
+#~ "Voi tūmār turpynuot?"
+
+#~ msgid "You must have a FAT partition mounted in /boot/efi"
+#~ msgstr "Jiusim ir napīcīšoma /boot/efi monteita FAT sadaļa"
+
+#~ msgid "Use free space"
+#~ msgstr "Izmontuot breivū vītu"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr "Napīteik breivys vītys, lai izvītuotu jaunys sadalis"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "Izmontuot jau asūšu sadali"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "Nav nivīnys sadalis, kū varātu izmontuot"
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "Izmontuot Windows sadali prīkš loopback"
+
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "Kuru sadali gribit izmontuot deļ Linux4Win?"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "Izavielejit izmārus"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "Saknis sadalis izmārs (MB): "
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "Swap sadalis izmārs (MB): "
+
+#~ msgid ""
+#~ "There is no FAT partition to use as loopback (or not enough space left)"
+#~ msgstr ""
+#~ "Nav FAT sadalis, lai izmontuotu kai loopback (voi napīteik breivys vītys)"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "Izmontuot breivū vītu iz Windows sadalis"
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "Kurys sadalis izmāru gribit izmaineit?"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "FAT izmāra maineituojs naspiej izmaineit jiusu sadaļu, \n"
+#~ "atkluota sekojūša kliuda: %s"
+
+#~ msgid "Resizing"
+#~ msgstr "Izmāra maineišona"
+
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "Teik izskaitļuots Windows sadalis izmārs"
+
+#~ msgid ""
+#~ "Your Windows partition is too fragmented. Please reboot your computer "
+#~ "under Windows, run the ``defrag'' utility, then restart the Mandriva "
+#~ "Linux installation."
+#~ msgstr ""
+#~ "Windows sadaļa ir puoruok fragmenteita. Vyspyrms nu Windows vidis "
+#~ "palaidit utilitu ``defrag'', tod atsuocit Mandriva Linux instaleišonu."
+
+#~ msgid ""
+#~ "WARNING!\n"
+#~ "\n"
+#~ "DrakX will now resize your Windows partition. Be careful: this\n"
+#~ "operation is dangerous. If you have not already done so, you\n"
+#~ "first need to exit the installation, run \"chkdsk c:\" from a\n"
+#~ "Command Prompt under Windows (beware, running graphical program\n"
+#~ "\"scandisk\" is not enough, be sure to use \"chkdsk\" in a\n"
+#~ "Command Prompt!), optionally run defrag, then restart the\n"
+#~ "installation. You should also backup your data.\n"
+#~ "When sure, press Ok."
+#~ msgstr ""
+#~ "BRĪDINĀJUMS!\n"
+#~ "\n"
+#~ "Niule DrakX izmaineis Windows sadalis izmāru. Esit uzmaneigs:\n"
+#~ "itei darbeiba ir beistama. Ja jius tū vēļ naasot dariejs,\n"
+#~ "jiusim vyspyrms ir juopuortrauc instaleišona, Windows vidē\n"
+#~ "juopalaiž programma scandisk (īteicams palaist ari defrag),\n"
+#~ "tod atkuortuoti juosuok instaleišona.\n"
+#~ "Vajadzātu izveiduot ari datu rezervis kopeju.\n"
+#~ "Kod asot puorlīcynuots, nūspīdit Labi."
+
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "Kaidu apjūmu gribit atstuot prīkš Windows iz"
+
+#~ msgid "partition %s"
+#~ msgstr "sadaļa %s"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "Teik maineits Windows sadalis izmārs"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "FAT izmāra maiņa naizadeve: %s"
+
+#~ msgid ""
+#~ "To ensure data integrity after resizing the partition(s), \n"
+#~ "filesystem checks will be run on your next boot into Windows(TM)"
+#~ msgstr ""
+#~ "Datu integritātis drūšeibai piec sadaļu izmāru maineišonys, \n"
+#~ "failu sistemys puorbaude tiks palaista nuokūšajā Windows(TM) īluodis laikā"
+
+#~ msgid "There is no FAT partition to resize (or not enough space left)"
+#~ msgstr "Nav FAT sadalis, lai izmaineitu izmāru (voi napīteik breivys vītys)"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Izdzēst Windows(TM)"
+
+#~ msgid "Erase and use entire disk"
+#~ msgstr "Izdzēst i lītuot vysu disku"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr ""
+#~ "Jiusim ir vairuok nakai vīns cītais disks, iz kura jius gribit instalēt "
+#~ "linuksu?"
+
+#~ msgid "ALL existing partitions and their data will be lost on drive %s"
+#~ msgstr "VYSYS diska %s sadalis i tamuos asūšī dati tiks pazaudeiti"
+
+#~ msgid "Custom disk partitioning"
+#~ msgstr "Pīlāguots disku sadalejums"
+
+#~ msgid "Use fdisk"
+#~ msgstr "Izmontuot fdisk"
+
+#~ msgid ""
+#~ "You can now partition %s.\n"
+#~ "When you are done, do not forget to save using `w'"
+#~ msgstr ""
+#~ "Tagad jius varit sadaleit cītū disku %s.\n"
+#~ "Kod esit pabeiguši, naaizmierstit saglobuot, izmontojūt `w'"
+
+#~ msgid "I can not find any room for installing"
+#~ msgstr "Navaru atrast vītu instaleišonai"
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr "DrakX sadaļu veiduošonys paleigs atroda sekuojūšus rysynuojumus:"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "Diska sadaleišona naizadeve: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "Teik īslāgts teikls"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "Teik atslāgts teikls"
+
+#~ msgid "none"
+#~ msgstr "nav"

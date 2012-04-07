@@ -1,0 +1,284 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 1999 Mandriva.
+# Alexander Bokovoy <ab@avilink.net>, 2000
+# Maryia Davidouskaia <maryia@scientist.com>, 2000
+msgid ""
+msgstr ""
+"Project-Id-Version: DrakX VERSION\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2000-09-24 12:30 +0100\n"
+"Last-Translator: Alexander Bokovoy <ab@avilink.net>\n"
+"Language-Team: be\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../draklive-install:106
+#, c-format
+msgid "Unity Installer"
+msgstr ""
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr ""
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Памылка"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "Адбылася памылка"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr ""
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr ""
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr ""
+
+#: ../draklive-install:479
+#, fuzzy, c-format
+msgid "Congratulations"
+msgstr "Прыміце віншаванні!"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Сапраўды працягваць?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Выйсці без захавання"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Выйсці без запісу табліцы раздзелаў"
+
+#: ../draklive-install:505
+#, fuzzy, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Ці жадаеце пратэсціраваць настройкі?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr "Каб мадыфікацыя табліцы раздзелаў здейснілася, патрэбна перазагрузка."
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:1
+msgid "Install Unity"
+msgstr ""
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Please wait"
+#~ msgstr "Калі ласка, пачакайце"
+
+#, fuzzy
+#~ msgid "Copying in progress"
+#~ msgstr "Стварэньне меню ўжо запушчана"
+
+#~ msgid "Choose the partitions you want to format"
+#~ msgstr "Выбар раздзелаў для фарматавання"
+
+#~ msgid "Check bad blocks?"
+#~ msgstr "Праверыць на наяўнасць дрэнных блокаў?"
+
+#~ msgid "Not enough swap space to fulfill installation, please add some"
+#~ msgstr ""
+#~ "Не хапае месца ў буферы падкачкі (swap) для ўсталявання, павялічце яго."
+
+#~ msgid "No partition available"
+#~ msgstr "няма даступных раздзелаў"
+
+#~ msgid "Choose the mount points"
+#~ msgstr "Абярыце пункты манціравання"
+
+#, fuzzy
+#~ msgid "Partitioning"
+#~ msgstr "Прынтэр"
+
+#~ msgid "Duplicate mount point %s"
+#~ msgstr "Дубляванне пункту манціравання %s"
+
+#~ msgid ""
+#~ "Some hardware on your computer needs ``proprietary'' drivers to work.\n"
+#~ "You can find some information about them at: %s"
+#~ msgstr ""
+#~ "Пэўнае абсталяванне патрабуе камерцыйных драйвераў для працы.\n"
+#~ "Часткова інфармацыю пра іх можна атрымаць тут: %s"
+
+#~ msgid ""
+#~ "You must have a root partition.\n"
+#~ "For this, create a partition (or click on an existing one).\n"
+#~ "Then choose action ``Mount point'' and set it to `/'"
+#~ msgstr ""
+#~ "Вы павінны мець каранёвы раздзел.\n"
+#~ "Для гэтага стварыце раздзел (альбо адзначце ўжо існуючы).\n"
+#~ "Потым абярыце ‟Кропка манціравання” і ўстанавіце яе ў ‛/’"
+
+#~ msgid ""
+#~ "You do not have a swap partition.\n"
+#~ "\n"
+#~ "Continue anyway?"
+#~ msgstr ""
+#~ "Няма раздзела swap.\n"
+#~ "\n"
+#~ "Усё адно працягваць?"
+
+#~ msgid "Use free space"
+#~ msgstr "Выкарыстоўваць незанятую прастору"
+
+#~ msgid "Not enough free space to allocate new partitions"
+#~ msgstr "Не хапае прасторы для стварэння новых раздзелаў"
+
+#~ msgid "Use existing partitions"
+#~ msgstr "Выкарыстоўваць існуючы раздзел"
+
+#~ msgid "There is no existing partition to use"
+#~ msgstr "Няма існуючых раздзелаў, якія можна выкарыстаць"
+
+#~ msgid "Use the Windows partition for loopback"
+#~ msgstr "Выкарыстоўваць раздзел Windows для віртуальнай файлавай сістэмы"
+
+#, fuzzy
+#~ msgid "Which partition do you want to use for Linux4Win?"
+#~ msgstr "Памеры якога раздзела вы жадаеце змяніць?"
+
+#~ msgid "Choose the sizes"
+#~ msgstr "Выбар памераў"
+
+#~ msgid "Root partition size in MB: "
+#~ msgstr "Каранёвы раздзел ў Мб: "
+
+#~ msgid "Swap partition size in MB: "
+#~ msgstr "Памер swap раздзелу ў Мб:"
+
+#~ msgid "Use the free space on the Windows partition"
+#~ msgstr "Выкарыстоўваць незанятую прастору на раздзеле Windows"
+
+#~ msgid "Which partition do you want to resize?"
+#~ msgstr "Памеры якога раздзела вы жадаеце змяніць?"
+
+#~ msgid ""
+#~ "The FAT resizer is unable to handle your partition, \n"
+#~ "the following error occurred: %s"
+#~ msgstr ""
+#~ "У праграмы змены памераў раздзела FAT не атрымалася\n"
+#~ "апрацаваць Ваш раздзел, памылка: %s"
+
+#~ msgid "Resizing"
+#~ msgstr "Змяненне памераў"
+
+#, fuzzy
+#~ msgid "Computing the size of the Windows partition"
+#~ msgstr "Выкарыстоўваць незанятую прастору на раздзеле Windows"
+
+#~ msgid ""
+#~ "Your Windows partition is too fragmented. Please reboot your computer "
+#~ "under Windows, run the ``defrag'' utility, then restart the Mandriva "
+#~ "Linux installation."
+#~ msgstr ""
+#~ "Ваш раздзел з Windows занадта фрагментаваны. \n"
+#~ "Рэкамендуем спачатку запусціць праграму ‟defrag”"
+
+#~ msgid "Which size do you want to keep for Windows on"
+#~ msgstr "Якую прастору захаваць для Windows?"
+
+#~ msgid "partition %s"
+#~ msgstr "Раздзел %s"
+
+#~ msgid "Resizing Windows partition"
+#~ msgstr "Вылічэнне межаў файлавай сістэмы Windows"
+
+#~ msgid "FAT resizing failed: %s"
+#~ msgstr "Аўтазмяненне памераў не атрымалася для раздзелу FAT %s"
+
+#~ msgid "Remove Windows(TM)"
+#~ msgstr "Выдаліць Windows™"
+
+#, fuzzy
+#~ msgid "Erase and use entire disk"
+#~ msgstr "Сцёрці дадзеныя на ўсім дыску"
+
+#~ msgid ""
+#~ "You have more than one hard drive, which one do you install linux on?"
+#~ msgstr "На які з маючыхся жорсткіх дыскаў Вы жадаеце ўсталяваць Linux?"
+
+#~ msgid "ALL existing partitions and their data will be lost on drive %s"
+#~ msgstr "Усе існуючыя раздзелы на дыску %s і дадзеныя на іх будуць страчаны"
+
+#~ msgid "Use fdisk"
+#~ msgstr "Выкарыстоўваць fdisk"
+
+#~ msgid ""
+#~ "You can now partition %s.\n"
+#~ "When you are done, do not forget to save using `w'"
+#~ msgstr ""
+#~ "Вы можаце цяпер разбіць ваш дыск %s\n"
+#~ "Па заканчэнні не забудзьцеся захаваць змяненні, скарыстаўшы ‛w’"
+
+#, fuzzy
+#~ msgid "I can not find any room for installing"
+#~ msgstr "Дадаць раздзел немагчыма"
+
+#~ msgid "The DrakX Partitioning wizard found the following solutions:"
+#~ msgstr "Майстар падрыхтоўкі раздзелаў DrakX знайшоў наступныя варыянты:"
+
+#~ msgid "Partitioning failed: %s"
+#~ msgstr "Падрыхтоўка разделаў не ўдалася: %s"
+
+#~ msgid "Bringing up the network"
+#~ msgstr "Далучэнне да сеткі"
+
+#~ msgid "Bringing down the network"
+#~ msgstr "Адлучэнне ад сеткі"
+
+#~ msgid "none"
+#~ msgstr "няма"

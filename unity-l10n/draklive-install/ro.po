@@ -1,0 +1,181 @@
+# Translation of draklive-install.po to Romanian
+# Copyright (c) 1999-2010 Mandriva
+#
+# Vă rugăm să nu actualizaţi fișierul, cu excepția cazului în care sînteți
+# sigur de calitatea traducerii dumneavoastră, de gramatică și de ortografie.
+# Acestea din urmă sînt de prea multe ori aproximative.
+# Corectarea lor ulterioară nu are nici un alt rezultat decît acela de
+# pierdere de timp pentru toata lumea.
+#
+# VĂ RUGĂM SĂ RESPECTAȚI SEMNELE DE PUNCTUAȚIE ALE LIMBII ROMÂNE!
+#
+# Nu suprimați spațiul care urmează unui semn de punctuație de sfîrșit de
+# frază; trebuie respectată versiunea originală. În acest caz, este foarte
+# probabil ca programul să afișeze un mesaj la sfîrșit. Suprimînd acel spațiu,
+# cele două cuvintele vor fi afișate legat.
+#
+# Traduceți de manieră INTELIGENTĂ (de ce nu și prin comparație cu alte
+# traduceri ale acestui fișier în alte limbi) și nu cuvînt cu cuvînt. Unele
+# astfel de traduceri nu au nici un sens în limba română.
+#
+# ATENȚIE LA FONTURILE UTILIZATE! Pentru a reda corect diacriticele folosiți
+# disponerea tastaturii românească standard, codarea de caractere UTF-8 și
+# asigurați-vă că fonturile utilizate sînt cu virgulițe, NU CU SEDILE!
+# Exemplu:
+#          font incorect (cu sedile): şŞ ţŢ
+#          font corect (cu virgule): șȘ țȚ
+#
+# Pentru a vă asigura că folosiți fonturile corecte, vizitați:
+#          http://i18n.ro/Fonturi_romanesti/testare
+#
+# Vă mulțumim pentru înțelegere.
+#                                                       Echipa de traducători,
+#                                                       www.Mandrivausers.ro
+#
+# Traducători de-a lungul timpului:
+#
+# Florin Grad <florin@mandriva.com>, 1999, 2000.
+# Dragos Marian Barbu <dragosb@softhome.net>, 2000.
+# Ovidiu Constantin <ovidiu.constantin@gmx.net>, 2002, 2003.
+# Harald Ersch <harald@ersch.ro>, 2003.
+# Cristian Ionuț PÎRÎU <piriu.cristian@rdslink.ro>, 2008.
+# Florin Cătălin RUSSEN <cfrussen@yahoo.co.uk>, 2009, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: DrakX 7.1\n"
+"Report-Msgid-Bugs-To: https://qa.mandriva.com\n"
+"POT-Creation-Date: 2010-11-06 18:00+0100\n"
+"PO-Revision-Date: 2010-05-17 13:27+0100\n"
+"Last-Translator: Cătălin Florin RUSSEN <cfrussen@yahoo.co.uk>\n"
+"Language-Team: Romanian <cooker-i18n@mandrivalinux.org>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3;plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
+"2:1))\n"
+"X-Poedit-Language: Romanian\n"
+"X-Poedit-Country: ROMANIA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../draklive-install:106
+#, fuzzy, c-format
+msgid "Unity Installer"
+msgstr "Instalare Mandriva Live"
+
+#: ../draklive-install:107
+#, c-format
+msgid "This wizard will help you to install the live distribution."
+msgstr "Acest asistent vă va ajuta să instalați distribuția."
+
+#: ../draklive-install:124
+#, c-format
+msgid "/_File"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "/File/_Quit"
+msgstr ""
+
+#: ../draklive-install:125
+#, c-format
+msgid "<control>Q"
+msgstr ""
+
+#: ../draklive-install:192 ../draklive-install:204 ../draklive-install:287
+#, c-format
+msgid "Error"
+msgstr "Eroare"
+
+#: ../draklive-install:204
+#, c-format
+msgid "An error occurred"
+msgstr "A apărut o eroare"
+
+#: ../draklive-install:220
+#, c-format
+msgid "Not enough space available (%s available while %s are needed)"
+msgstr "Nu există spațiu suficient (%s disponibili dar sînt necesari %s) "
+
+#: ../draklive-install:260
+#, c-format
+msgid "Computing total size"
+msgstr "Se calculează spațiul disponibil"
+
+#: ../draklive-install:287
+#, c-format
+msgid "Unable to copy files to new root"
+msgstr "Copierea fișierelor în noua rădăcină nu este posibilă"
+
+#: ../draklive-install:479
+#, c-format
+msgid "Congratulations"
+msgstr "Felicitări"
+
+#: ../draklive-install:479
+#, c-format
+msgid ""
+"Please halt your computer, remove your live system, and restart your "
+"computer."
+msgstr ""
+"Opriți calculatorul, îndepărtați sistemul Live și reporniți calculatorul."
+
+#: ../draklive-install:494
+#, c-format
+msgid "Continue anyway?"
+msgstr "Continuați totuși?"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without saving"
+msgstr "Ieșire fără înregistrare"
+
+#: ../draklive-install:499
+#, c-format
+msgid "Quit without writing the partition table?"
+msgstr "Ieșiți din program fără scrierea tabelei de partiții?"
+
+#: ../draklive-install:505
+#, c-format
+msgid "Do you want to save /etc/fstab modifications"
+msgstr "Doriți să înregistrați modificările în /etc/fstab?"
+
+#: ../draklive-install:512
+#, c-format
+msgid "You need to reboot for the partition table modifications to take place"
+msgstr ""
+"Trebuie să reporniți pentru a înregistra modificările tabelei de partiții"
+
+#: ../draklive-install:517
+#, c-format
+msgid ""
+"You should format partition %s.\n"
+"Otherwise no entry for mount point %s will be written in fstab.\n"
+"Quit anyway?"
+msgstr ""
+"Se recomandă formatarea partiției %s.\n"
+"Altfel nu se va înscrie partiția %s în fstab.\n"
+"Renunțați totuși?"
+
+#: ../draklive-install.desktop.in.h:1
+#, fuzzy
+msgid "Install Unity"
+msgstr "Instalare pe discul dur"
+
+#: ../draklive-install.desktop.in.h:2
+msgid "The Unity Linux Installer"
+msgstr ""
+
+#~ msgid "Mandriva Live"
+#~ msgstr "Mandriva Live"
+
+#~ msgid "Please wait"
+#~ msgstr "Așteptați vă rog"
+
+#~ msgid "Copying in progress"
+#~ msgstr "Copiere în progres"
+
+#~ msgid "Install your Mandriva live system to disk"
+#~ msgstr "Instalați sistemul Mandriva Live pe disc"
