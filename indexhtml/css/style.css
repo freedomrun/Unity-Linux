@@ -1,0 +1,461 @@
+/* Unity Linux Project
+   Original CSS by Noodle Business Template
+   Taken as GPL from Open Source Templates   */
+
+/* reset */
+body,div,dl,dt,dd,ul,ol,li,pre,form,fieldset,input,textarea,blockquote,th,td {
+    margin:0;
+    padding:0;
+}
+
+fieldset,img {
+    border:0;
+}
+
+html {
+    height:100%;
+    margin-bottom:1px;
+}
+
+body {
+    position:relative;
+}
+
+:focus {
+    outline:none;
+}
+
+/* links */
+a {
+    color:#5E8491;
+    text-decoration:none;
+}
+
+a:hover {
+    text-decoration:none;
+	background-color:#333333;
+	color:#5E8491;
+}
+
+/* header elements */
+h1, h2, h3, h4, h5, h6 {
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight:bold;
+}
+
+h1 {
+    font-size:300%;
+    color:#000;
+}
+
+h2 {
+    font-size:250%;
+    color:#b4b4b4;
+}
+
+h3 {
+    font-size:19px;
+    color:#b3001b;
+}
+
+h4 {
+    font-size:175%;
+    color:#000;
+}
+
+h5 {
+    font-size:150%;
+    color:#787878;
+}
+
+h6 {
+    font-size:125%;
+    color:#000;
+}
+
+/* page setup */
+body {
+    /* background:url(../images/page_bg.png); */
+    font-family:Arial, Helvetica, sans-serif;
+    line-height:130%;
+    background-color:#333333;
+    font-size:14px;
+}
+
+/* wrapper setup */
+div.rapidxwpr {
+    margin:auto;
+    width:958px;
+    background:url(../images/wrapper-top.png) 50% 20px no-repeat;
+    padding:35px 0 0 0;
+}
+
+div.rapidxwpr-bottom {
+    background:url(../images/wrapper-bottom.png) 50% 100% no-repeat;
+    padding:4px 19px 19px 19px;
+}
+
+/* header */
+div#header {
+    position:relative;
+    height:174px;
+    margin:0px 0px 15px 0px;
+    background:url(../images/header-bg.jpg) 0 0 no-repeat;
+}
+
+/* logo */
+span#logo, img#logo {
+    position:absolute;
+    top:-39px;
+    left:10px;
+    width:228px;
+    height:204px;
+    border:0;
+}
+
+/* main body setup */
+div#middle {
+    width:auto;
+    margin:0px 0px 0px 0px;
+    clear:both;
+}
+
+div#middle .background {
+    min-height:140px;
+}
+
+div#middle .layoutleft {
+    background:none;
+}
+
+div#middle .layoutright {
+    background:none;
+}
+
+/* right column */
+div#right {
+    width:305px;
+    padding:14px 17px;
+    float:right;
+    border:#3c3c3c 1px dotted;
+}
+
+/* content column */
+div#main {
+    width:auto;
+}
+
+div#middle .layoutleft div#main {
+    margin:0px 0px 0px 0px;
+    padding:0px 0px 0px 0px;
+}
+
+div#middle .layoutright div#main {
+    margin:0px 200px 0px 0px;
+    padding:0px 0px 0px 0px;
+}
+
+div#middle .withoutleft div#main {
+    margin:0px 0px 0px 0px;
+}
+
+div#mainmiddle {
+    margin:0px 0px 0px 0px;
+}
+
+div#main .withoutright {
+    background:transparent;
+}
+
+div#content {
+    width:auto;
+}
+
+div#main .withright div#content {
+    margin:0px 354px 0px 0px;
+    padding:0px 0px 0px 0px;
+}
+
+div#main .withoutright div#content {
+    margin:0px 0px 0px 0px;
+    padding:0px 0px 0px 0px;
+}
+
+/* footer */
+div#footer {
+    margin:-4px auto 0 auto;
+    width:958px;
+    padding:0 0 30px 0;
+    clear:both;
+    color:#fff;
+}
+
+* html div#footer {
+    margin:-3px auto 0 auto;
+}
+
+div#footer a {
+    color:#3a251d;
+}
+
+/* clearing & floating */
+.clearingfix:after {
+    content:".";
+    display:block;
+    line-height:0px;
+    clear:both;
+    visibility:hidden;
+}
+
+.clearingfix {
+    display:block;
+}
+
+.floatbox {
+    overflow:hidden;
+}
+
+/* alignments */
+.alignleft {
+    float:left;
+    margin:0 20px 0 0;
+}
+
+.alignright {
+    float:right;
+    margin:0 0 0 20px;
+}
+
+/* topmenu */
+div#topmenu {
+    position:absolute;
+    top:140px;
+    right:20px;
+    height:34px;
+}
+
+div#topmenu ul {
+    padding:0px;
+    margin:0px;
+    list-style:none;
+    float:left;
+}
+
+div#topmenu li {
+    float:left;
+    display:block;
+}
+
+div#topmenu li a {
+    float:left;
+    display:block;
+    position:relative;
+    height:34px;
+    line-height:38px;
+    overflow:hidden;
+    color:#3a251d;
+    background:url(../images/right-menu.png) 100% 0 no-repeat;
+    padding:0 6px 0 0;
+    font-size:16px;
+    font-weight:bold;
+}
+
+div#topmenu li a span {
+    display:block;
+    float:left;
+    color:#000;
+    background:url(../images/left-menu.png) 0 0 no-repeat;
+    padding:0 6px 0 13px;
+    cursor:pointer;
+}
+
+div#topmenu li a:hover, div#topmenu li a.active {
+    background:url(../images/right-menu.png) 100% -36px no-repeat;
+    text-decoration:none;
+}
+
+div#topmenu li a:hover span, div#topmenu li a.active span {
+    background:url(../images/left-menu.png) 0 -36px no-repeat;
+}
+
+/* quote */
+div.quote {
+    text-align:right;
+    padding:40px 45px;
+}
+
+/* about */
+div.about, div.news {
+    margin:0 0 30px 0;
+}
+
+div.about h3, div.news h3 {
+    margin:0 0 10px 0;
+}
+
+div.about img {
+    border:none;
+}
+
+/* news */
+div.news ul {
+    list-style:none;
+}
+
+div.news ul li {
+    margin:0 0 10px 0;
+}
+
+div.news span.date {
+    font-weight:bold;
+}
+
+div.news a.more {
+    color:#b3001b;
+    font-weight:bold;
+    float:right;
+}
+
+/* call us */
+div.call-us {
+    border:#3c3c3c 1px dotted;
+    padding:10px 17px;
+    margin:0 0 10px 0;
+}
+
+div.call-us .numbers {
+    width:340px;
+    float:left;
+}
+
+div.call-us .numbers p {
+    margin:0;
+    padding:5px 0;
+    font-size:23px;
+    font-weight:bold;
+    color:#412d21;
+}
+
+div.call-us .numbers p span {
+    color:#b3001b;
+    width:170px;
+    display:block;
+    float:left;
+}
+
+div.call-us .message {
+    width:160px;
+    float:right;
+}
+
+/* featured */
+div.featured {
+    margin:0 0 10px 0;
+    padding:14px 17px;
+}
+
+div.featured a {
+    font-weight:bold;
+}
+
+div.featured h3 {
+    margin:0 0 10px 0;
+}
+
+div.featured ul {
+    list-style:none;
+}
+
+div.featured ul li {
+    padding:10px 0;
+    clear:both;
+    min-height:80px;
+}
+
+div.featured ul li .item-img {
+    width:110px;
+    float:left;
+}
+
+div.featured ul li .item-details {
+    width:410px;
+    float:right;
+}
+
+
+
+table {
+		border-collapse:collapse;
+		background:#EFF4FB url(../images/teaser.gif) repeat-x;
+		border-left:1px solid #686868;
+		border-right:1px solid #686868;
+		font:0.8em/145% 'Trebuchet MS',helvetica,arial,verdana;
+		color: #333;
+}
+
+td, th {
+		padding:5px;
+}
+
+caption {
+		padding: 0 0 .5em 0;
+		text-align: left;
+		font-size: 1.4em;
+		font-weight: bold;
+		text-transform: uppercase;
+		color: #333;
+		background: transparent;
+}
+
+/* =links
+----------------------------------------------- */
+
+table a {
+		color:#950000;
+		text-decoration:none;
+}
+
+table a:link {}
+
+table a:visited {
+		font-weight:normal;
+		color:#666;
+		text-decoration: line-through;
+}
+
+table a:hover {
+		border-bottom: 1px dashed #bbb;
+}
+
+/* =head =foot
+----------------------------------------------- */
+
+thead th, tfoot th, tfoot td {
+		background:#333 url(../images/llsh.gif) repeat-x;
+		color:#fff
+}
+
+tfoot td {
+		text-align:right
+}
+
+/* =body
+----------------------------------------------- */
+
+tbody th, tbody td {
+		border-bottom: dotted 1px #333;
+}
+
+tbody th {
+		white-space: nowrap;
+}
+
+tbody th a {
+		color:#333;
+}
+
+.odd {}
+
+tbody tr:hover {
+		background:#fafafa
+}

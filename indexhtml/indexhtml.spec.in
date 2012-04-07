@@ -1,0 +1,71 @@
+%define name        indexhtml
+%define version     @VERSION@
+%define release     %mkrel @RELEASE@
+
+Name:               %{name}
+Version:            %{version}
+Release:            %{release}
+Summary:            Default home page for browsers
+License:            GPL
+Group:              System/Base
+BuildRoot:          %{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildArch:          noarch
+Source:             %{name}-%{version}.tar.xz
+
+BuildRequires:      translate-toolkit
+BuildRequires:      gettext
+
+%description
+The %{name} package provides default home page for browsers.
+
+%prep
+%setup -q
+
+%build
+%make
+
+%install
+%makeinstall
+
+%files
+%defattr(0644,root,root,0755)
+%{_datadir}/doc/HTML/index.html
+#{_datadir}/doc/HTML/branch.html
+%{_datadir}/doc/HTML/help.html
+%dir %{_datadir}/doc/HTML/css
+%{_datadir}/doc/HTML/css/*
+%dir %{_datadir}/doc/HTML/images
+%{_datadir}/doc/HTML/images/*
+%dir %{_datadir}/doc/HTML/js
+%{_datadir}/doc/HTML/js/*
+
+#Installed only if corresponding locale is installed
+@LOCALIZED_FILES@
+
+%clean
+%__rm -rf %{buildroot}
+
+%changelog
+* Sat Sep 03 2011 Matthew Dawkins <mattydaw@gmail.com> 2012-1-unity2011
+- removed synergy, chameleonOS, update 2012
+
+* Tue Feb 01 2011 Gianvacca <gianvacca@unity-linux.org> 2011-2-unity2011
+- Corrected old references to 'remasterme'
+- Updated Italiand and Spanish translations
+
+* Fri Dec 24 2010 mdawkins <mattydaw@gmail.com> 2011-1-unity2011
+- new version 2011
+
+* Mon Nov 29 2010 JMiahMan <JMiahMan at Unity-Linux dot org> 2010-3-unity2010
+- Update for 2010.2 release
+- Removed Granular
+
+* Sat Mar 27 2010 Gianvacca <gianvacca@unity-linu.org> 2010-2-unity2010
+- install localized versions only if corresponding locale is installed
+- full translation to Italian and Spanish
+
+* Tue Mar 22 2010 Gianvacca <gianvacca@unity-linu.org> 2010-1-unity2010
+- updated content
+
+* Tue Jul 21 2009 David Smid <david@smidovi.eu> 2009-1-unity2009
+- initial build for unity

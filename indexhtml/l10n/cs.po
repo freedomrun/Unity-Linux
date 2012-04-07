@@ -1,0 +1,307 @@
+# translation of cs.po to Czech
+# David Smid <david@smidovi.eu>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: cs\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-01-30 23:56+0200\n"
+"PO-Revision-Date: 2010-03-30 09:15+0200\n"
+"Last-Translator: David Smid <david@smidovi.eu>\n"
+"Language-Team: Czech <cs@li.org>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: help.html+html.head.title:4 index.html+html.head.title:4
+msgid "Unity Linux"
+msgstr "Unity Linux"
+
+#: help.html+html.body.div.div.div.div.ul.li:28
+#: index.html+html.body.div.div.div.div.ul.li:27
+msgid "Welcome"
+msgstr "Vítejte"
+
+#: help.html+html.body.div.div.div.div.ul.li:29
+#: index.html+html.body.div.div.div.div.ul.li:28
+msgid "Getting Help"
+msgstr "Kde hledat pomoc"
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.h3:40
+msgid "Remaster and Backup"
+msgstr ""
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.div:42
+#, fuzzy
+msgid ""
+"You can create your remaster of any distribution based on Unity Linux with "
+"the script \"mkremaster\"."
+msgstr ""
+"Kdykoliv můžete vytvořit vlastní bootovatelné CD jakékoliv distribuce "
+"založené na Unity Linuxu pomocí příkazu \"mkremaster\"."
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.h3:45
+msgid "The Unity Logo"
+msgstr ""
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.div.img:47
+#: index.html+html.body.div.div.div.div.div.div.div.div.img:-1
+msgid "Image"
+msgstr "Obrázek"
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.div:48
+msgid ""
+"The Unity Linux logo is a tree leaf for a reason. We liken Unity Linux as "
+"the core or root of the distributions that build on it. Like a tree, each "
+"subsequent distribution based on Unity would be a 'Branch'. Branches are "
+"made easily with the LiveCD tools at the core of every Unity Linux based "
+"desktop."
+msgstr ""
+"To, že logem Unity Linuxu je list, není bez důvodu. Unity Linux se dá "
+"přirovnat ke kořeni nebo kmeni distribucí, které jsou na něm založeny. A "
+"každá distribuce založená na Unity tvoří \"větev\" tohoto stromu. Větve je "
+"možné snadno vytvářet pomocí nástrojů na tvorbu LiveCD, které jsou součástí "
+"každého sytému založeného na Unity Linuxu."
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.h3:55
+#: index.html+html.body.div.div.div.div.div.div.div.h3:49
+msgid "Did you know?"
+msgstr "Věděli jste, že ... ?"
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.div:57
+msgid ""
+"Unity Linux packages are built using a 'chroot' which means that each "
+"package is built in a pristine environment so that developers are able to "
+"identify hard to find build requirements quickly and easily. It also affords "
+"developers the ability to build 32bit packages on a 64bit host."
+msgstr ""
+"Balíčky Unity Linuxu se sestavují v \"chroot\" stromu, což znamená, že každý "
+"balíček je sestavován v čistém prostředí, aby byli vývojáři schopni rychle a "
+"jednoduše identifikovat obtížně detekovatelné závislosti. To také umožňuje "
+"vývojářům sestavovat 32 bitové balíčky na 64 bitovém sytému."
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.div.div:70
+#, fuzzy
+msgid ""
+"Need help installing a desktop? Get up and running quickly on your favorite "
+"desktop. Just click on the icon of your favorite desktop below and the Smart "
+"Package Manager will begin to install it."
+msgstr ""
+"Potřebujete pomoc? Nainstalujte rychle a bezbolestně své oblíbené desktopové "
+"prostředí pomocí metabalíčků uvedených níže. Jednoduše klikněte na jeden z "
+"odkazů a správce balíčků Smart zahájí instalaci"
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.div.h3:102
+msgid "Support Resources"
+msgstr "Kde hledat podporu"
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.div.ul.li.div.img:105
+msgid "community forums"
+msgstr "komunitní fórum"
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.div.ul.li.div:107
+msgid ""
+"<a href=\"http://forum.unity-linux.org/\" target=\"_blank\">Community "
+"Forums</a> - The community forums are a vast resource of help for users. "
+"Need help installing a desktop? Need help remastering or branching into your "
+"own distribution? Looking for help packaging? This is a 'first stop' for "
+"users to find their way."
+msgstr ""
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.div.ul.li.div.img:115
+msgid "Mailing List"
+msgstr "Mailová konference"
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.div.ul.li.div:117
+msgid ""
+"<a href=\"http://groups.google.com/group/ul-developers\" target=\"_blank"
+"\">Mailing List</a> - Our developers have an active mailing list where they "
+"talk about upcoming features, packaging, troubleshooting, and tips/tricks. "
+"The mailing list is an excellent place to understand how Unity developers "
+"work and to interact with them as they continue to develop Unity Linux."
+msgstr ""
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.div.ul.li.div.img:125
+msgid "Documentation Wiki"
+msgstr "Wiki dokumentace"
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.div.ul.li.div:127
+msgid ""
+"<a href=\"http://docs.unity-linux.org/Main_Page\" target=\"_blank"
+"\">Documentation Wiki</a> - Our documentation wiki is geared to help you "
+"find out more about the Unity Linux project, how it is organized and "
+"financed, who is a part of it, and how you can do more with Unity Linux. "
+"This community developed wiki is an excellent resource for general knowledge "
+"about Unity Linux."
+msgstr ""
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.div.ul.li.div.img:135
+msgid "IRC"
+msgstr "IRC"
+
+#: help.html+html.body.div.div.div.div.div.div.div.div.div.ul.li.div:137
+msgid ""
+"<a href=\"http://webchat.freenode.net/?channels=unitylinux\">Internet Relay "
+"Chat</a> - Looking for Unity Linux on IRC? We have a channel on Freenode: "
+"#unitylinux. You can join us there using your favorite IRC client or you can "
+"use the link provided at the start of this information to open a page that "
+"will connect you in your browser. Please note that not all developers use "
+"IRC... so please be patient with your questions!"
+msgstr ""
+
+#: help.html+html.body.small.span.div:156
+#: index.html+html.body.small.span.div:136
+#, fuzzy
+msgid "Unity Linux Project 2011"
+msgstr "Unity Linux Project 2010"
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.h3:39
+msgid "About Unity"
+msgstr "O Unity"
+
+#: index.html+html.body.div.div.div.div.div.div.div.div:41
+msgid ""
+"Unity Linux, in itself, is not a full distribution. What our group provides "
+"is set of “core packages” (i.e. kernel, firmware, toolkits, Desktop "
+"Environments, etc) and the tools which make it very easy to remaster the "
+"core into a distribution of your liking targeting specific functionality or "
+"localizations"
+msgstr ""
+
+#: index.html+html.body.div.div.div.div.div.div.div.div:50
+msgid ""
+"There are many different distributions of Linux that have based themselves "
+"from a Unity core:"
+msgstr ""
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.ul.li:54
+msgid "TinyMe Linux"
+msgstr "TinyMe Linux"
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.ul.li:55
+msgid "Synergy Linux"
+msgstr "Synergy Linux"
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.ul.li:56
+msgid "ChameleonOS"
+msgstr "ChameleonOS"
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.ul.li:57
+msgid "HUMANity"
+msgstr "HUMANity"
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.ul.li:58
+msgid "Orvitux"
+msgstr "Orvitux"
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.ul.li:59
+msgid "Qua It"
+msgstr "Qua It"
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.ul.li:60
+msgid "SAMity"
+msgstr "SAMity"
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.ul.li:61
+msgid "TMLinux"
+msgstr "TMLinux"
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.ul.li:62
+msgid "Unity-Hu"
+msgstr "Unity-Hu"
+
+#: index.html+html.body.div.div.div.div.div.div.div.div:66
+msgid ""
+"As Unity continues to simplify the requirements to remaster and quickly "
+"build packages utilizing a \"Build Server\" to do heavy lifting for "
+"developers... there are sure to be many more!"
+msgstr ""
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.div.div.br:75
+msgid ""
+"At the heart of Unity Linux is RPM5 and the <a href=\"https://launchpad.net/"
+"smart\" target=\"_blank\">Smart Package Manager</a>.<br> <br> We take this "
+"and combine it with the LiveCD project which allows developers to quickly "
+"\"remaster\" derivative distributions. Unity Linux is based on Mandriva and "
+"thus benefits from its package pool and large developer network.<br> <br> "
+"You may find Unity Linux to be a good base for your distribution. Why not "
+"give it a try?<br>"
+msgstr ""
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.div.div.img:86
+msgid "Unity Goals"
+msgstr "Cíle Unity"
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.div.h3:90
+msgid "Featuring"
+msgstr "Co je uvnitř"
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.div.ul.li.div.img:93
+msgid "RPM"
+msgstr "RPM"
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.div.ul.li.div:94
+msgid ""
+"<a href=\"http://rpm5.org/\" target=\"_blank\">RPM 5</a> - RPM 5 provides a "
+"larger set of features over RPM 4. Unity Linux has close ties with RPM 5 "
+"through upstream contributions. We like the cross-platform cross-vendor "
+"approach that RPM 5 employs and the fact that no company controls the future "
+"direction of our package manager and features we want get put into play. "
+"This will allow us to concentrate on what matters... development... instead "
+"of worrying about upstream direction changes."
+msgstr ""
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.div.ul.li.div.img:105
+msgid "CD"
+msgstr "CD"
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.div.ul.li.div:107
+msgid ""
+"<a target=\"_blank\" href=\"http://unity-linux.org/livecd-now-developed-by-"
+"team-unity-linux/\">LiveCD</a> - Using the 'mklivecd' command, developers "
+"can create their own ISO for release. Using the 'mkremaster' script, "
+"developers can take a snapshot of their system in it's current state in an "
+"ISO format. Both mklivecd and remasterme are integral parts of the LiveCD "
+"project which is now developed by the Unity Linux team."
+msgstr ""
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.div.ul.li.div.img:116
+msgid "Zip"
+msgstr "Zip"
+
+#: index.html+html.body.div.div.div.div.div.div.div.div.div.ul.li.div:117
+msgid ""
+"<a target=\"_blank\" href=\"http://en.wikipedia.org/wiki/Xz\">xz "
+"compression</a> - Unity utilizes xz compression which saves space over gz "
+"and bz2 compression. It's almost as fast as gz when decompressing as well so "
+"we save a lot of space and don't sacrifice on performance. Add the fact that "
+"xz has data integrity checking without sacrificing performance and you can "
+"see why Unity developers chose to use it."
+msgstr ""
+
+#~ msgid ""
+#~ "You can create your remaster of any distribution based on Unity Linux "
+#~ "with the command \"mkremaster\"."
+#~ msgstr ""
+#~ "Kdykoliv můžete vytvořit vlastní bootovatelné CD jakékoliv distribuce "
+#~ "založené na Unity Linuxu pomocí příkazu \"mkremaster\"."
+
+#~ msgid "Unity Linux Project 2010"
+#~ msgstr "Unity Linux Project 2010"
+
+#, fuzzy
+#~ msgctxt "./help.html:3"
+#~ msgid "Welcome"
+#~ msgstr "Vítejte"
+
+#, fuzzy
+#~ msgctxt "./index.html:2"
+#~ msgid "Welcome"
+#~ msgstr "Vítejte"
+
+#, fuzzy
+#~ msgctxt "./index.html:3"
+#~ msgid "Welcome"
+#~ msgstr "Vítejte"
