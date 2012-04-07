@@ -1,0 +1,75 @@
+#!/bin/sh
+
+# Make sure we're running as root
+[ ! "`whoami`" = "root" ] && exec gksu $0
+
+# Array of supported lang codes
+langcodelist=( \
+@@LANGCODES@@
+)
+
+# Array of descriptions
+description=( \
+@@DESCRIPTIONS@@
+)
+
+# Builds the array of lang default status
+# If locales-xx package is installed on the system,
+# it automatically selects the xx language pack
+# for installation
+c=0
+echo "Installed locales:"
+for i in `echo ${langcodelist[@]:0}`; do
+	rpm -q locales-$i
+	if [[ $? = 0 ]]
+	then onoffvalue[$c]="on"
+	else onoffvalue[$c]="off"
+	fi
+	((c++))	
+done
+echo
+
+Xdialog --separator=" " --title "CHOOSE THE LANGUAGE" \
+        --checklist "Below, there is a list of supported languages.\n\
+	Please, pick those you want to install.\n" 30 61 6 \
+        @@LANGLIST@@
+	2> /tmp/checklist.tmp
+	
+retval=$?
+
+choice=$(cat /tmp/checklist.tmp)
+rm -f /tmp/checklist.tmp.$$
+case $retval in
+  0)
+    echo "'$choice' chosen.";;
+  1)
+    echo "Cancel pressed.";;
+  255)
+    echo "Box closed.";;
+esac
+
+c=0
+echo -n "To be installed: "
+for i in $choice; do
+	packagetoinstall[$c]="@PKGNAME@-$i"
+	echo -n "${packagetoinstall[$c]} "
+((c++))	
+done
+echo
+echo
+
+smart update --gui
+
+smart install --yes ${packagetoinstall[@]:0} --gui
+
+for i in $choice; do
+
+cp -f /usr/share/@PKGNAME@/$i.tar.xz /usr/share/locale/$i/LC_MESSAGES/
+pushd /usr/share/locale/$i/LC_MESSAGES/ 1> /dev/null
+	tar -Jxvf $i.tar.xz
+	rm -f $i.tar.xz
+popd 1> /dev/null
+
+done
+
+smart remove --yes @PKGNAME@-common

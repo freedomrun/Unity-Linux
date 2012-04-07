@@ -1,0 +1,55 @@
+%define name @PKGNAME@
+%define scriptname @SCRIPTNAME@
+%define version @TRANSLATEMEVER@
+%define release %mkrel @TRANSLATEMEREL@
+
+
+Summary:	Easy localization of a fresh TinyMe install
+Name:		%{name}
+Version:	%{version}
+Release:	%{release}
+License:	GPL
+Group:		System/Internationalization
+URL:		http://www.unity-linux.org/
+Source0:	%{name}-@ARCHIVEVER@.tar.xz
+BuildArch:	noarch
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+
+%description
+It provides a script for localization of the packages which come with a TinyMe
+fresh install. It permits to have a fully localized install without reinstalling
+all packages.
+
+%package common
+Group:		System/Internationalization
+Summary: 	Script for TinyMe localization
+Requires:	Xdialog
+
+%description common
+It provides a script for localization of the packages which come with a TinyMe
+fresh install. It permits to have a fully localized install without reinstalling
+all packages.
+
+@@DATAPACKAGES@@
+
+%prep
+%setup -q -n %{name}-@ARCHIVEVER@
+
+%build
+%make
+
+%install
+%make DESTDIR=%{buildroot} install
+
+%clean
+rm -rf %buildroot
+
+%files common
+%defattr(-,root,root,-)
+%{_bindir}/%{scriptname}
+
+@@FILESDATAPKGS@@
+
+%changelog
+* Sat Sep 05 2009 Gianvacca <gianvacca@unity-linux.org> 0.1.0-1unity2009
+- First build

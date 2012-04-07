@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# Before proceeding, it cleans up the any previous generated file.
+rm -f @SCRIPTNAME@
+
+# It generates a script which handles only the supported languages.
+
+# First, it finds the position of the tags in @SCRIPTNAME@.in and how many
+# lines is composed of.
+c=1
+for tagname in @@LANGCODES@@ @@DESCRIPTIONS@@ @@LANGLIST@@; do
+	position[$c]=$(grep -n "$tagname" @SCRIPTNAME@.in|cut -f1 -d:)
+	((c++))
+done
+
+numberoflines=$(grep -c ".*" lang_database)
+
+# The generation of @SCRIPTNAME@ starts here
+touch @SCRIPTNAME@
+
+sed -n "1,$[${position[1]}-1]p" @SCRIPTNAME@.in >> @SCRIPTNAME@
+
+c=1
+while [ $c -le $numberoflines ]; do
+	i=$(sed -n "${c}p" lang_database|cut -d';' -f1)
+	echo "\"$i\" \\" >> @SCRIPTNAME@
+	((c++))
+done
+
+sed -n "$[${position[1]}+1],$[${position[2]}-1]p" @SCRIPTNAME@.in >> @SCRIPTNAME@
+
+c=1
+while [ $c -le $numberoflines ]; do
+	i=$(sed -n "${c}p" lang_database|cut -d';' -f3)
+	echo "\"$i\" \\" >> @SCRIPTNAME@
+	((c++))
+done
+
+sed -n "$[${position[2]}+1],$[${position[3]}-1]p" @SCRIPTNAME@.in >> @SCRIPTNAME@
+
+c=0
+while [ $c -lt $numberoflines ]; do
+	echo "	\"\${langcodelist[$c]}\" \"\${description[$c]}\" \"\${onoffvalue[$c]}\" \\" >> @SCRIPTNAME@
+	((c++))
+done
+
+sed -n "$[${position[3]}+1],\$p" @SCRIPTNAME@.in >> @SCRIPTNAME@
