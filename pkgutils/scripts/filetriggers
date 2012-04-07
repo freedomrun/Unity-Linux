@@ -1,0 +1,42 @@
+#!/bin/sh
+
+
+# Gives list of packages containing files that launch filetrigger upon install
+# If you pass 'fix' as the first parameter it will call the triggers just like installing RPM would
+# Pass list of packages you want to fix as the next parameters if you don't want to fix all of them
+# Example:
+# ./filetriggers fix xinitrc libhal1
+
+
+QUERY="-qa"
+if [ "$1" == "fix" ]
+then
+    SORT="cat"
+    FIX=1
+    if [ -n "$2" ]
+    then
+	shift
+	QUERY="-q $@"
+    fi
+else
+    SORT="sort -u"
+fi
+
+rpm $QUERY --filesbypkg | while read PKG REST
+do
+    FIL="+""$REST"
+    for filter in `ls /var/lib/rpm/filetriggers/*.filter`
+    do
+	    REGEX=`cat $filter`
+	    if perl -e "exit 0 if '$FIL' =~ qr{$REGEX}; exit 1"
+	    then
+		    echo $PKG
+		    if [ -n "$FIX" ]
+		    then
+			    SCRIPT=${filter%%.filter}.script
+			    echo "launching : $SCRIPT ${FIL:1}"
+			    $SCRIPT ${FIL:1}
+		    fi
+	    fi
+    done
+done | $SORT

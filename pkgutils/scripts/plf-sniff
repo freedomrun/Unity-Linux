@@ -1,0 +1,95 @@
+#!/bin/sh
+
+# Change svnsave if you want to save the
+# settings in a different folder/file
+svnsave="$HOME/.svndir"
+#
+
+fixpath () {
+	echo "$1" | sed -re "s|/+|/|g" -e "s|/$||"
+}
+
+getpath () {
+	# $1 is key, $2 is filename to read from
+	[ -r "$2" ] && sed -n "s|^$1[ \t]*||p" "$2"
+}
+
+cfgerr () {
+	cat<<-EOF
+	Can't write to config file '${!1}'!
+	Please edit this script and change the value of
+	variable '$1' to a file which you have
+	write permissions to, e.g. '$HOME/${!1##*/}'
+	(Script is located at '$0')
+	EOF
+	exit 1
+}
+
+savepath () {
+	# $1 is key, $2 is value, $3 is  var name of filename to write to
+	sed -i "\|^$1|d" "${!3}" 2>/dev/null
+	echo "$1	$2" 2>/dev/null >>"${!3}" || cfgerr "$3"
+}
+
+vareval () {
+	local a e n f="$1"
+	if [[ "$f" =~ [$] ]]; then
+		a=( $(echo "$f"|cut --output-delimiter=" " -d"/" -f1-) )
+		for n in ${!a[@]}; do
+			if [ "${a[n]:0:1}" = "$" ]; then
+				e=${a[n]#$} ; a[n]=${!e}
+			fi
+		done
+		f=$(echo ${a[@]} | sed "s| |/|g")
+	fi
+	fixpath "$f"
+}
+
+getsvn () {
+	# $1 is svn or altsvn
+	local v="$1" svn=$(getpath "$1" "$svnsave")
+	if [ -z "$svn" ]; then
+		read -p "Please enter full path to ${1/alt/alternate } base folder: " svn
+		if [ -z "$svn" ]; then
+			echo "Nothing entered, quitting..."
+			exit 1
+		fi
+	fi
+	# If svn contains "$" evaluate it as a variable
+	svn=$(vareval "$svn")
+	savepath "$1" "$svn" "svnsave"
+	[ "$v" = "svn" ] && v="svndir"
+	eval $v="$svn"
+	echo -e "Using ${1/alt/alternate } base folder '$svn'\n"
+}
+
+showme () {
+	if [ $# -gt 1 ]; then
+		echo `basename $1` ; shift
+		echo "$*"
+		echo "------------"
+		(( count++ ))
+	fi
+}
+
+isplf () {
+	IFS=$'\012'
+	local a
+	a=($(sed -n '0,/%prep/ {
+	s/\(define\|bcond\).*/&/p
+	}' $1 | grep plf) )
+
+	showme $1 ${a[*]}
+}
+
+getsvn "svn"
+cd "$svndir"
+if [ $? -ne 0 ]; then
+	echo "Can't change dir to '$svndir', quitting."
+	exit 1
+fi
+count=0
+for f in `find -type f -iname "*.spec"`; do
+	isplf $f
+done
+echo "Total: $count"

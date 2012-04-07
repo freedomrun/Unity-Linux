@@ -1,0 +1,64 @@
+#!/bin/sh
+#
+# freeme - chroot env umount script
+
+# name of this script
+myname=$(basename $0)
+#
+# name of the .mo file for translations
+moname="pkgutils"
+#
+# Change userhome if the name of the
+# chroot env user changes from unity
+userhome="/home/unity"
+#
+
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+if [ "$UID" -eq 0 ]; then
+	__ "Please run %s as normal user, not superuser (root)\n" "$myname"
+	exit 1
+fi
+
+tmpfil="/tmp/${myname}.$$"
+touch "$tmpfil" ; err=$? ; rm -f "$tmpfil"
+if [ "$err" -ne 0 ]; then
+	__ "Can't create tmp file '%s'\n" "$tmpfil"
+	exit 1
+fi
+
+cd $(dirname "$0") ; build=${PWD%/bin}
+#echo "\$build=$build"
+
+svn="${userhome}/src/svn"
+
+cat>"$tmpfil"<<EOF
+#!/bin/sh
+echo ; e=0
+umount -v ${build}/dev/pts ; (( e+=\$? ))
+umount -v ${build}/sys ; (( e+=\$? ))
+umount -v ${build}/proc ; (( e+=\$? ))
+umount -v ${build}/dev ; (( e+=\$? ))
+umount -v ${build}/var/lib/smart/packages ; (( e+=\$? ))
+umount -v ${build}${svn} ; (( e+=\$? ))
+umount -v ${build}/tmp ; (( e+=\$? ))
+exit \$e
+EOF
+
+chmod +x "$tmpfil"
+__ "Please enter root "
+su -c "$tmpfil"
+err=$?
+rm -f "$tmpfil"
+[ $err -ne 0 ] && __ "\nOops, an error occurred\n"

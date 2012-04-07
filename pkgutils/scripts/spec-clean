@@ -1,0 +1,115 @@
+#!/bin/bash
+#
+#  Spec-Clean
+#  Makes spec files neat-freak friendly
+#  See also the comments in /usr/share/pkgutils/spec-clean-sed.sources
+#
+#  Copyright (C) 2009 Kaleb Marshall <kdulcimer@unity-linux.org>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+SED_SOURCE=/usr/share/pkgutils/spec-clean-sed.sources
+
+macroformat()
+{
+	sed -i.bak -f $SED_SOURCE $1
+}
+
+backupChooser()
+{
+	echo "1. (O)kay all the changes and delete the backup file"
+	echo "2. (R)estore the backup file"
+	echo "3. (L)eave both files on the system"
+	x_valid=false
+	read x
+	while ! [[ "$x_valid" ]]; do
+		case $x in
+			[Oo1])
+				rm -f $f.bak
+				x_valid=true
+				;;
+			[Rr2])
+				mv -f $f.bak $f
+				x_valid=true
+				;;
+			[Ll3])
+				x_valid=true
+				;;
+			*)
+				read x
+				x_valid=false
+				;;
+		esac
+	done
+}
+
+checkChanges()
+{
+	echo "Would you like to check $f and make sure all the changes are okay?"
+	echo "Options:"
+	echo "1. (S)kip checking changes (the .bak file will be preserved)"
+	echo "2. Use (d)iff & less to view changes (Command Line)"
+	echo "3. Use (K)Diff3 to view changes (GUI)"
+	valid=false
+	read a
+	while ! [[ "$valid" ]]; do
+		case $a in
+			[Ss1])
+				valid=true
+				;;
+			[Dd2])
+				clear
+				echo "Press Enter to view the changes."
+				echo "Press Q when done."
+				read
+				diff -uNr $f.bak $f | less
+				backupChooser "$f"
+				valid=true
+				;;
+			[Kk3])
+				clear
+				kdiff3 $f.bak $f
+				echo "1. (O)kay all the changes and delete the backup file"
+				echo "2. (R)estore the backup file"
+				echo "3. (L)eave both files on the system"
+				backupChooser "$f"
+				valid=true
+				;;
+			*)
+				valid=false
+				read a
+				;;
+		esac
+	done
+}
+
+#############################################
+##          Execution starts here          ##
+#############################################
+
+if [ -z "$1" ]; then
+	echo 'spec-clean tidys up your spec files for you'
+	echo 'Usage: spec-clean <name>.spec'
+	echo 'Multiple spec files may be specified, or *.spec may be used to'
+	echo 'clean up all the specs in a directory'
+        exit 0
+fi
+
+for f in "$@"; do
+	if [ "${f:(-5)}" == ".spec" ]; then
+		macroformat "$f"
+		checkChanges "$f"
+	fi
+done

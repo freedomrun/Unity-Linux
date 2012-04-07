@@ -1,0 +1,674 @@
+#!/bin/bash
+#
+#  splog
+#
+#  Copyright (C) 2009 Steven J Stover <stumpy@unity-linux.org>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+
+# name of this script
+myname=$(basename $0)
+#
+# name of the .mo file for translations
+moname="pkgutils"
+#
+# change tmp to use a different tmp dir
+tmp="/tmp"
+#
+#change logext to use a different log file extension
+logext="log"
+#
+# change logfilename to use a different changelog filename
+logfilename=".changelog"
+#
+
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+showhelp () {
+	local di=${dist:-%distribution}
+	local nd="-not defined-"
+
+	cat<<-EOF
+$(__ "Usage: %s [OPTION]... [SPECFILE]...
+  or:  %s [OPTION]... -m SPECFILE1 SPECFILE2
+Tag SPECFILE %s with current date,
+packager and version-release info.
+In the 2nd form, same as above but also
+merge %s from SPECFILE2 into SPECFILE1.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -d, --distribution=DIST    Distribution [%s]
+  -p, --packager=NAME        Packager info [%s]
+  -b, --bump                 Bump release number by one
+  -i, --import               Use import tag [- import for %s]
+  -n, --newver               Use new version tag [- new version %%version]
+  -r, --rebuild              Use rebuild tag [- rebuild]
+  -t, --tag=TAG              Use custom tag (Can be repeated)
+  -g, --notag                Don't add any new tag (overrides dpinrts)
+  -s, --nosuffix             Don't add distsuffix & mandriva_release [%s]
+  -l, --limit=NUMBER         Limit changelog to NUMBER most recent entries
+  -m, --merge                Merge %s from SPECFILE2 into SPECFILE1
+  -v, --verbose              Verbose, more detailed output
+  -q, --quiet                No output, except errors
+  -u, --usage                Display typical usage and exit
+  -h, --help                 Display this help and exit" "$myname" "$myname" "$chlog" "$chlog" "${dist:-$nd}" "${pkgr:-$nd}" "$di" "${dsmr:-$nd}" "$chlog")
+	EOF
+
+	[ "$1" = "u" ] && cat<<-EOF
+$(__ "
+Examples:
+        %s -p \"Joe Cool <jc@example.net>\"
+        %s -t \"- add BR foo\" -t \"- bugfix\"
+        %s    (Default tag \"%s\")
+        %s -m unity.spec mdv.spec
+
+Note: When using -m, exactly two SPECFILE arguments must be given.
+      The %s entries from the 2nd SPECFILE will be merged into
+      the first SPECFILE. No changes are made to the 2nd SPECFILE." "$myname" "$myname" "$myname" "$deftag" "$myname" "$chlog")
+	EOF
+
+	[ -z "$pkgr" ] && cat<<-EOF
+$(__ "
+Consider adding the %%packager macro to your
+%s file." "$rpmmac")
+	EOF
+
+	if [ -z "$dsmr" ]; then
+		[ -z "$(rpmeval %distsuffix)" ] && cat<<-EOF
+$(__ "
+Consider adding the %%distsuffix macro to your
+%s file." "$rpmmac")
+		EOF
+
+		[ -z "$(rpmeval %mandriva_release)" ] && cat<<-EOF
+$(__ "
+Consider adding the %%mandriva_release macro to your
+%s file." "$rpmmac")
+		EOF
+	fi
+	exit
+}
+
+getnum () {
+	local n
+	for n in `seq 0 $((${#1}-1))`; do
+		if ! [[ ${1:n:1} =~ [[:digit:]] ]]; then
+			__ "Invalid limit option '%s', quitting.\n" "$1"
+			exit 1
+		fi
+	done
+	echo $1
+}
+
+mergeit () {
+	swap () {
+		local t=${k[$1]} ; k[$1]=${k[$2]} ; k[$2]=$t
+		t="${m[$1]}" ; m[$1]="${m[$2]}" ; m[$2]="$t"
+	}
+
+	getepoch () {
+		local s=$(echo "${1%%$NL*}" | cut -d" " -f3-5)
+		date -d "$s" +%s
+	}
+
+	getlog () {
+		local a c d n=-1
+		declare -a c d
+		mapfile c < <(sed "0,/^$chlog/d" "$1")
+		if [ -n "$2" ]; then
+			if grep -q ^$chlog "$2"; then
+				mapfile -O ${#c[@]} c < <(sed "0,/^$chlog/d" "$2")
+			else
+				mapfile -O ${#c[@]} c < "$2"
+			fi
+		fi
+		for a in ${!c[@]}; do
+			echo "${c[a]}" | grep -q "^*" && (( n++ ))
+			[ $n -ge 0 ] && d[$n]="${d[n]}${c[a]}"
+		done
+
+		for a in ${d[@]}; do
+			echo -n "$(echo $a | sed ':a;/^\n*$/N;/\n$/ba')$ETX"
+		done
+	}
+
+	local e i j k m
+	declare -a k m
+	IFS=$ETX k=( $(getlog "$1" "$2") )
+
+	# remove duplicate entries
+	IFS=$NL
+	for j in ${!k[@]}; do
+		i=( $(for e in ${!k[@]}; do [ $e -gt $j ] && echo $e; done) )
+		for e in ${i[@]}; do
+			[ "${k[j]}" = "${k[e]}" ] && unset k[$e]
+		done
+	done
+	IFS=$OFS
+
+	# make array m an unsparse version of array k
+	i=0
+	for e in "${k[@]}"; do
+		m[((i++))]="$e"
+	done
+
+	# get epoch dates into k array
+	unset k
+	for e in ${!m[@]}; do
+		k[$e]=$(getepoch "${m[e]}")
+	done
+
+	# synchronous decending bubble sort of k & m
+	for (( j= ${#k[@]} - 1; j > 0; j-- )); do
+		for (( i = 0 ; i < j ; i++ )); do
+			[ ${k[i]} -lt ${k[$((i+1))]} ] \
+				&& swap $i $((i+1))
+		done
+	done
+
+
+	sed "0,/$chlog/!d" "$1" > "$tmp/$1.$$"
+	i=$((${#m[@]}-1))
+	if [ -n "$limit" ]; then
+		((limit--))
+		[ $i -gt $limit ] && i=$limit
+	fi
+	for (( e=0; e<=i; e++ )); do
+		echo "${m[e]}" >> "$tmp/$1.$$"
+		[ $e -ne $i ] && echo >> "$tmp/$1.$$"
+	done
+
+	cp -f "$tmp/$1.$$" "$1"
+	rm -f "$tmp/$1.$$"
+}
+
+
+yorn () {
+	local s
+	while ! [[ "$s" =~ [ynYN] ]]; do
+		read -p"$2" s
+		s=${s:-$1}
+		[ ${#s} -gt 1 ] && s=
+	done
+	echo -n $s|tr yn YN
+}
+
+mkmtag () { # make mtag regex
+local a b c d e
+b="\*[ \t]*" ; d="[ \t]+|" ; e=( Sun Mon Tue Wed Thu Fri Sat )
+for c in ${e[@]}; do [ "$c" = "Sat" ] && d=${d%|} ; a="$a$b$c$d" ; done ; echo "$a"
+}
+
+dellast () { # $1 is filename to delete last blank line from
+	local n=$(tail -1 "$1")
+	[ ${#n} -eq 0 ] && sed -i '$d' "$1"
+}
+
+esc () { # echo a string replacing sed special chars with an escaped copy,
+		 # but don't change \n or \t
+	echo "$1" | sed -e 's~[/\.*^$[]~\&~g' -e 's~\\n~\n~g' -e 's~\\t~\t~g'
+}
+
+bmprel () { # $1 is filename
+	local L R N n c
+	L=$(sed -nr '0,/^%package/ { \~^[Rr]elease[ \t]*:~ p }' "$1")
+	R=$(echo "$L" | sed -nr 's~^[Rr]elease[ \t]*:[ \t]*(.*)$~\1~p' | sed "s~[ \t]*$~~")
+	R=${R##*$NL}
+	$test && { echo "L='$L'"; echo "R='$R'"; }
+	[ -z "$R" ] && break
+	N=$(echo "$R" | sed -nr ":a;s~^[^0-9]+(.*)$~\1~;t a;p" | sed -nr ":b;s~^[0-9]+[^0-9]+(.*)$~\1~;t b;p;")
+	$test && echo "N='$N'"
+	[ -z "$N" ] && R=$(echo "$R" | sed -nr "s~^.*(%.*)$~\1~p" | sed -nr "s~%+\{*([^}]*)}*.*$~\1~p")
+	$test && echo "Now: R='$R'"
+	c=0
+	while [ -z "$N" ]; do
+		(( c++ ))
+		R="[ \t]*%define[ \t]+$(esc "$R")[ \t]+"
+		$test && echo "R='$R'"
+ 		L=$(sed -nr '\~^'"$R"'~ p' "$1")
+		R=$(echo "$L" | sed -nr 's~^'"$R"'(.*)$~\1~p' | sed "s~[ \t]*$~~")
+		R=${R##*$NL}
+ 		$test && { echo "After: L='$L'"; echo "After: R='$R'"; }
+		[ -z "$R" ] && break
+		n="$R"
+		N=$(echo "$R" | sed -nr ":a;s~^[0-9]+[^0-9]+([0-9]+.*)$~\1~;t a;s~^[^0-9]+([0-9]+.*)$~\1~;t a;p" \
+			| grep -Eo "^[0-9]+")
+		$test && echo "After: N='$N'"
+		[ -z "$N" ] && R=$(echo "$R" | sed -nr "s~^.*(%.*)$~\1~p" | sed -nr "s~%+\{*([^}]*)}*.*$~\1~p")
+		$test && echo "EndLoop: R='$R'"
+		[ -z "$R" -o "$c" -gt 5 ] && break
+	done
+
+	# whew! after all that, now try to change the release #
+	$test && echo "File: '$1'  N='$N'  L='$L'  n='$n'  c='$c'"
+
+	if [ -z "$N$n" ]; then
+		! $quiet && __ "Can't evaluate release, please change manually.\n"
+		return
+	fi
+
+	if [ -n "$N" ]; then
+		if [ "$c" -gt 2 ] && ! "$quiet"; then
+			__ "Warning: recursive definition of release, result may be invalid.\n"
+			__ "Please check the release value manually.\n"; echo
+		fi
+
+		L=$(esc "$L")
+		N=$(echo "$N" | grep -Eo "^[0-9]+")
+		let c=$N+1
+
+		if ! $quiet; then
+			$test && echo "L='$L'"
+			__ "Current release: %s" "$rel"
+			# TRANSLATORS: try to right-align 'Current line: ' and '    New line: ' by adding initial blank spaces
+			__ "Current line: "
+			sed -nr "\~^$L~p" "$1"
+			# TRANSLATORS: try to right-align 'Current line: ' and '    New line: ' by adding initial blank spaces
+			__ "    New line: "
+			sed -nr "\~^$L~ s~(.*)$N~\1$c~p" "$1"
+			[ "$(yorn y "$(__ "Replace? %s" "[Y/n] ")")" = "Y" ] && sed -ri "\~^$L~ s~(.*)$N~\1$c~" "$1"
+		else
+			sed -ri "\~^$L~ s~(.*)$N~\1$c~" "$1"
+		fi
+
+	elif echo "$n" | grep -Eq "[^0-9]"; then
+		__ "release '%s' is not an integer, please change manually.\n" "$n"
+		return
+	fi
+}
+
+grmtag () { # grep for mtag, $1 is string to match against
+	echo "$1" | grep -Eq "$mtag"
+}
+
+rpmeval () {
+	local e=$(rpm -E "$1")
+	[ "$e" != "$1" ] && echo "$e"
+}
+
+rpmq () { # $1 is querytag to query, $2 is specfile name
+	local a=$(rpm -q --specfile --qf '%{'"$1"'}\n' "$2" 2>/dev/null)
+	local b=$(rpm -q --specfile --qf '%{'"$1"'}\n' "$2" 2>&1 1>/dev/null)
+	a=${a%%$NL*} ; b=${b%%$NL*}
+	if [ -z "$a" ]; then
+		echo "$b File: $2"
+		return 1
+	else
+		case "$1" in
+			Version) ver="$a";;
+			Release) rel="$a";;
+		esac
+		return 0
+	fi
+}
+
+sednl () { # echo a string replacing \n with a newline
+	echo "$1" | sed 's|\n|\
+|g' #; echo
+# end of script
+}
+
+killtag () { # $1 is tagline, $2 is # of newlines, $3 is specfile name
+	sed -i '
+		/'"$chlog"'/,/'"$1"'/ {
+			: more
+			$!N
+			s/\n/&/'"$2"';
+			t enough
+			$!b more
+			: enough
+			/^'"$1"'\n\?$/d
+			P;D
+		}' "$3"
+	# end of script
+}
+
+geto () {
+	# match on any line which starts with * and ends with current version-release,
+	# and match up to and including a blank line (or EOF)
+	# use an "end of text" char (octal 003) as the field separator
+	local r="\*.*${ver}-${rel}" ; IFS=$ETX
+	$test && { echo "$mtag"; echo; }
+	o=( $(sed -nr '
+		\~'"$r"'~ {
+		:loop
+		s~.*~&'"$ETX"'~
+		$ b done
+		H;n
+		\~'"$mtag"'~ !b loop
+		:test
+		\~'"$r"'~ b loop
+		n
+		$!b test
+		# delete spurious last line
+		s~.*~~
+		:done
+		H;x;p
+		}' "$1") )
+
+	# sed includes the newline char at the end of the pattern so now all the elements
+	# of array o (except the first) have a leading newline char, so strip them off
+	for l in ${!o[@]}; do
+		o[$l]=${o[l]#$NL};
+		$test && echo -e "len= '${#o[l]}'\to[$l]= '${o[l]}'"
+	done
+	$test && echo
+}
+
+killmvr () {
+	local k l m n o p q
+	# get the array of matches into o
+	# k is the number of matched lines, including blank lines
+	geto "$1" ; k=${#o[@]}
+	if [ "$k" -gt 0 ]; then
+		# start from array element 0 and also reset the field separator
+		l=0 ; IFS=$OFS
+		# loop while the current line # is less than the number of matched lines
+		while [ "$l" -lt "$k" ]; do
+			# start numbering each tag block line from 0 and start with an empty string
+			n=0 ; m=""
+			# loop until we find a blank line (or EOF)
+#			while [ "${#o[l]}" -gt 0 ]; do
+			while :; do
+				# concatenate the lines from one tag block together into m,
+				# separating each line with a newline meta char \n
+				[ "$n" -eq 0 ] && m=${o[l]} || m="$m\n${o[l]}"
+				$test && echo "l='$l' n='$n' m='$m'"
+				# increment the line and block counters
+				(( l++ )) ; (( n++ ))
+				# if the following line starts a new tag, or we reached the end, stop and process
+				if grmtag "${o[l]}" || [ "$l" -eq "$k" ]; then
+					(( l-- )) ; (( n-- ))
+					break
+				fi
+			done
+			$test && echo -e "l='$l' n='$n' m='$m'\n"
+			q="" # reset q so we don't delete tags unless in verbose mode
+			# display the tag block, replacing each \n meta char with a real newline
+			$verbose && { sednl "$m"; q=$(yorn n "$(__ "Delete? %s" "[y/N] ")"); }
+			# does user want to delete the current tag block?
+			if [ "$q" = "Y" ]; then
+				$verbose && echo
+				p=$(esc "$m")
+				if [ "$n" -eq 0 ]; then
+					# tag line followed immediately by another tag
+					$test && echo "p='$p'"
+					$test && __ "Deleting line '%s'\n" "$m" && echo
+					sed -i '0,/'"$p"'/ {//d;}' "$1"
+				else
+					$test && echo "p='$p'"
+					$test && { __ "Deleting multi-line tag:\n" ; sednl "$m"; }
+					killtag "$p" "$n" "$1"
+				fi
+			else
+				$verbose && echo
+			fi
+			(( l++ ))
+		done
+	fi
+}
+
+tagit () {
+	chkspc () {
+		if [ ! -r "$1" ]; then
+			__ "Can't read '%s'... skipping\n" "$1"
+			return 1
+		fi
+		# stop here if 2nd file
+		[ -n "$2" ] && return 0
+
+		if [ "${1:(-5)}" != ".spec" ]; then
+			__ "'%s' is not a spec file... skipping\n" "$1"
+			return 1
+		elif ! grep -q "^$chlog" "$1"; then
+			$verbose && __ "No %s found in '%s'" "$chlog" "$1"
+#			logfile=${1/%spec/$logext}
+			logfile="$(dirname "$1")/../$logfilename"
+			if [ ! -r "$logfile" ]; then
+				$verbose && echo
+				__ "Can't read '%s', skipping '%s'\n" "$logfile" "$1"
+				return 1
+			else
+				$verbose && __ ", using log file '%s'\n" "$logfile"
+				uselog=true
+				local oldspc="$spc"
+				spc="${tmp}/$(basename "$spc").${myname}"
+				# combine specfile + "%changelog" + logfile to tmp file
+				cat "$oldspc" <(echo -e "\n$chlog") "$logfile" > "$spc" 
+			fi
+		else
+			uselog=false
+		fi
+		return 0
+	}
+
+	local chd spc="$1" mspc="$2"
+	while [ -L "$spc" ]; do spc=$(readlink "$spc"); done
+	chkspc "$spc" || return
+	if [ -n "$mspc" ]; then
+		while [ -L "$mspc" ]; do mspc=$(readlink "$mspc"); done
+		mspc=$(readlink -m "$mspc") #because we need the absolute path
+		chkspc "$mspc" 0 || return
+	fi
+	chd=$(dirname "$spc") ; [ "$chd" = "." ] && chd=""
+	spc=$(basename "$spc")
+
+	if [ -n "$chd" ]; then
+		$test &&  __ "\nChanging dir to '%s'\n" "$chd" && echo
+		pushd "$chd" &>/dev/null
+	fi
+
+	# replace multiple blank lines in changelog with a single blank line
+	# sed -i '/'"$chlog"'/,$ { /./,/^$/!d }' "$spc"
+
+	if $bump || $usetag; then
+		# evaluate the version and release macros
+		rpmq Version "$spc" ; [ "$?" -ne 0 ] && return
+		rpmq Release "$spc" ; [ "$?" -ne 0 ] && return
+		$test && echo -e "%version='$ver'  %release='$rel'\n"
+
+		# bump the release # up by one
+		if $bump; then
+			# increment the release # by 1
+			bmprel "$spc"
+			if $usetag; then
+				# evaluate the version and release macros again
+				rpmq Version "$spc" ; [ "$?" -ne 0 ] && return
+				rpmq Release "$spc" ; [ "$?" -ne 0 ] && return
+				$test && echo -e "%version='$ver'  %release='$rel'\n"
+			fi
+		fi
+	fi
+
+	if $usetag; then
+		$newver && nvtag="${nvtag}${ver}\n"
+
+		# delete any tag blocks which match the current version-release
+		killmvr "$spc"
+
+		# If we deleted the bottom changelog entry, there is probably
+		# a blank line at the end of the file now, so delete it too
+		dellast "$spc"
+
+		# add %distsuffix & %mandriva_release to release if missing
+		if ! $nosfx && [ -n "$dsmr" ]; then
+			if ! echo "$rel" | grep -q ".*$dsmr"; then
+				$test && __ "Adding suffix '%s'\n" "$dsmr" && echo
+				rel=${rel}${dsmr}
+			fi
+		fi
+
+		# add the new tag block immediately after the %changelog line
+		sed -i "/^${chlog}/a\
+\* $mydate $pkgr ${ver}-${rel}\n\
+$imptag\
+$nvtag\
+$rebtag\
+$mytag" "$spc"
+
+		if ! $quiet; then
+			# display new changelog entry
+			local s="$spc"
+			$uselog && s="$logfile"
+			__ "Tag added to '%s':" "$s"
+			sed -n '/^'"$chlog"'/ {
+				:loop
+				s~^$~~
+				t done
+				$!H;n
+				$! b loop
+				:done
+				H;g;p }' "$spc"
+		fi
+
+		# If we added the bottom changelog entry, there is
+		# a blank line at the end of the file now, delete it
+		dellast "$spc"
+	fi
+
+
+	# call mergeit even for limit, since
+	# that's where the limit is applied
+	$merge || [ -n "$limit" ] && mergeit "$spc" "$mspc"
+
+	# if we changed dir then restore old dir
+	if [ -n "$chd" ]; then
+		popd &>/dev/null
+		$test && __ "Restoring dir to %s\n" "$PWD" && echo
+	fi
+
+	# if we used the log file then write the modified
+	# log file back to the actual log file
+	if $uselog; then
+		sed "0,/^$chlog/d" "${tmp}/${spc}" > "$logfile"
+		# remove the tmp file
+		rm -f "${tmp}/${spc}"
+	fi
+
+	$verbose && [ -n "$sep" ] && awk 'BEGIN{$64=OFS="-";print}'
+}
+
+fixmt () {
+	# no printable chars; delete this tag
+	if echo "$1" | grep -Pq "^[^[:graph:]]*$"; then
+		return
+	# at least 2 spaces or a tab; freeform so leave it
+	elif echo "$1" | grep -Pq "^ {2}|^\t+"; then
+		echo "$1\n"
+	# at least one + or - plus at least one space; close enough so leave it
+	elif echo "$1" | grep -Pq "^[ \t]*[+-]+[ \t]+"; then
+ 		echo "$1\n"
+	# at least one + or - then a printable char; add a space before the printable char
+	elif echo "$1" | grep -Pq "^ *[+-]+[[:print:]]"; then
+		echo "$(echo "$1" | sed "s~^\( *[+-]*\)\(.*\)$~\1 \2~")\n"
+	# default; force a - and a space first
+	else
+		echo "- $1\n"
+	fi
+}
+
+# # # # # # # # # # # # # # # # # # # # # #
+#          Execution starts here          #
+# # # # # # # # # # # # # # # # # # # # # #
+chlog="%changelog"
+mydate=$(echo $(LC_ALL="C" date +"%a %b %d %Y"))
+rpmmac="$HOME/.rpmmacros"
+dist=$(rpmeval %distribution)
+pkgr=$(rpmeval %packager)
+dsmr=$(rpmeval %distsuffix)
+dsmr=${dsmr:+${dsmr}$(rpmeval %mandriva_release)}
+dsmr=${dsmr:+-$dsmr}
+OFS=$IFS ; NL=$'\012' ; ETX=$'\003'
+deftag="- FIXME comment goes here"
+mtag=$(mkmtag)
+bump=false ; import=false ; rebuild=false ; newver=false ; nosfx=false ; usetag=true
+merge=false ; verbose=false ; quiet=false ; usage=false ; helpme=false ; test=false
+
+IFS=$NL
+set - $(echo "$*" | sed -e "s~--distribution=~-d~g" -e "s~--packager=~-p~g" -e "s~--limit=~-l~g" \
+ -e "s~--bump~-b~g" -e "s~--import~-i~g" -e "s~--rebuild~-r~g" -e "s~--newver~-n~g" -e "s~--tag=~-t~g" \
+ -e "s~--notag~-g~g" -e "s~--verbose~-v~g" -e "s~--nosuffix~-s~g" -e "s~--merge~-m~g" -e "s~--quiet~-q~g" \
+ -e "s~--usage~-u~g" -e "s~--help~-h~g")
+IFS=$OFS
+
+while getopts d:p:birnt:gsl:mvquh op
+do	case "$op" in
+		d) dist="$OPTARG";;
+		p) pkgr="$OPTARG";;
+		b) bump=true;;
+		i) import=true;;
+		r) rebuild=true;;
+		n) newver=true;;
+		t) mytag="${mytag}$(fixmt "$OPTARG")";;
+		g) usetag=false;;
+		s) nosfx=true;;
+		l) limit=$(getnum $OPTARG);;
+		m) merge=true;;
+		v) $verbose && test=true ; verbose=true;;
+		q) quiet=true;;
+		u) usage=true;;
+		h) helpme=true;;
+		?) exit 1;;
+	esac
+done
+
+$usage && showhelp u
+$helpme && showhelp
+
+shift $(( $OPTIND-1 ))
+
+if $import; then
+	while [ -z "$dist" ]; do
+		read -p "$(__ "Distribution? ")" dist
+	done
+	imptag="- import for ${dist}\n"
+fi
+
+while [ -z "$pkgr" ]; do
+	read -p "$(__ "Packager? ")" pkgr
+done
+
+$rebuild && rebtag="- rebuild\n"
+$newver && nvtag="- new version "
+[ -z "${imptag}${rebtag}${nvtag}${mytag}" ] && mytag="$deftag\n"
+
+if $merge; then
+	if [ $# -eq 2 ]; then
+		tagit "$1" "$2"
+	else
+		__ "Please supply exactly two SPECFILE arguments for the merge option... quitting.\n"
+		exit 1
+	fi
+else
+	while [ "$#" -gt 0 ]; do
+		[ "$#" -gt 1 ] && sep=1 || sep=""
+		tagit "$1"
+		shift
+	done
+fi
+
+exit 0

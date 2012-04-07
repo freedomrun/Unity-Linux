@@ -1,0 +1,137 @@
+#!/bin/bash
+#
+#  svndir
+#
+#  Copyright (C) 2009 Steven J Stover <stumpy@unity-linux.org>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#
+# # # # # # # # # # # # # # # # # # # # # # # #
+#  Make a new folder structure in svn folder  #
+#  $@ is name(s) of package(s) to add         #
+# # # # # # # # # # # # # # # # # # # # # # # #
+
+
+# Change svnsave if you want to save the
+# settings file in a different folder
+svnsave="$HOME/.svndir"
+#
+
+showhelp () {
+	cat << EOF
+Usage: $myname [OPTION]... [PKGNAME]...
+Make new folder structures in svn folder
+
+Mandatory arguments to long options are mandatory for short options too.
+  -s, --svndir    svn base folder
+  -h, --help      Display this help and exit
+  -u, --usage     Display typical usage and exit
+EOF
+	[ -n "$1" ] && exit $1
+}
+
+usage () {
+	showhelp
+	cat << EOF
+
+Examples:
+	$myname foo bar  (Makes folders for foo & bar)
+	$myname -s /data/geek/svn  (Sets svn base folder)
+EOF
+	exit
+}
+
+savesvn () {
+	echo "$1" 2>/dev/null >$svnsave
+	if [ "$?" -ne 0 ]; then
+		cat << EOF
+Can't write to config file "$svnsave"!
+Please edit this script and change the value of
+variable "\$svnsave" to a file which you have
+write permissions to, e.g. $HOME/.svndir
+(Script is located at $0)
+EOF
+		exit 1
+	fi
+}
+
+getsvn () {
+	[ -r "$svnsave" ] && svndir=$(<$svnsave)
+	if [ -z "$svndir" ]; then
+		read -p "Please enter full path to svn base folder: " svndir
+		if [ -z "$svndir" ]; then
+			echo "Nothing entered... Quitting"
+			exit 1
+		fi
+	fi
+
+	# If svndir contains "$" evaluate it as a variable
+	if [[ "$svndir" =~ '\$' ]]; then
+		local a e
+		a=( $(echo "$svndir"|cut --output-delimiter=" " -d"/" -f1-) )
+		for (( n=0; n<${#a[@]}; n++ ))
+		do	if [[ "${a[n]}" = \$* ]]; then
+				e=${a[n]##$} ; a[n]=${!e}
+			fi
+		done
+		svndir=$(echo ${a[@]} | sed "s| |/|g")
+	fi
+
+	savesvn "$svndir"
+}
+
+# # # # # # # # # # # # # #
+#  Execution starts here  #
+# # # # # # # # # # # # # #
+
+myname=$(basename "$0")
+set - $(echo "$*" | sed -e "s|--svndir=|-s|g" -e "s|--usage|-u|g" -e "s|--help|-h|g")
+
+while getopts s:uh op
+do	case "$op" in
+		s) svndir="$OPTARG";;
+		u) dousage=1;;
+		h|?) dohelp=1;;
+	esac
+done
+shift $(( $OPTIND-1 ))
+
+[ -n "$dousage" ] && usage
+[ -n "$dohelp" ] && showhelp 0
+
+if [ -n "$svndir" ]; then
+	savesvn "$svndir"
+	echo "svn base folder changed to \"$svndir\""
+else
+	getsvn
+fi
+
+cd $svndir 2>/dev/null
+if [ "$?" -ne 0 ]; then
+	echo "Can't change dir to svn base folder \"$svndir\""
+	echo "Change the base folder with the -s option."
+	exit 1
+else
+	echo "Using svn base folder \"$svndir\""
+fi
+
+err=0
+while [ "$#" -gt 0 ]
+do	p="$1" ; shift
+	mkdir -pv $p/{F,P,S}
+	[ "$?" -ne 0 ] && err=1
+done
+[ "$err" -eq 0 ] && echo "Success!" || echo "An error occurred!"

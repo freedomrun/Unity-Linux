@@ -1,0 +1,334 @@
+#!/bin/bash
+#
+#  mkrepo
+#
+#  Copyright (C) 2009 Steven J Stover <stumpy@unity-linux.org>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+
+# name of this script
+myname=$(basename $0)
+#
+# name of the .mo file for translations
+moname="pkgutils"
+#
+	######################################
+	##  Some important variables which  ##
+	##    might need changed someday    ##
+	######################################
+
+defvars () {
+	##  %distribution & %mandriva_release should always be defined.
+	##  In case they are not we provide some default values here.
+	ourdistribution="Unity" ; ourrelease="2009"
+	##
+	rpmmac="$HOME/.rpmmacros" ; rpmrc="$HOME/.rpmrc" ; dbgmac="%debug_package"
+	tmpfn=${myname}.$$ ; NL=$'\012'
+	rmvd="<removed>"
+	
+	[ -f "$rpmmac" ] && mv -f $rpmmac ${rpmmac}.$$ 2>/dev/null
+	
+	defdist=$(rpmeval %distribution) ; defsuff=$(rpmeval %distsuffix)
+	defvend=$(rpmeval %vendor) ; defrele=$(rpmeval %mandriva_release)
+	defpack=$(rpmeval %packager) ; defdbug=$(fixmac "$(rpmeval $dbgmac)")
+	defbase="$HOME"
+	
+	[ -f "${rpmmac}.$$" ] && mv -f ${rpmmac}.$$ $rpmmac 2>/dev/null
+	
+	macdist=$(rpmeval %distribution) ; macsuff=$(rpmeval %distsuffix)
+	macvend=$(rpmeval %vendor) ; macrele=$(rpmeval %mandriva_release)
+	macpack=$(rpmeval %packager) ; macdbug=$(fixmac "$(rpmeval $dbgmac)")
+	macbase=$(rpmeval %_topdir) ; macbase=${macbase%/src/rpm}
+	usr=$(rpmeval "%_usr") ; usr=${usr:-/usr}
+	[ "$macbase" = "$usr" ] && macbase=$defbase
+}
+
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+fixmac () {
+	local ml a="$1"
+	if [[ "$a" =~ $NL ]]; then
+		ml=$(echo "$a"|wc -l)
+		a="$(echo "$a"|sed "\|^$|d"|head -n1) $(__ "(%s more lines)" "$ml")"
+	fi
+	echo "$a"
+}
+
+showinfo () {
+	[ -f "$rpmmac" ] && __ "\nCurrent ~/.rpmmacros file contains:\n" && cat $rpmmac
+}
+
+showhelp () {
+	d=${macdist:-$defdist} ; s=${macsuff:-$defsuff}
+	r=${macrele:-$defrele} ; v=${macvend:-$defvend}
+	p=${macpack:-$defpack} ; n=${macdbug:-$defdbug}
+	b=${macbase:-$defbase}
+
+	cat << EOF
+$(__ "Usage: %s [OPTION]...
+Create a local repository including folder
+structure, .rpmrc and .rpmmacros files
+
+Mandatory arguments to long options are mandatory for short options too.
+  -d, --distribution=DIST    Distribution  %s
+  -s, --distsuffix=SUFFIX    Distribution suffix %s
+  -r, --release=YYYY         Mandriva release %s
+  -v, --vendor=VENDOR        Vendor %s
+  -p, --packager=NAME        Packager info %s
+  -n, --nodebug=Y            No debug packages %s
+  -b, --basedir=DIR          Base folder for src tree %s
+  -x, --extra                Extra information is displayed
+  -u, --usage                Display typical usage and exit
+  -h, --help                 Display this help and exit
+
+Use a - as the argument to d,s,r,v,p,n,b to remove an existing macro." "$myname" "${d:+[$d]}" "${s:+[$s]}" "${r:+[$r]}" "${v:+[$v]}" "${p:+[$p]}" "${n:+[$n]}" "${b:+[$b]}")
+EOF
+	[ "$1" = "u" ] && cat << EOF
+$(__ "
+Examples:
+        mkrepo --distsuffix=myos --nodebug=y
+        mkrepo -p \"Joe Cool <jc@example.net>\"
+        mkrepo -r-  (removes %%release macro if it exists)")
+EOF
+	[ -n "$extra" ] && showinfo
+	exit
+}
+
+yorn () {
+	local s
+	while ! [[ "$s" =~ [ynYN] ]]; do
+		read -p"$2" s
+		s=${s:-$1}
+		[ ${#s} -gt 1 ] && s=
+	done
+	echo -n $s|tr yn YN
+}
+
+rpmeval () {
+	OFS=$IFS ; IFS=$NL
+	local e=$(rpm -E "$1")
+	if [ "$1" = "$dbgmac" ]; then
+		[ -z "$e" -a -f "$rpmmac" ] && e=$(sed -n "s|^$dbgmac[ \t]*||p" $rpmmac)
+	fi
+	[ "$e" != "$1" ] && echo "$e"
+	IFS=$OFS
+}
+
+baremacs () {
+	local msg="$(__ "\nThese changes will be written to ~/.rpmmacros:\n")"
+	if [ -f "$rpmmac" ]; then
+		macfil=$(<$rpmmac)
+		OFS=$IFS ; IFS=$NL
+		newmac=( $(getmacs) )
+		for am in ${newmac[@]}
+		do	m=$(echo "$am" | cut -f1)
+			v=$(echo "$am" | cut -f2)
+			ov=$(echo "$macfil" | sed -n "s|^$m[ \t]*||p")
+			case "$v" in
+				$rmvd) [ -n "$ov" ] && change=$change$NL$am;;
+				*) [ "$v" != "$ov" ] && change=$change$NL$am;;
+			esac
+		done
+		IFS=$OFS
+		change=$(echo "$change" | sed "/^$/d")
+		[ -n "$change" ] && echo -e "$msg$change"
+	else
+		echo -ne "$msg" ; getmacs | sed "\|\t${rmvd}$|d"
+	fi
+}
+
+getmacs () {
+	macr=( %_topdir %_tmppath %packager %distribution %distsuffix %vendor %mandriva_release %debug_package )
+	macv=( "$topdir" "$tmppath" "$packager" "$distribution" "$distsuffix" "$vendor" "$release" "$debug" )
+	for (( m=0; m<${#macr[@]}; m++ ))
+	do	[ "${macv[$m]}" = "-" ] && macv[$m]=$rmvd
+		[ -n "${macv[$m]}" ] && echo -e "${macr[$m]}\t${macv[$m]}"
+	done
+}
+
+bkmsg () {
+	local f=$(basename "$2")
+	case "$1" in
+		0)   __ "File %s backed up as %s.old" "$f" "$f";;
+		999) :;;
+		*)   __ "Failed to create backup of %s" "$f";;
+	esac
+}
+
+#########################################
+##        Execution starts here        ##
+#########################################
+
+if ! ps|grep $PPID|grep -q $(basename $SHELL); then
+	e="$(__ "Run %s from a console please." "$myname")"
+	which kdialog && exec kdialog --title $myname --caption "" --error "$e"
+	which zenity && exec zenity --title $myname --error --text="$e"
+	which konsole && exec konsole -T $myname --caption "" --noclose -e echo "$e"
+	which xterm && exec xterm -T $myname -fn *-fixed-*-*-*-20-* -hold -e echo "$e"
+	exit 0
+fi
+
+if [ $UID -eq 0 ]; then
+	showhelp
+	__ "\nPlease use this command as normal user, not root.\n"
+	exit 1
+fi
+
+if ! cd ~; then
+	__ "Cannot change directory to your home directory... quitting.\n"
+	exit 1
+fi
+
+defvars
+
+for c in $(echo "/ | # ! = _ ~ :")
+do	if ! [[ "$@" =~ $c ]]; then
+		s=$c ; break
+	fi
+done
+if [ -z "$s" ]; then
+	__ "Try again without using all of \"/|#!=_~:\" in your arguments... quitting.\n"
+	exit 1
+fi
+
+OFS=$IFS ; IFS=$NL
+set - $(echo "$*" | sed -e "s$s--packager=$s-p$s" -e "s$s--distribution=$s-d$s"\
+ -e "s$s--distsuffix=$s-s$s" -e "s$s--vendor=$s-v$s" -e "s$s--release=$s-r$s"\
+ -e "s$s--basedir=$s-b$s" -e "s$s--nodebug=$s-n$s" -e "s$s--usage$s-u$s"\
+ -e "s$s--help$s-h$s" -e "s$s--extra$s-x$s")
+IFS=$OFS
+
+while getopts p:d:s:v:r:b:n:uxh? op
+do	case "$op" in
+	p) packager="$OPTARG";;
+	d) distribution="$OPTARG";;
+	s) distsuffix="$OPTARG";;
+	v) vendor="$OPTARG";;
+	r) release="$OPTARG";;
+	b) basedir="$OPTARG";;
+	n) debug="%{nil}"; [[ "$OPTARG" = "-" ]] && debug="-";;
+	u) usage=1;;
+	x) extra=1;;
+	h|?) helpme=1;;
+	esac
+done
+
+[ -n "$usage" ] && showhelp u
+[ -n "$helpme" ] && showhelp
+
+shift $(( $OPTIND-1 ))
+[ -n "$1" ] && __ "\nExtra parameter(s) \"%s\" ignored...\n" "$@"
+
+if [ "$basedir" = "-" ]; then
+	basedir=$defbase
+else
+	basedir=$(echo "$basedir"|sed -e "s|//*|/|g" -e "s|/$||")
+fi
+basedir=${basedir:-${macbase:-$defbase}}
+echo "$basedir"|grep -q "^/" || basedir=$HOME/$basedir
+bd=$basedir
+while [ ! -d "$bd" -a -n "$bd" ]
+do	bd=${bd%/*}
+done
+
+touch "$bd/$tmpfn" 2>/dev/null ; err=$? ; rm -f "$bd/$tmpfn"
+if [ "$err" -ne "0" ]; then
+	__ "ERROR: You do not have write permission to \"%s\"\n" "$basedir"
+	__ "Check the -b (--basedir) argument and try again... quitting.\n"
+	exit 1
+fi
+
+d="$distribution" ; [ "$d" = "-" ] && d="$defdist"
+dist=${d:-${macdist:-${defdist:-$ourdistribution}}}
+dist=$(echo "$dist" | sed "s| |_|g")
+r="$release" ; [ "$r" == "-" ] && r="$defrele"
+rel=${r:-${macrele:-${defrele:-$ourrelease}}}
+rel=$(echo "$rel" | tr A-Z a-z | sed "s| |_|g")
+
+topsrc="$basedir/src" ; topdir="$topsrc/rpm" ; tmppath="$topsrc/tmp"
+
+[ -n "$extra" ] && showinfo && echo
+
+__ "\nUsing %s as base for src tree.\n" "$basedir" ; baremacs
+
+if [ "$(yorn y "$(__ "Continue? %s" "[Y/n] ")")" = "N" ]; then
+	__ "\nOperation cancelled.\n"
+	exit 1
+fi
+
+
+if [ -f "$rpmmac" ]; then
+	macfil=$(<$rpmmac)
+	mv -f --backup=t $rpmmac ${rpmmac}.old &>/dev/null
+	rpmmacbk=$?
+	OFS=$IFS ; IFS=$NL
+	newmac=( $(getmacs) )
+	for am in ${newmac[@]}
+	do	m=$(echo "$am" | cut -f1)
+		v=$(echo "$am" | cut -f2)
+		macfil=$(echo "$macfil" | sed "\|^$m|d")
+		[ "$v" != "$rmvd" ] && macfil=$macfil$NL$am
+	done
+	echo "$macfil">$rpmmac
+	IFS=$OFS
+else
+	getmacs | sed "\|\t${rmvd}$|d">$rpmmac
+	rpmmacbk=999
+fi
+
+if [ -f "$rpmrc" ]; then
+	mv -f --backup=t $rpmrc ${rpmrc}.old &>/dev/null
+	rpmrcbk=$?
+else
+	rpmrcbk=999
+fi
+
+cat > $rpmrc <<EOF
+buildarchtranslate: i386: i586
+buildarchtranslate: i486: i586
+buildarchtranslate: i586: i586
+buildarchtranslate: i686: i586
+EOF
+
+[ -n "$extra" ] && vb="v" && lm="   ln: $(__ "created link") " && echo
+uname -m | grep -q "i[3456]86" && dir86="i586" || dir86="x86_64"
+mkdir -p${vb} $topsrc/{rpm/{BUILD,RPMS/$dir86,SOURCES,SPECS,SRPMS},tmp}
+pushd $topdir/RPMS &>/dev/null
+[ -d "noarch" ] || { echo -n "$lm" && ln -sf${vb} $topdir/RPMS/$dir86 noarch ; }
+popd &>/dev/null
+
+echo ; bkmsg $rpmmacbk $rpmmac ; bkmsg $rpmrcbk $rpmrc
+
+cat << EOF
+$(__ "
+%s is now finished. You can install source rpms
+(*.src.rpm) as normal user by typing:
+
+$ rpm -i --nodeps package.src.rpm
+
+Enjoy building rpms!" "$myname")
+EOF

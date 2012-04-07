@@ -1,0 +1,124 @@
+#!/bin/sh
+
+# i586 script Copyright (C) 2010 by Steven J Stover <stumpy@unity-linux.org>
+#
+# Enable or disable the unity-i586-* channels in smart
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+
+# name of this script
+myname=$(basename $0)
+#
+# name of the .mo file for translations
+moname="pkgutils"
+#
+ARCH="i586" ; PREF="unity-${ARCH}-"
+OFS=$IFS ; NL=$'\012'
+
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+helpme () {
+	cat<<-EOF>&2
+$(__ "Usage: %s [OPTION]... [CHANNEL]...
+Enable or disable the %s channels in smart
+
+  -e, --enable      Enable channels
+  -d, --disable     Disable channels
+  -a, --all         Affect all %s channels
+  -s, --show        Show all %s channels
+  -h, --help        Display this help and exit" "$myname" "${PREF}*" "$ARCH" "$ARCH")
+	EOF
+	[ -n "$1" ] && exit $1
+}
+
+IFS=$NL ; show=false ; all=false
+set - $(echo "$*" | sed -e "s|--enable|-e|g" -e "s|--disable|-d|g" \
+	-e "s|--all|-a|g" -e "s|--show|-s|g" -e "s|--help|-h|g")
+IFS=$OFS
+
+while getopts edash? op
+do
+	case "$op" in
+		e)		opt="--enable";;
+		d)		opt="--disable";;
+		a)		all=true;;
+		s)		show=true;;
+		h|?)	helpme 0;;
+	esac
+done
+shift $(( $OPTIND-1 ))
+
+a=($(smart channel --show | sed -nr "s|^\[(unity-${ARCH}.*)]|\1|p" | sort))
+
+if [ ${#a[@]} -eq 0 ]; then
+	__ "No %s channels installed.\n" "$ARCH">&2
+	[ -n "$opt" ] && __ "Option \"%s\" ignored, quitting.\n" "$opt">&2
+	exit 0
+fi
+
+if $show; then
+	IFS=$NL ; echo "${a[*]}" ; IFS=$OFS
+fi
+
+if [ -z "$opt" ]; then
+	if [ $# -gt 0 ]; then
+		__ "Missing option -e|-d, ignoring \"%s\"\n" "$@">&2
+	elif ! $show; then
+		__ "Nothing to do...\n">&2
+	fi
+	exit 0
+fi
+
+if [ $UID -ne 0 ]; then
+	$show && echo>&2
+	__ "Option \"%s\" ignored...\n" "$opt">&2
+	__ "Please run %s as root or with sudo, quitting.\n" "$myname">&2
+	exit 1
+fi
+
+declare -a m ; c=0
+while [ $# -gt 0 ]; do
+	p=$1 ; echo "$p" | grep -q "^${PREF}" || p="${PREF}$p"
+	fnd=false
+	for e in ${a[@]}; do
+		if [ "$p" = "$e" ]; then
+			m[(( c++ ))]=$p ; fnd=true ; break
+		fi
+	done
+	$fnd || __ "Channel \"%s\" not installed, skipping...\n" "$p">&2
+	shift
+done
+
+if ! $all && [ ${#m[@]} -eq 0 ]; then
+	__ "No installed channels given, quitting.\n">&2
+	exit 1
+fi
+
+[[ "$opt" =~ en ]] && msg="$(__ "Enabling channel(s): ")" || msg="$(__ "Disabling channel(s): ")"
+echo -n "$msg"
+$all && echo ${a[@]} || echo ${m[@]}
+$all && smart channel $opt ${a[@]} || smart channel $opt ${m[@]}

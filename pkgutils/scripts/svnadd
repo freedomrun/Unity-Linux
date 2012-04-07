@@ -1,0 +1,106 @@
+#!/bin/sh
+
+# name of this script
+myname=$(basename $0)
+#
+# name of the .mo file for translations
+moname="pkgutils"
+#
+
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+yorn () {
+	local s
+	while ! [[ "$s" =~ [ynYN] ]]; do
+		read -p"$2" s
+		s=${s:-$1}
+		[ ${#s} -gt 1 ] && s=
+	done
+	echo -n $s|tr yn YN
+}
+
+showhelp () {
+	cat<<-EOF
+$(__ "Usage: %s [FILE]...
+
+Add files & folders listed in FILE to svn
+
+Note: Generate FILE with 'svn st | tee ../FILE'" "$myname")
+	EOF
+	exit $1
+}
+
+addlist () {
+	local a=($(sed -rn "s|^\?[ \t]*(.*)$|\1|p" "$1"))
+	if [ ${#a[@]} -eq 0 ]; then
+		__ "Nothing found, check your input file(s).\n"
+		showhelp 1
+	fi
+	cmd="${cmd} ${a[@]}"
+}
+
+# # # # # # # # # # # # # #
+#  Execution starts here  #
+# # # # # # # # # # # # # #
+
+[ $# -eq 0 ] && showhelp
+
+set - $(echo "$*" | sed -e "s|--help|-h|g")
+
+while getopts h OP; do
+	case $OP in
+		h|?) HELPME=1;;
+	esac
+done
+shift $(( $OPTIND-1 ))
+
+[ -n "$HELPME" ] && showhelp
+
+
+cmd="svn add"
+while [ $# -gt 0 ]; do
+	addlist "$1"
+	shift
+done
+
+__ "About to execute command:\n%s\n" "${cmd}"; echo
+if [ "$(yorn y "$(__ "Continue? %s" "[Y/n] ")")" = "N" ]; then
+	__ "Operation aborted.\n"
+	exit 1
+fi
+
+$cmd
+
+c=0 ; x=60 ; NL=$'\012'
+OFS=$IFS ; IFS=$NL
+a="$(echo "$cmd" | sed -re "s|svn add (.*)$|\1|" -e "s| |, |g") added.$NL"
+
+while [ ${#a} -gt 0 ]; do
+	i=$(expr index "$a" " $NL")
+	b[c]=${b[c]}${a:0:i}
+	a=${a:i}
+	if [ ${#b[c]} -ge $x ]; then
+		b[c]=${b[c]% }
+		(( c++ ))
+	fi
+done
+
+m=$(echo "${b[*]}")
+
+if [ "$(yorn y "$(__ "Commit now? %s" "[Y/n] ")")" = "Y" ]; then
+	exec svn ci -m "$m"
+else
+	echo -e "\n$m\n"
+	__ "Now you may run 'svn ci' to commit the added contents.\n"
+fi

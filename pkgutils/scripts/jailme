@@ -1,0 +1,327 @@
+#!/bin/bash
+#
+# jailme - chroot env mount script
+#
+#  Copyright (C) 2009 Steven J Stover <stumpy@unity-linux.org>
+#                   & Matthew Dawkins <mattydaw@gmail.com>
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+
+# name of this script
+myname=$(basename $0)
+#
+# name of the .mo file for translations
+moname="pkgutils"
+#
+# Change svnsave if you want to save the
+# settings file in a different folder
+svnsave="$HOME/.svndir"
+#
+# Change userhome if the name of the
+# chroot env user changes from unity
+userhome="/home/unity"
+#
+# Change cachedir to use a different
+# cache folder in the host system
+cachedir="/var/lib/bldchrt"
+#
+# Change tmp to use a different tmp folder
+tmp="/tmp"
+#
+
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+showhelp () {
+	local sdir=$(getpath "svn" "$svnsave")
+	local adir=$(getpath "altsvn" "$svnsave")
+	cat<<-EOF
+$(__ "Usage: %s [OPTION]...
+Set up for entering chroot environment
+
+Mandatory arguments to long options are mandatory for short options too.
+  -s, --svndir=PATH         Path to svn base folder %s
+  -S, --altsvn=PATH         Path to alternate svn base folder %s
+  -A, --usealtsvn           Use alternate svn base folder
+  -h, --help                Display this help and exit" "$myname" "${sdir:+[$sdir]}" "${adir:+[$adir]}")
+	EOF
+	exit 0
+}
+
+yorn () {
+	local s
+	while ! [[ "$s" =~ [ynYN] ]]; do
+		read -p"$2" s
+		s=${s:-$1}
+		[ ${#s} -gt 1 ] && s=
+	done
+	echo -n $s|tr yn YN
+}
+
+fixpath () {
+	echo "$1" | sed -re "s|/+|/|g" -e "s|/$||"
+}
+
+getpath () {
+	# $1 is key, $2 is filename to read from
+	[ -r "$2" ] && sed -n "s|^$1[ \t]*||p" "$2"
+}
+
+cfgerr () {
+	cat<<-EOF
+$(__ "Can't write to config file '%s'!
+Please edit this script and change the value of
+variable '%s' to a file which you have
+write permissions to, e.g. '%s'
+(Script is located at '%s')" "${!1}" "$1" "$HOME/${!1##*/}" "$0")
+	EOF
+	exit 1
+}
+
+savepath () {
+	# $1 is key, $2 is value, $3 is  var name of filename to write to
+	sed -i "\|^$1|d" "${!3}" 2>/dev/null
+	echo "$1	$2" 2>/dev/null >>"${!3}" || cfgerr "$3"
+}
+
+vareval () {
+	local a e n f="$1"
+	if [[ "$f" =~ [$] ]]; then
+		a=( $(echo "$f"|cut --output-delimiter=" " -d"/" -f1-) )
+		for n in ${!a[@]}; do
+			if [ "${a[n]:0:1}" = "$" ]; then
+				e=${a[n]#$} ; a[n]=${!e}
+			fi
+		done
+		f=$(echo ${a[@]} | sed "s| |/|g")
+	fi
+	fixpath "$f"
+}
+
+getsvn () {
+	# $1 is svn or altsvn
+	local v="$1" svn=$(getpath "$1" "$svnsave")
+	if [ -z "$svn" ]; then
+		read -p "$(__ "Please enter full path to %s base folder: " "${1/alt/alternate }")" svn
+		if [ -z "$svn" ]; then
+			__ "Nothing entered, quitting...\n"
+			exit 1
+		fi
+	fi
+	# If svn contains "$" evaluate it as a variable
+	svn=$(vareval "$svn")
+	savepath "$1" "$svn" "svnsave"
+	[ "$v" = "svn" ] && v="svndir"
+	eval $v="$svn"
+	__ "Using %s base folder '%s'\n" "${1/alt/alternate }" "$svn"; echo
+}
+
+getpkgr () {
+	pkgr=$(sed -nr "s|^%packager[ \t]*(.*)$|\1|p" ${myhome}/.rpmmacros 2>/dev/null)
+	upkgr=$(sed -nr "s|^%packager[ \t]*(.*)$|\1|p" ${uhome}/.rpmmacros 2>/dev/null)
+	if [ -z "$pkgr" ]; then
+		if [ -n "$upkgr" ]; then
+			# TRANSLATORS: do not translate %%packager, it's an rpm macro name
+			if [ "$(yorn y "$(__ "Use '%%packager %s'? %s" "$upkgr" "[Y/n] ")")" = "N" ]; then
+				__ "Quitting...\n"
+				exit 1
+			else
+				pkgr="$upkgr"
+			fi
+		# TRANSLATORS: do not translate %%packager, it's an rpm macro name
+		elif [ "$(yorn n "$(__ "No %%packager macro, continue? %s" "[y/N] ")")" = "N" ]; then
+			__ "Quitting...\n"
+			exit 1
+		fi
+	else
+		# TRANSLATORS: do not translate %%packager, it's an rpm macro name
+		__ "Using '%%packager %s'\n" "$pkgr"
+	fi
+}
+
+chksvn () {
+	# $1 is svn or altsvn
+	local s=$1
+	[ "$1" = "svn" ] && s="svndir"
+	if ! [ -d "${!s}" ]; then
+		cat<<-EOF
+$(__ "Can't find %s base directory:
+'%s'
+Please change the path with the %s option" "${1/alt/alternate }" "${!s}" "--${s}")
+		EOF
+		exit 1
+	fi
+}
+
+sanity () {
+	tmpfil="${tmp}/${myname}.$$"
+	touch "$tmpfil" ; err=$? ; rm -f "$tmpfil"
+	if [ "$err" -ne 0 ]; then
+		__ "Can't create tmp file '%s'\n" "$tmpfil"
+		exit 1
+	fi
+
+	chksvn "svn"
+	$usealtsvn && chksvn "altsvn"
+}
+
+# # # # # # # # # # # # # #
+#  Execution starts here  #
+# # # # # # # # # # # # # #
+
+if [ "$UID" -eq 0 ]; then
+	__ "Please run %s as normal user, not superuser (root)\n" "$myname"
+	exit 1
+fi
+
+NL=$'\012' ; usealtsvn=false ; dohelp=false
+OFS=$IFS ; IFS=$NL
+set - $(echo "$*" | sed -e "s|--svndir=|-s|g" -e "s|--altsvn=|-S|g" -e "s|--usealtsvn|-A|g")
+IFS=$OFS
+
+while getopts s:S:Ah op
+do
+	case "$op" in
+		s) svndir=$(fixpath "$OPTARG");;
+		S) altsvn=$(fixpath "$OPTARG");;
+		A) usealtsvn=true;;
+		h) dohelp=true;;
+		?) exit 1;;
+	esac
+done
+shift $(( $OPTIND-1 ))
+$dohelp && showhelp
+
+if [ -n "$svndir" ]; then
+	savepath "svn" "$svndir" "svnsave"
+	__ "Svn base folder changed to '%s'\n" "$svndir"; echo
+else
+	getsvn "svn"
+fi
+
+if [ -n "$altsvn" ]; then
+	savepath "altsvn" "$altsvn" "svnsave"
+	__ "Alternate svn base folder changed to '%s'\n" "$altsvn"; echo
+else
+	$usealtsvn && getsvn "altsvn"
+fi
+
+sanity
+
+pushd $(dirname "$0") &>/dev/null
+build=${PWD%/bin}
+popd &>/dev/null
+sudort=${build#${PWD}/}
+[ "$sudort" = "$PWD" ] && sudort='.'
+if [ "$sudort" = "$build" ]; then
+	sudort=$(echo "$PWD" | sed -nr 's?^'"$build"'(.*)$?\1?p')
+	if [ -z "$sudort" ]; then
+		sudort=$build
+	else
+		# translate . to : then replace /foo with ..* in a loop, finally replace * with / globally and print
+		sudort=$(echo "$sudort" | tr . : | sed -nr ":a;s?/[^/]+?\.\.\*?;t a;s?\*?/?gp")
+	fi
+fi
+
+uhome="${build}${userhome}"
+myuid=$(id -u) ; mygid=$(id -g)
+myhome="$HOME"
+getpkgr
+
+
+
+cat>"$tmpfil"<<EOF
+#!/bin/sh
+domount () { # \$1 is what, \$2 is where
+	if ! echo "\$mnt" | grep -q "\$2"; then
+		if [ "\$1" = "/proc" ]; then
+			mount -v -t proc none "\$2" ; (( e+=\$? ))
+		else
+			mount -v --bind "\$1" "\$2" ; (( e+=\$? ))
+		fi
+	fi
+}
+
+e=0
+# /usr/sbin/chroot $sudort uname -m | grep -q "i[3-6]86" && dir86="i586" || dir86="x86_64"
+/usr/sbin/chroot $sudort [ -d /lib64 ] && dir86="x86_64" || dir86="i586"
+mkdir -p ${uhome}/src/{svn,tmp,rpm/{BUILD,RPMS/\$dir86,SOURCES,SPECS,SRPMS}}
+pushd ${uhome}/src/rpm/RPMS &>/dev/null
+[ -d "noarch" ] || ln -sf ${userhome}/src/rpm/RPMS/\$dir86 noarch
+popd &>/dev/null
+mkdir -p ${cachedir}/\${dir86}
+sed -ri "s|^(unity:x:)[0-9]+:\$|\1${mygid}:|" "${build}/etc/group"
+sed -ri "s|^(unity:x:)[0-9]+:[0-9]+(.*)\$|\1${myuid}:${mygid}\2|" "${build}/etc/passwd"
+# owner=\$(stat -c %u "$uhome")
+# [ "\$owner" != "$myuid" ] && chown -R ${myuid}:${mygid} "$uhome"
+chown -R ${myuid}:${mygid} "$uhome"
+if [ -n "$pkgr" ]; then
+	sed -i "\|%packager|d" ${uhome}/.rpmmacros 2>/dev/null
+	echo "%packager	$pkgr">>${uhome}/.rpmmacros
+fi
+
+echo -e "\n$(__ "Mounting filesystem folders...")"
+mnt=\$(mount)
+domount /tmp ${build}/tmp
+domount ${svndir} ${uhome}/src/svn
+domount ${cachedir}/\${dir86} ${build}/var/lib/smart/packages
+domount /dev ${build}/dev
+domount /proc ${build}/proc
+domount /sys ${build}/sys
+domount /dev/pts ${build}/dev/pts
+cp -f /etc/resolv.conf ${build}/etc/resolv.conf ; (( e+=\$? ))
+cp -f ${myhome}/.Xauthority ${uhome}/ ; (( e+=\$? ))
+chown ${myuid}:${mygid} ${uhome}/.Xauthority ; (( e+=\$? ))
+# cp -f ${myhome}/.xauth* ${uhome}/ ; (( e+=\$? ))
+# chown ${myuid}:${mygid} ${uhome}/.xauth* ; (( e+=\$? ))
+exit \$e
+EOF
+
+chmod +x "$tmpfil"
+__ "\nPlease enter root "
+su -c "$tmpfil"
+err=$?
+rm -f "$tmpfil"
+
+if [ "$err" -eq 0 ]; then
+	cat<<-EOF
+$(__ "	
+Now you can use your build environment.
+Enter the following command for root access:
+su - -c 'chroot %s'
+
+Enter the following commands for unity access:
+sudo chroot %s
+su - unity
+
+Note: The root password is 'root', unity password is 'unity'
+
+When you are finished and have exited the chroot environment,
+make sure to run the following command to clean up:
+%s" "$build" "$sudort" "sh ${0%$myname}freeme")
+	EOF
+else
+	__ "\nOops, an error occurred\n"
+fi

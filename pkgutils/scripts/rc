@@ -1,0 +1,8 @@
+#!/bin/bash
+
+[ $# -eq 0 ] && exit 1
+
+[ "${1:(-4)}" != ".rpm" ] && exit 1
+
+rpm2cpio "$1" | cpio -i -d --no-absolute-filenames
+/bin/ls -l

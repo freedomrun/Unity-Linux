@@ -1,0 +1,987 @@
+#!/bin/bash
+#
+#  bldpkg
+#
+#  Copyright (C) 2009 Steven J Stover <stumpy@unity-linux.org>
+#                   & Matthew Dawkins <mattydaw@gmail.com>
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#
+# # # # # # # # # # # # # # # # # # # # # #
+#  Build packages from command line args, #
+#  from a listfile or all in svn          #
+# # # # # # # # # # # # # # # # # # # # # #
+
+# name of this script
+myname=$(basename $0)
+#
+# name of the .mo file for translations
+moname="pkgutils"
+#
+# Change svnsave if you want to save the
+# settings in a different folder/file
+svnsave="$HOME/.svndir"
+#
+# Change tmp to use a different tmp folder
+tmp="/tmp"
+#
+# Change rpmmac if you want to save the
+# macros in a different folder/file
+rpmmac="$HOME/.rpmmacros"
+#
+# Change logfile if you want to save the
+# log in a different folder/file
+logfile="$HOME/$myname.log"
+#
+# Change pkginfo if you want to use a
+# different file extention for the info files
+pkginfo=".pkginfo"
+#
+# Change specdiff if you want to use a
+# different filename for the spec file diff file
+specdiff="spec.diff"
+#
+# Change chlog to use a different changelog filename
+chlog=".changelog"
+#
+# Change maxentries to use a different maximum number
+# of %changelog entries for altsvn pkgs
+maxentries=4
+#
+# Change minentries to use a different minimum number
+# of %changelog entries for altsvn pkgs
+minentries=2
+#
+# Change defbopt if you want to use a
+# different default build option
+defbopt="-bb"
+#
+# The default string for -t
+deftopt="--short-circuit"
+#
+# We need this to get the default macros path
+globalrpmrc="/usr/lib/rpm/manbo/rpmrc"
+#
+
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+# At some points, the script relies on the output of other programs such as smart, rpm, subversion.
+# We can't rely on the English version of their messages, because, depending on the system, those
+# messages might be translated into the system locale. This function retrieves the translated 
+# version of a given message $2 (if such translation exists) for the program $1.
+fetchmsg() {
+	local gettextopts="-d $1 -e --"
+	shift
+        local TEXT=`gettext $gettextopts "$1"`
+	shift
+	printf -- "$TEXT" "$@" | head -n 1 # Always extract the first line from multi-line messages
+}
+
+showhelp () {
+	local sdir=$(getpath "svn" "$svnsave")
+	local adir=$(getpath "altsvn" "$svnsave")
+	cat <<-EOF
+$(__ "Usage: $myname [OPTION]... [PKGNAME]...
+Build packages from command line args, listfiles or all in svn
+
+Mandatory arguments to long options are mandatory for short options too.
+  -a, --all                 Build all packages in svn
+  -f, --file=LISTFILE       Build all packages in LISTFILE
+  -r, --rebuild             Build regardless of previous success
+  -k, --keep                Keep downloaded BuildRequires pkgs in cache
+  -l, --leave               Leave BuildRequires pkgs installed
+  -p, --purge               Purge downloaded BuildRequires pkgs from cache
+  -c, --clean               Clean BUILD, BUILDROOT, SOURCES after each pkg
+  -e, --eraselog            Erase logfile at start
+  -o, --logfile=LOGFILE     Log to LOGFILE [default=%s]
+  -w, --writelog=y|n        Write log always|never
+  -B, --bldlog              Write build status log [%s/PKGNAME.log]
+  -n, --noprompt            Non-interactive mode
+  -s, --svndir=PATH         Path to svn base folder %s
+  -S, --altsvn=PATH         Path to alternate svn base folder %s
+  -x, --exit                Exit when any build fails
+  -b[pcilabstfx]            Build option [default=%s]
+                            (See \"rpmbuild -?\" for explanations)
+  -t, --short-circuit       Skip straight to specified stage (only for c,i)
+      --with=<option>       Enable configure <option> for build
+      --without=<option>    Disable configure <option> for build
+  -q, --quiet               Provide less detailed output
+  -h, --help                Display this help and exit
+  -u, --usage               Display typical usage and exit" "$logfile" "$tmp" "${sdir:+[$sdir]}" "${adir:+[$adir]}" "$defbopt")
+	EOF
+	[ -n "$1" ] && exit $1
+}
+
+usage () {
+	showhelp
+	cat <<-EOF
+$(__ "
+Examples:
+bldpkg foo bar              Builds packages foo & bar
+bldpkg .                    Builds package in current dir
+bldpkg -a                   Builds all packages in svn
+bldpkg -f LISTFILE          Builds all packages listed in LISTFILE
+bldpkg -s /path/to/svn      Sets path to svn folder
+bldpkg -n ...               No prompting, output is logged to
+                            LOGFILE (unless -w n used)
+bldpkg -l ...               BuildRequires pkgs remain installed,
+                            use "rmp" to remove them later
+bldpkg -bx ...              Extended build option, runs -bi -t
+                            followed by -bb -t
+
+Default logging is non-interactive mode only, unless -w used.")
+	EOF
+	exit
+}
+
+blog () {
+	if $bldlog; then
+		echo "${1}-status=\"$2\";" >> "$bldlogfile"
+		[ -n "$3" ] && echo "${1}-message=\"$3\";" >> "$bldlogfile"
+	fi
+}
+
+thedate () {
+	echo -ne "$(date +%F_%T%t)"
+}
+
+logme () {
+	echo "$(thedate)$1" >> "$logfile"
+}
+
+logit () {
+	# log only if logging is on
+	$logging && logme "$1"
+}
+
+flogit () {
+	# log if logging on in interactive mode,
+	# but always log in non-interactive mode
+	( $logging || $noprompt ) && logme "$*"
+}
+
+cecho () {
+	# echo only in interactive mode
+	! $noprompt && echo "$*" >&2
+}
+
+# FIXME added for testing
+techo () {
+	# echo only in testing mode
+	if $testing; then
+		[ -n "$2" ] && echo >&2
+		echo @@@ $1 >&2
+	fi
+}
+
+fixpath () {
+	echo "$1" | sed -re "s|/+|/|g" -e "s|/$||"
+}
+
+getpath () {
+	# $1 is key, $2 is filename to read from
+	[ -r "$2" ] && sed -n "s|^$1[ \t]*||p" "$2"
+}
+
+cfgerr () {
+	if ! $noprompt; then
+		cat<<-EOF
+$(__ "Can't write to config file '%s'!
+Please edit this script and change the value of
+variable '%s' to a file which you have
+write permissions to, e.g. '%s'
+(Script is located at '%s')" "${!1}" "$1" "$HOME/${!1##*/}" "$0")
+		EOF
+	fi
+	flogit "$(__ "ERROR: Can't write to config file: %s" "${!1}")"
+	exit 1
+}
+
+savepath () {
+	# $1 is key, $2 is value, $3 is  var name of filename to write to
+	sed -i "\|^$1|d" "${!3}" 2>/dev/null
+	echo "$1	$2" 2>/dev/null >>"${!3}" || cfgerr "$3"
+}
+
+vareval () {
+	local a e n f="$1"
+	if [[ "$f" =~ [$] ]]; then
+		a=( $(echo "$f"|cut --output-delimiter=" " -d"/" -f1-) )
+		for n in ${!a[@]}; do
+			if [ "${a[n]:0:1}" = "$" ]; then
+				e=${a[n]#$} ; a[n]=${!e}
+			fi
+		done
+		f=$(echo ${a[@]} | sed "s| |/|g")
+	fi
+	fixpath "$f"
+}
+
+getsvn () {
+	# $1 is svn or altsvn
+	local v="$1"
+	local svn=$(getpath "$1" "$svnsave")
+	techo "In getsvn \$svnsave is '$svnsave', '$1' is '$svn'" 1
+	if [ -z "$svn" ]; then
+		if ! $noprompt; then
+			read -p "$(__ "Please enter full path to %s base folder: " "${1/alt/alternate }")" svn
+			if [ -z "$svn" ]; then
+				cecho "$(__ "Nothing entered, quitting...")"
+				flogit "$(__ "ERROR: Missing value for %s base folder" "${1/alt/alternate }")"
+				exit 1
+			fi
+		else
+			flogit "$(__ "ERROR: Missing value for %s base folder" "${1/alt/alternate }")"
+			exit 1
+		fi
+	fi
+	# If svn contains "$" evaluate it as a variable
+	svn=$(vareval "$svn")
+	savepath "$1" "$svn" "svnsave"
+	[ "$v" = "svn" ] && v="svndir"
+	eval $v="$svn"
+	cecho "$(__ "Using %s base folder '%s'" "${1/alt/alternate }" "$svn")"
+	logit "$(__ "INFO: %s base folder: %s" "${1/alt/alternate }" "$svn")"
+}
+
+# allows us to change the default .rpmmacros file location
+getmacopt () {
+	if [ "$rpmmac" != "$HOME/.rpmmacros" ]; then
+		macopt="--macros=$(rpm -E $(grep "^macrofiles:" $globalrpmrc | gawk '{ print $2 }' | sed "s|:~/\.rpmmacros||"))"
+		macopt="$macopt:$(rpm -E %_sysconfdir/rpm5/macros.d/*.macros):$rpmmac"
+	fi
+}
+
+chkdir () {
+	local err f="$1"
+	eval "$f"=$(rpm $macopt -E %_${f})
+	touch "${!f}/tmp.$$" 2>/dev/null
+	err=$? ; rm -f "${!f}/tmp.$$"
+	if [ $err -ne 0 ]; then
+		if ! $noprompt; then
+			cat <<-EOF
+$(__ "Can't write to '%s'. Please check the
+%s macro in '%s'.
+Quitting..." "${!f}" "%_${f}" "$rpmmac")
+			EOF
+		fi
+		flogit "$(__ "ERROR: Can't write to %s: %s" "%_${f}" "${!f}")"
+		exit 1
+	fi
+}
+
+chkfiles () {
+	# check logfile first so we can log other errors
+	[ ! -f "$logfile" ] && touch "$logfile" 2>/dev/null
+
+	if ! [ -w "$logfile" ]; then
+		cat <<-EOF
+$(__ "Can't write to log file '%s'!
+Please edit this script and change the value of
+variable "logfile" to a file which you have
+write permissions to, e.g. '%s'
+(Script is located at '%s')" "$logfile" "$HOME/${myname}.log" "$0")
+		EOF
+		exit 1
+	fi
+
+	# clear the logfile first if requested
+	$clnlog && 2>/dev/null :> "$logfile"
+
+	case "${wantlog:0:1}" in
+		y|Y)	logging=true;;
+		n|N)	logging=false;;
+		*)		logging=$noprompt
+				if [ -n "$wantlog" ]; then
+					cecho "$(__ "Bad argument '%s' to -w option, logging is off." "$wantlog")"
+					flogit "$(__ "ERROR: Bad argument to -w option: %s" "$wantlog")"
+				fi;;
+	esac
+
+	if ! [ -r "$rpmmac" ]; then
+		if ! $noprompt; then
+			cat <<-EOF
+$(__ "Can't read '%s' macros file. Please make sure
+you have '%s' with %%_topdir macro defined.
+Quitting..." "$rpmmac" "$rpmmac")
+			EOF
+		fi
+		flogit "$(__ "ERROR: Can't read macros file: %s" "$rpmmac")"
+		exit 1
+	fi
+
+	getmacopt		# do this before we rpm -E anything
+
+	chkdir topdir
+	chkdir tmppath
+	
+	touch "$tmp/tmp.$$" 2>/dev/null
+	err=$? ; rm -f "$tmp/tmp.$$"
+	if [ $err -ne 0 ]; then
+		cecho "$(__ "Can't write to dir '%s', quitting." "$tmp")"
+		flogit "$(__ "ERROR: Can't write to dir: %s" "$tmp")"
+		exit 1
+	fi
+
+	smartopt="-o rpm-nodigest=true -o rpm-nofdigests=true -o rpm-excludedocs=true"
+	$keep && smartopt="$smartopt -o remove-packages=False"
+	
+	if $purge; then
+		smart clean
+		cecho "$(__ "### Removing cached package files ###")"
+		logit "$(__ "INFO: Removing cached package files")"
+	fi
+	
+	if [ -z "$bopt" ];then
+		bopt=$defbopt
+	elif [ "${bopt:(-1)}" = "x" ]; then
+		BX=true
+	fi
+
+	# get username for rpmbuild
+	ME=$SUDO_USER
+	[ -z "$ME" ] && ME=$USER
+
+	# set up arch-specific flag filenames
+	local p
+	p=$(echo "$wopt" | sed -nr 's|(.*[[:space:]]+\|^)--with=plf([[:space:]]+.*\|$)|plf|p')
+	uname -m | grep -q "x86_64" && arch="64" || arch="32"
+	dfailed=".failed${p}${arch}"
+	dfixed=".fixed${p}${arch}"
+	dsuccess=".success${p}${arch}"
+	rmpkgext="${p}${arch}.rmpkg"
+}
+
+findspec () {
+	# $1 is path to package, $2 is "F", "SPECS"  or "."
+	local a e m
+	a=($(find $2 -maxdepth 1 -type f -iname "*.spec" 2>/dev/null | sed "s|^\./||"))
+	if [ ${#a[@]} -gt 1 ]; then
+		m="$(__ "Multiple specfiles")"
+		echo "$m" >> $failed
+		cecho "$(__ "Multiple specfiles found:")"
+		cecho "${a[*]}"
+		cecho "$(__ "Skipping '%s'" "$1")"
+		flogit "$(__ "INFO: Multiple specfiles in %s: %s" "$1/$2" "${a[*]}")"
+		flogit "$(__ "ERROR: Skipping %s" "$1")"
+		blog specfile fail "$(__ "Multiple specfiles in %s: %s" "$1/$2" "${a[*]}")"
+		e=2
+	elif [ ${#a[@]} -eq 0 ]; then
+		cecho "$(__ "No specfile found in '%s'" "$1/$2")"
+		flogit "$(__ "INFO: Missing specfile: %s" "$1/$2")"
+		e=1
+	else
+		cecho "$(__ "Using specfile '%s'" "$1/${a[0]}")"
+		logit "$(__ "INFO: Using specfile: %s" "$1/${a[0]}")"
+		blog specfile ok "$(__ "Using specfile: %s" "$1/${a[0]}")"
+		echo "${a[0]}"
+		e=0
+	fi
+	return $e
+}
+
+getspec () {
+	# $1 is F or SPECS
+	findspec "$1" "$2" ; local e=$?
+	[ $e -ne 1 ] && return $e
+	findspec "$1" "." ; e=$?
+	if [ $e -ne 0 ]; then
+		echo "$(__ "Missing specfile")" >> $failed
+		cecho "$(__ "Skipping '%s'" "$1")"
+		flogit "$(__ "ERROR: Skipping %s" "$1")"
+		blog specfile fail "Missing specfile: $1"
+	fi
+	return $e
+}
+
+cleanup () {
+	if $usealtsvn; then
+		# restore spec file for altsvn if used
+		mv -f ${spec}.${myname} $spec 2>/dev/null
+		chown $ME: $spec 2>/dev/null
+		# restore the repsys.conf file
+		mv -f /etc/repsys.conf.${myname} /etc/repsys.conf 2>/dev/null
+	fi
+	# remove installed pkgs from smart
+	rm -f "$rmpkgtmp"
+	if [ -f "$rmpkg" ]; then
+		if $leave; then
+			cecho "$(__ "### Leaving installed BuildRequires for %s in %s ###" "$n" "$rmpkg")"
+			logit "$(__ "INFO: Left installed BuildRequires: %s" "$rmpkg : $n")"
+		else
+			cecho "$(__ "### Removing installed BuildRequires for %s ###" "$n")"
+			if $quiet; then
+				smart remove -y $(<$rmpkg) 1>/dev/null 2>&1
+			else
+				smart remove -y $(<$rmpkg)
+			fi
+			if [ $? -eq 0 ]; then
+				blog BR_remove_${arch} ok "$(__ "Successfully removed BuildRequires")"
+			else
+				blog BR_remove_${arch} fail "$(__ "Failed to remove BuildRequires")"
+			fi
+			rm -f "$rmpkg"
+		fi
+	fi
+
+	#clean BUILD, BUILDROOT,SOURCES & tmppath
+	if $clean; then
+		cecho "$(__ "### Cleaning %s ###" "BUILD,BUILDROOT,SOURCES,tmppath")"
+		logit "$(__ "INFO: Cleaning %s ###" "BUILD,BUILDROOT,SOURCES,tmppath")"
+		rm -fr $topdir/{BUILD,BUILDROOT,SOURCES}/* $tmppath/*
+	fi
+	
+	if [ -f "$failed" ] && $xiterr; then
+		cecho "$(__ "### Exiting due to failed build for %s ###" "$n")"
+		logit "$(__ "ERROR: Build failed: %s" "$n")"
+		exit 1
+	fi
+
+	popd 1>/dev/null
+}
+
+report () {
+	if [ $1 -ne 0 ]; then
+		msg="$(__ "Failed to build package")"
+		echo "$msg" >> $failed
+		cecho "### $msg $n ###"
+		logit "$(__ "ERROR: %s" "$msg: $n")"
+		blog build fail "$msg"
+	else
+		[ -f $failed ] && mv -f $failed $fixed
+		msg="$(__ "Succeeded in building package")"
+		echo "$msg" > $success
+		cecho "### $msg $n ###"
+		logit "$(__ "INFO: %s" "$msg: $n")"
+		blog build ok "$msg"
+	fi
+}
+
+chkrepsys () {
+	which repsys &>/dev/null || smart install -y repsys
+	if [ $? -ne 0 ]; then
+		msg="$(__ "Failed to install repsys")"
+		cecho "### ${msg} ###"
+		logit "$(__ "ERROR: %s" "$msg: $n")"
+		return 1
+	else
+		[ -n "$1" ] && return 0
+		local conf="/etc/repsys.conf"
+		cp -a $conf ${conf}.${myname}
+		sed -i '/^[^#]/s|svn+ssh|http|' $conf 2>/dev/null
+	fi
+}
+
+patchspec () {
+	# $1 is spec, $2 is specdiff
+	! [ -s "$2" ] && return
+	local a c e
+	a=$(sed -n "/^+++/ {p;q}" "$2" | gawk '{print $2}')
+	if [ -z "$a" ]; then
+		msg="$(__ "Can't parse '%s'" "$2")"
+		cecho "### ${msg} ###"
+		logit "$(__ "ERROR: %s" "$msg: $n")"
+		return 1
+	fi
+	c=$(echo "$a" | grep -o "/" | wc -l)
+	[ ${a:0:1} = "/" ] && ((c--)) ; [ $c -lt 0 ] && c=0
+	a=$(patch -uN -d$(dirname "$1") -p${c} -i "$2" 2>&1)
+	e=$?
+	cecho "${a%%$NL*}"
+	techo "Error $e"
+	if [ $e -ne 0 ]; then
+		echo "$a" | grep "^$(__ "Reversed (or previously applied) patch detected")"
+		((e-=1-$?))
+		techo "Error $e"
+		if [ $e -ne 0 ]; then
+			msg="$(__ "Patch '%s' failed" "$2")"
+			cecho "### ${msg} ###"
+			logit "$(__ "ERROR: %s" "$msg: $n")"
+			blog "patch" fail "msg"
+		fi
+	fi
+	return $e
+}
+
+buildone () {
+	local d f n info currev oldrev msg
+	bldlogfile="${tmp}/$(basename "$1").log"
+
+	if [ -d "$1" ]; then
+		d="$1"
+	elif [ $bldall -a -d "${svndir}/$1" ]; then
+		d="${svndir}/$1"
+	else
+		cecho "$(__ "Can't find dir '%s', skipping." "$1")"
+		flogit "$(__ "ERROR: Can't find dir: %s" "$1")"
+		blog packagedir fail "$(__ "Can't find dir: '%s'" "$1")"
+		return
+	fi
+	
+	d=$(readlink -nm "$d") ; n=$(basename "$d")
+	success="$d/$dsuccess" ; failed="$d/$dfailed" ; fixed="$d/$dfixed"
+
+	$rebuild && rm -f "$success"
+	[ -f "$success" ] && return
+
+	# look for pkginfo file
+	techo "\$d is '$d'  \$n is '$n'"
+	info="${d}/${n}${pkginfo}"
+	spdf="${d}/${specdiff}"
+	techo "Looking for pkginfo file '$info'"
+	if [ -s "$info" ]; then
+		techo "Found pkginfo file '$info'"
+		f="$n" ; n=$(getpath "name" "$info") ; n="${n:-$f}"
+		d=$(getpath "path" "$info")
+		if [ -z "$d" ]; then
+			msg="$(__ "Missing path in '%s', skipping '%s'" "$info" "$n")"
+			cecho "### $msg ###"
+			flogit "$(__ "ERROR: %s" "$msg")"
+			blog pkginfo fail "$msg"
+			return
+		else
+			d="${altsvn}/$d"
+			if [ ! -d "$d" ]; then
+				cecho "$(__ "Can't find dir '%s', skipping." "$1")"
+				flogit "$(__ "ERROR: Can't find dir: %s" "$1")"
+				blog packagedir fail "$(__ "Can't find dir: '%s'" "$1")"
+				return
+			fi
+		fi
+		oldrev=$(getpath "rev" "$info")
+		f="SPECS"
+	else
+		techo "Can't find pkginfo file '$info'"
+		f="F"
+	fi
+
+	pushd "$d" 1>/dev/null
+	cecho "$(__ "### Starting %s ###" "$n")"
+	# get specfile name
+	spec=$(getspec "$d" $f)
+	if [ $? -ne 0 ]; then
+		popd 1>/dev/null
+		return
+	fi
+
+	newlog () {
+		# $1 is # of entries, $2 is flag for chkrepsys
+		msg="$(__ "Using new changelog, rev %s, entries" "$currev")"
+		if chkrepsys $2 && repsys rpmlog -n${1} $n > "$chlog"; then
+			techo "$msg $1"
+			chown ${ME}: "$chlog"
+			# append changelog to spec
+			echo -e "\n%changelog" >> $spec
+			cat "$chlog" >> $spec
+			# write new rev to pkginfo file
+			savepath "rev" "$currev" "info"
+			return 0
+		else
+			return 1
+		fi
+	}
+
+	mkdir -pv "$topdir/SOURCES"
+	# copy over SOURCES & PATCHES
+	if [ "$f" = "F" ]; then
+		techo "Copying sources: $(ls S 2>/dev/null)"
+		su -p $ME -c "cp -f S/* ${topdir}/SOURCES/  2>/dev/null"
+		techo "Copying patches: $(ls P 2>/dev/null)"
+		su -p $ME -c "cp -f P/* ${topdir}/SOURCES/  2>/dev/null"
+		usealtsvn=false
+	else
+		techo "Copying sources: $(ls SOURCES 2>/dev/null)"
+		su -p $ME -c "cp -f SOURCES/* ${topdir}/SOURCES/ 2>/dev/null"
+		# make a backup copy of spec
+		techo "Copying $spec to ${spec}.${myname}"
+		cp -f $spec ${spec}.${myname}
+		# apply patch from spec.diff if found
+		patchspec "$spec" "$spdf"
+		if [ $? -ne 0 ]; then
+			report 1
+			cleanup
+			return
+		fi
+		#oldrev=$(sed -n '/Revision:/{p;q}' $chlog | sed -r 's|^.*Revision:[ \t]*(.*)$|\1|')
+		# add %changelog to spec
+		techo "Adding %changelog to $spec"
+		# get current pkg revision
+		currev=$(svn info | grep "$(fetchmsg subversion "Last Changed Rev: %ld\n" "0" | sed 's/0/\.\*/')" | gawk -F": " '{ print $2 }')
+		# compare oldrev & currev
+		techo "\$oldrev='$oldrev'  \$currev='$currev'"
+		if [ -n "$oldrev" -a -n "$currev" ] && [ "$oldrev" -eq "$currev" -a -s "$chlog" ]; then
+			# same rev so use existing chlog
+			techo "Using old changelog, rev $oldrev"
+			echo -e "\n%changelog" >> $spec
+			cat "$chlog" >> $spec
+		else
+			# different or empty rev, or empty/missing chlog file
+			if [ -z "$currev" ]; then
+				msg="$(__ "Can't read current pkg revision")"
+				cecho "### $msg ###"
+				logit "$(__ "ERROR: %s" "$msg: $n")"
+				blog pkginfo fail "$msg"
+			fi
+			[ -z "$oldrev" ] && techo "Missing rev in '$info'"
+			[ ! -s "$chlog" ] && techo "Missing or empty $chlog file"
+			techo "Getting current changelog"
+			# try $maxentries entries
+			if newlog $maxentries; then
+				:
+			# try $minentries entries
+			elif newlog $minentries 1; then
+				:
+			# give up
+			else
+				msg="$(__ "Can't get current changelog")"
+				cecho "### $msg ###"
+				logit "$(__ "ERROR: %s" "$msg: $n")"
+				blog pkginfo fail "$msg"
+			fi
+		fi
+		usealtsvn=true
+	fi
+	
+	local a b c rmpkg="${tmp}/${n}.${rmpkgext}"
+	local rmpkgtmp="${rmpkg}.$$"
+
+	if [ "$bopt" = "-bs" ]; then
+		IFS=$NL
+		a=($(su $ME -c "rpmbuild $macopts -bs --nodeps $spec" 2>&1))
+		c=$?
+		for b in $(echo "${a[*]}" | grep -v "$(fetchmsg rpm "Wrote: %s\n" "")"); do
+			echo "$b" >> $failed
+			cecho "$b"
+			logit "$(__ "ERROR: %s" "$b: $n")"
+		done
+		a=$(echo "${a[*]}" | grep "$(fetchmsg rpm "Wrote: %s\n" "")")
+		[ -n "$a" ] && cecho $a
+		IFS=$OFS
+		report $c
+		cleanup
+		return
+	fi
+
+	IFS=$NL
+	techo "\$d is '$d' \$spec is '$spec'"
+	#echo ; pwd ; su -p - $ME -c "pushd $d &>/dev/null; pwd; popd &>/dev/null"
+	b=( $(su -p - $ME -c "pushd $d &>/dev/null; rpmbuild $macopts $wopt --nobuild $spec 2>&1"; popd &>/dev/null) )
+	b=( $(echo "${b[*]}" | grep "$(fetchmsg rpm "error:")\|$(fetchmsg rpm "%s is needed by %s%s" ".*" ".*" ".*")\|$(fetchmsg rpm "%s conflicts with %s%s" ".*" ".*" ".*")") )
+	# Previously it was:
+	# b=($(su -p $ME -c "rpmbuild $macopts $wopt --nobuild $spec 2>&1 | grep 'error:\|is needed\|conflicts with'"))
+	# Recoded because impossible to make localization-proof
+	techo "After --nobuild:"
+	techo "${b[*]}"
+	techo "---------"
+	# find not installed BuildRequires
+	a=($(echo "${b[*]}" | grep "$(fetchmsg rpm "%s is needed by %s%s" ".*" ".*" ".*")" | gawk '{ print $1 }'))
+	techo "BRs:"
+	techo "${a[*]}"
+	techo "---------"
+	# check for %prep errors
+	b=($(echo "${b[*]}" | grep -v "$(fetchmsg rpm "Failed build dependencies")\|$(fetchmsg rpm "%s is needed by %s%s" ".*" ".*" ".*")" | sed -r "s|^$(fetchmsg rpm "error:")[ \t]*\|^[ \t]*||"))
+	techo "Errors:"
+	techo "${b[*]}"
+	techo "---------"
+	IFS=$OFS
+	
+	if [ ${#b[@]} -ne 0 ]; then
+		for c in "${b[@]}"; do
+			echo "$c" >> $failed
+			cecho "$c"
+			logit "$(__ "ERROR: %s" "$c: $n")"
+		done
+		msg="$(__ "Failed %s section" "%prep")"
+		echo "$msg" >> $failed
+		cecho "$msg"
+		logit "$(__ "ERROR: %s" "$msg: $n")"
+		blog BR_install_${arch} fail "$msg"
+		cleanup
+		return
+	fi
+
+	fbr () {
+		msg="$(__ "Failed to install BuildRequires")"
+		echo "$msg" >> $failed
+		cecho "$(__ "### Failed to install BuildRequires for %s ###" "$1")"
+		logit "$(__ "ERROR: %s" "$msg: $1")"
+		blog BR_install_${arch} fail "$msg"
+		report 1
+		cleanup
+	}
+
+	# check if not empty BuildRequires
+	if [ ${#a[@]} -ne 0 ]; then
+		# get list for uninstalling later
+		IFS=$NL
+		b=($(smart install --dump "${a[@]}" 2>&1 1>/dev/null))
+		techo "After smart install --dump:"
+		techo "${b[*]}"
+		techo "---------"
+		errormsg[1]="$(fetchmsg smart "Can't install %s: conflicted package %s is locked" ".*" ".*")"
+		errormsg[2]="$(fetchmsg smart "Can't install %s: it's conflicted by the locked package %s" ".*" ".*")"
+		errormsg[3]="$(fetchmsg smart "Can't install %s: it can't coexist with %s" ".*" ".*")"
+		errormsg[4]="$(fetchmsg smart "Can't install %s: no package provides %s" ".*" ".*")"
+		errormsg[5]="$(fetchmsg smart "Can't install %s: all packages providing %s failed to install:\n%s" ".*" ".*" ".*")"
+		errormsg[6]="$(fetchmsg smart "Can't install %s: it's locked" ".*")"
+		msg=($(echo "${b[*]}" | grep "${errormsg[1]}\|${errormsg[2]}\|${errormsg[3]}\|${errormsg[4]}\|${errormsg[5]}\|${errormsg[6]}")) ; c=$?
+		IFS=$OFS
+		techo "c=$c"
+		techo "---------"
+		b=($(echo "${b[@]}" | gawk -F"'" '{ print $2 }'))
+
+		if [ ${#b[@]} -eq 0 -a $c -ne 0 ]; then
+			# install BuildRequires and their Requires
+			cecho "$(__ "### Installing BuildRequires for %s ###" "$n")"
+			if $quiet; then
+				smart $smartopt install -y "${a[@]}" 2>&1 > "$rmpkgtmp" ; c=$?
+			else
+				smart $smartopt install -y "${a[@]}" | tee "$rmpkgtmp" ; c=${PIPESTATUS[0]}
+			fi
+			if [ $c -ne 0 ]; then
+				if $quiet; then
+					smart $smartopt install -y "${a[@]}" 2>&1 > "$rmpkgtmp" ; c=$?
+				else
+					smart $smartopt install -y "${a[@]}" | tee "$rmpkgtmp" ; c=${PIPESTATUS[0]}
+				fi
+				if [ $c -ne 0 ]; then
+					fbr $n ; return
+				fi
+			fi
+			# create rmpkg file from rmpkgtmp file
+			sed -nr "/^$(fetchmsg smart "Installing packages (%d):" 0 | cut -d\( -f1)/,/^$/ s|^[ \t]+(.*)[ \t]+$|\1|p" "$rmpkgtmp" | sed -r "s|[ \t]+| |g" >> "$rmpkg"
+			rm -f "$rmpkgtmp"
+
+		else
+			if [ ${#msg[@]} -ne 0 ]; then
+				IFS=$NL
+				msg=($(echo "${msg[*]}" | sed "s|^$(fetchmsg smart "error: %s\n" "" | cut -d' ' -f1)[ \t]*||"))
+				echo "${msg[*]}" >> $failed
+				cecho "${msg[*]}"
+				for c in "${msg[@]}"; do logit "$(__ "ERROR: %s" "$c")"; done
+				IFS=$OFS
+			else
+				msg="$(__ "Missing dependencies")"
+				echo "$msg: ${b[@]}" >> $failed
+				cecho "$(__ "Missing dependencies for %s: %s" "$n" "${b[@]}")"
+				logit "$(__ "ERROR: %s: pkg %s" "$msg: ${b[@]}" "$n")"
+			fi
+			fbr $n ; return
+		fi
+	fi
+
+
+	# build pkg after all the BuildRequires are installed
+	cecho "$(__ "### Starting build for %s ###" "$n")"
+	if $BX; then
+		cecho "$(__ "######## Extended Build Mode ########")"
+		su -p - $ME -c "pushd $d &>/dev/null; rpmbuild $macopts -bi $deftopt $wopt $spec && rpmbuild $macopts -bb $deftopt $wopt $spec"
+	else
+		su -p - $ME -c "pushd $d &>/dev/null; rpmbuild $macopts $bopt $topt $wopt $spec"
+	fi
+	c=$?
+	[ "$PWD" != "$d" ] && popd &>/dev/null
+
+	# show contents of BUILDROOT on failed build
+	if [ $c -ne 0 ]; then
+		local BR=$(rpm -E %_topdir/BUILDROOT)
+		if [ -d "$BR" ]; then
+			pushd "$BR" &>/dev/null
+			for b in $(ls -d */); do
+				__ "\nContents of %s:\n" "${b%/}" >&2
+				cd $b
+				find -mindepth 1 | sed "s|^\.||" >&2
+				cd - &>/dev/null
+			done
+			popd &>/dev/null
+			echo >&2
+		fi
+	fi
+
+	# report success or failure
+	report $c
+
+	# cleanup BRs and folders
+	cleanup
+}
+
+buildlists () {
+	local F L
+	for F in ${listfile[@]}; do
+		if [ -r "$F" ]; then
+			while read L; do
+				buildone "$L"
+			done < "$F"
+		else
+			cecho "$(__ "Can't read file '%s', skipping." "$F")"
+			flogit "$(__ "ERROR: Can't read file: %s" "$F")"
+		fi
+	done
+}
+
+buildall () {
+	! $bldall && return
+	pushd "$svndir" &>/dev/null
+	if [ $? -ne 0 ]; then
+		if ! $noprompt; then
+			cat <<-EOF
+$(__ "Can't change dir to '%s'!
+Please change the path with the -s option
+or by editing file '%s'." "$svndir" "$svnsave")
+			EOF
+		fi
+		flogit "$(__ "Can't change dir to svn dir: %s" "$svndir")"
+		return
+	fi
+	
+	local D s=0 f=0 x=0 a=$(ls -d */ | wc -l)
+	for D in $(find . -mindepth 1 -maxdepth 1 -type d ! -name ".*" | sed "s|^\./||"); do
+		buildone "$D"
+		[ -f "$D/$success" ] && (( s++ ))
+		[ -f "$D/$failed" ] && (( f++ ))
+		[ -f "$D/$fixed" ] && (( x++ ))
+	done
+	cecho "$(__ "Built: %s  Failed: %s  Fixed: %s  Out of %s packages" "$s" "$f" "$x" "$a")"
+	logit "$(__ "INFO: Built: %s  Failed: %s  Fixed: %s  Out of %s packages" "$s" "$f" "$x" "$a")"
+	popd 1>/dev/null
+}
+
+getbopt () {
+local o=${1:1}
+	if [ "${1:0:1}" != "@" ]; then
+		cecho "$(__ "%s: -b: unknown option" "$myname")"
+		logit "$(__ "ERROR: Unknown option: -b")"
+		exit 1
+	elif [ ${#1} -gt 2 ] || ! [[ $o =~ [pcilabstfx] ]]; then
+		cecho "$(__ "%s: -b%s: unknown option" "$myname" "${o}")"
+		logit "$(__ "ERROR: Unknown option: -b%s" "${o}")"
+		exit 1
+	elif [ -n "$bopt" ]; then
+		cecho "$(__ "### Ignoring extra option -b%s ###" "${o}")"
+		logit "$(__ "INFO: Ignoring extra option -b%s" "${o}")"
+	else
+		bopt="-b${o}"
+	fi
+	
+}
+
+# # # # # # # # # # # # # #
+#  Execution starts here  #
+# # # # # # # # # # # # # #
+
+listidx=0 ; NL=$'\012'
+declare -a listfile # rpmopts
+bldall=false ; rebuild=false ; keep=false ; leave=false ; purge=false ; clean=false; clnlog=false ; noprompt=false
+xiterr=false ; quiet=false ; dousage=false ; dohelp=false ; BX=false ; bldlog=false
+testing=false # FIXME added option for testing
+
+OFS=$IFS ; IFS=$NL
+set - $(echo "$*" | sed -e "s|==*|=|g" -re "s|^(-[^b]*)b([^ \t]+)|\1b@\2|g" -e "s|--all|-a|g" -e "s|--file=|-f|g" -e "s|--rebuild|-r|g" \
+	-e "s|--keep|-k|g" -e "s|--leave|-l|g" -e "s|--purge|-p|g" -e "s|--clean|-c|g" -e "s|--eraselog|-e|g" -e "s|--bldlog|-B|g" \
+	-e "s|--logfile=|-o|g" -e "s|--writelog=|-w|g" -e "s|--noprompt|-n|g" -e "s|--svndir=|-s|g" -e "s|--altsvn=|-S|g" \
+	-e "s|--exit|-x|g" -e "s|--short-circuit|-t|g" -e "s|--without=*|-y|g" -e "s|--with=*|-z|g" \
+	-e "s|--quiet|-q|g" -e "s|--usage|-u|g" -e "s|--help|-h|g")
+
+# echo "$*"
+# echo "-------"
+# rpmopts=($(echo "$*" | grep -E ".+=.+"))
+# echo "${rpmopts[*]}"
+# echo "-------"
+# set - $(echo "$*" | grep -Ev "=")
+# echo "$*"
+# echo "-------"
+
+IFS=$OFS
+
+while getopts Taf:rklpceo:w:ns:S:xb:Bty:z:quh op
+do
+	case "$op" in
+		T) testing=true;; # FIXME added option for testing
+		a) bldall=true;;
+		f) listfile[(( listidx++ ))]=$(fixpath "$OPTARG");;
+		r) rebuild=true;;
+		k) keep=true;;
+		l) leave=true;;
+		p) purge=true;;
+		c) clean=true;;
+		e) clnlog=true;;
+		o) logfile=$(fixpath "$OPTARG");;
+		w) wantlog="$OPTARG";;
+		n) noprompt=true;;
+		s) svndir=$(fixpath "$OPTARG");;
+		S) altsvn=$(fixpath "$OPTARG");;
+		x) xiterr=true;;
+		b) getbopt "$OPTARG";;
+		B) bldlog=true;;
+		t) topt=$deftopt;;
+		y) wopt="$wopt --without=$OPTARG";;
+		z) wopt="$wopt --with=$OPTARG";;
+		q) quiet=true;;
+		u) dousage=true;;
+		h) dohelp=true;;
+		\?) exit 1;;
+	esac
+done
+shift $(( $OPTIND-1 ))
+
+$dousage && usage
+$dohelp && showhelp 0
+
+if [ $UID -ne 0 ]; then
+	__ "Run %s as root or with sudo, quitting.\n" "$myname"
+	exit 1
+fi
+
+chkfiles
+
+if [ -n "$svndir" ]; then
+	savepath "svn" "$svndir" "svnsave"
+	cecho "$(__ "Svn base folder changed to '%s'" "$svndir")"
+	logit "$(__ "INFO: Svn base folder changed to '%s'" "$svndir")"
+else
+	# get svn base dir for --all
+	$bldall && getsvn "svn"
+fi
+
+if [ -n "$altsvn" ]; then
+	savepath "altsvn" "$altsvn" "svnsave"
+	cecho "$(__ "Alternate svn base folder changed to '%s'" "$altsvn")"
+	logit "$(__ "INFO: Alternate svn base folder changed to '%s'" "$altsvn")"
+else
+	# get altsvn base dir always
+	getsvn "altsvn"
+fi
+
+buildall
+
+buildlists
+
+while [ $# -gt 0 ]; do
+	buildone "$1"
+	shift
+done
+
+exit 0

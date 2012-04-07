@@ -1,0 +1,19 @@
+#!/bin/bash
+
+xzzip () {
+	b=$(xzme -kf "$1" 2>/dev/null)
+	echo "$b"
+	b=$(echo "$b" | cut -d" " -f5)
+	b=${b#$NL}
+	if file "$b" | grep -q "bzip2 compressed data"; then
+		mv "$b" "${b%xz}bz2"
+		xzme -F "${b%xz}bz2"
+	fi
+	[ "$2" != "-k" ] && rm -f "$1"
+}
+
+## Execution starts here ##
+NL=$'\012'
+for f in $(ls -1 *.zip 2>/dev/null); do
+	xzzip "$f" "$1"
+done

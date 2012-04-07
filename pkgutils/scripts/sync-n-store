@@ -1,0 +1,44 @@
+#!/bin/sh
+# sync rpms to devel server and store away
+
+PKGPATH=~/pkgs
+STORE32=$PKGPATH/updates32
+STORE64=$PKGPATH/updates64
+NEW32=$PKGPATH/i586
+NEW64=$PKGPATH/x86_64
+PLF32=$PKGPATH/plfi586
+PLF64=$PKGPATH/plfx86_64
+DEVELSERVER=gri
+DEVELDIR=~unity/incoming_rpms
+
+## starting path
+PWD=`pwd`
+
+## sync & store i586 pkgs
+cd $NEW32
+echo "#### sync'ing $NEW32 ####"
+scp *rpm $DEVELSERVER:$DEVELDIR/i586 && \
+mv $NEW32/*rpm $STORE32/
+
+## sync & store x86_64 pkgs
+cd $NEW64
+echo "#### sync'ing $NEW64 ####"
+scp *rpm $DEVELSERVER:$DEVELDIR/x86_64 &&  \
+mv $NEW64/*rpm $STORE64/
+
+#############################################
+
+## sync & store plf i586 pkgs
+cd $PLF32
+echo "#### sync'ing $PLF32 ####"
+scp *rpm $DEVELSERVER:$DEVELDIR/plfi586 && \
+mv $PLF32/*rpm $STORE32/
+
+## sync & store plf x86_64 pkgs
+cd $PLF64
+echo "#### sync'ing $PLF64 ####"
+scp *rpm $DEVELSERVER:$DEVELDIR/plfx86_64 &&  \
+mv $PLF64/*rpm $STORE64/
+
+## return to starting path
+cd $PWD

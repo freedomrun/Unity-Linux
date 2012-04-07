@@ -1,0 +1,87 @@
+#!/bin/bash
+
+# name of the .mo file for translations
+moname="pkgutils"
+#
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+yorn () {
+        local s
+        while ! [[ "$s" =~ [ynYN] ]]; do
+                read -p"$2" s
+                s=${s:-$1}
+                [ ${#s} -gt 1 ] && s=
+        done
+        echo -n $s|tr yn YN
+}
+
+clean () {
+	local chd spc="$1"
+	while [ -L "$spc" ]; do spc=$(readlink "$spc"); done
+	chd=$(dirname "$spc") ; [ "$chd" = "." ] && chd=""
+	spc=$(basename "$spc")
+
+	if [ -n "$chd" ]; then
+		__ "Changing dir to '%s'\n" "$chd"
+		pushd "$chd" &>/dev/null
+	fi
+
+	__ "Processing '%s'\n" "$spc"; echo
+	cp -f "$spc" "${spc}.old"
+
+	sed -ri "0,\~^%prep~ {
+		\~^Epoch[ \t]*:~ d
+		s~^(.*[Rr]equires.*:.*)[0-9]+:([[:print:]]+.*)$~\1\2~
+		s~^(.*[Rr]equires.*:.*)%\{*epoch\}*:([[:print:]]+.*)$~\1\2~
+		s~^([Oo]bsoletes.*:.*)[0-9]+:([[:print:]]+.*)$~\1\2~
+		s~^([Oo]bsoletes.*:.*)%\{*epoch\}*:([[:print:]]+.*)$~\1\2~
+		s~^([Pp]rovides.*:.*)[0-9]+:([[:print:]]+.*)$~\1\2~
+		s~^([Pp]rovides.*:.*)%\{*epoch\}*:([[:print:]]+.*)$~\1\2~
+		s~^([Cc]onflicts.*:.*)[0-9]+:([[:print:]]+.*)$~\1\2~
+		s~^([Cc]onflicts.*:.*)%\{*epoch\}*:([[:print:]]+.*)$~\1\2~
+		s~^([Ss]uggests.*:.*)[0-9]+:([[:print:]]+.*)$~\1\2~
+		s~^([Ss]uggests.*:.*)%\{*epoch\}*:([[:print:]]+.*)$~\1\2~
+		s~^([Ss]ource.*:.*\.tar\.)[bg]z2*$~\1xz~
+		s~^([Ss]ource.*:.*\.)zip$~\1tar.xz~
+		s~^([Ss]ource.*:.*\.)tgz$~\1txz~
+		}" "$spc"
+
+	grep -Eni "suggests" "$spc" && echo
+	grep -Eni "%{*epoch}*" "$spc" && echo
+	grep -Eni "%{*mdkversion}*" "$spc" && echo
+
+	diff -y --suppress-common-lines -W $W "${spc}.old" "$spc"
+	echo
+	[ "$(yorn y "$(__ "Delete backup? %s" "[Y/n] ")")" = "Y" ] && rm -f "${spc}.old"
+	[ -z "$2" ] && echo
+
+	[ -n "$chd" ] && popd >/dev/null
+}
+
+# # # # # # # # # # # # #
+# Execution starts here #
+# # # # # # # # # # # # #
+
+W=$(tput cols)
+while [ $# -gt 0 ]; do
+	[ $# -eq 1 ] && end=1
+	l="$1" ; [ "${l:(-5)}" != ".spec" ] && l="${l}.spec"
+	if [ -w "$l" ]; then
+		clean "$l" "$end"
+	else
+		__ "Skipping '%s'\n" "$1"
+		[ -z "$end" ] && echo
+	fi
+	shift
+done

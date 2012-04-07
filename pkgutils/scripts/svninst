@@ -1,0 +1,457 @@
+#!/bin/bash
+#
+#  svninst
+#
+#  Copyright (C) 2009 Steven J Stover <stumpy@unity-linux.org>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#  Install source rpm (*.src.rpm) and move all files    #
+#  from SOURCES & SPECS folders to svn folders F, P, S  #
+#  -or-                                                 #
+#  Make a new folder structure in svn folder            #
+#  $@ is name(s) of package(s) to add                   #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+# name of this script
+myname=$(basename $0)
+#
+# name of the .mo file for translations
+moname="pkgutils"
+#
+# Change svnsave if you want to save the
+# settings file in a different folder
+svnsave="$HOME/.svndir"
+#
+# Change tmp to use a different tmp folder
+tmp="/tmp"
+#
+
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+showhelp () {
+	local sdir=$(getpath "svn" "$svnsave")
+	cat <<-EOF
+$(__ "Usage: %s [OPTION]... [SRCNAME|PKGNAME]...
+Extract SRCNAME rpm (*.src.rpm) and
+move all files to svn folders F, P, S
+-or-
+Make new PKGNAME folder structures in svn folder
+
+Mandatory arguments to long options are mandatory for short options too.
+  -d, --default       Defaults with no prompting
+  -f, --folder=NAME   svn subfolder (e.g. kde4)
+  -r, --remove        Remove src.rpm after installing
+  -s, --svndir=DIR    Path to svn base folder %s
+  -v, --verbose       Verbose mode
+  -h, --help          Display this help and exit
+  -u, --usage         Display typical usage and exit" "$myname" "${sdir:+[$sdir]}")
+	EOF
+	[ -n "$1" ] && exit $1
+}
+
+usage () {
+	showhelp
+	cat <<-EOF
+$(__ "
+Examples:
+%s pkg.src.rpm      Installs package pkg to svn
+%s foo bar          Makes svn folders for foo & bar
+%s -r pkg.src.rpm   Deletes original src.rpm after
+                         installing it to svn folders
+%s -s /path/to/svn  Sets svn base folder
+%s -d ...           No prompting, skips all pkgs which
+                         already exist in svn folder
+
+NOTE: If SRCNAME is a URI then %s will attempt to
+      download the file using wget, then install it." "$myname" "$myname" "$myname" "$myname" "$myname" "$myname")
+	EOF
+	exit
+}
+
+yorn () {
+	local s
+	while ! [[ "$s" =~ [ynYN] ]]; do
+		read -p"$2" s
+		s=${s:-$1}
+		[ ${#s} -gt 1 ] && s=
+	done
+	echo -n $s|tr yn YN
+}
+
+errexit () {
+	which $1 &>/dev/null
+	if [ $? -ne 0 ]; then
+		cat <<-EOF
+$(__ "Can't find command '%s'
+Please install package '%s'
+and run %s again" "$1" "$2" "$myname")
+		EOF
+		exit 1
+	fi
+}
+
+checkdeps () {
+	local tmpf="$tmp/tmp.$$"
+	touch $tmpf 2>/dev/null
+	e=$? ; rm -f $tmpf
+	if [ $e -ne 0 ]; then
+		__ "\nCan't write to %s folder, quitting\n" "$tmp"
+		exit $e
+	fi
+
+	tmpf="$svndir/tmp.$$"
+	touch $tmpf 2>/dev/null
+	e=$? ; rm -f $tmpf
+	if [ $e -ne 0 ]; then
+		cat<<-EOF
+$(__ "
+Can't write to svn base folder '%s'
+Change the base folder with the -s option" "$svndir")
+		EOF
+		exit $e
+	fi
+
+	errexit svn subversion
+	errexit rpm rpm
+	errexit rpm2cpio rpm
+	errexit cpio cpio
+	errexit sed sed
+}
+
+fixpath () {
+	echo "$1" | sed -re "s|/+|/|g" -e "s|/$||"
+}
+
+getpath () {
+	# $1 is key, $2 is filename to read from
+	[ -r "$2" ] && sed -n "s|^$1[ \t]*||p" "$2"
+}
+
+cfgerr () {
+	cat<<-EOF
+$(__ "Can't write to config file '%s'!
+Please edit this script and change the value of
+variable '%s' to a file which you have
+write permissions to, e.g. '%s'
+(Script is located at '%s')" "${!1}" "$1" "$HOME/${!1##*/}" "$0")
+	EOF
+	exit 1
+}
+
+savepath () {
+	# $1 is key, $2 is value, $3 is  var name of filename to write to
+	sed -i "\|^$1|d" "${!3}" 2>/dev/null
+	echo "$1	$2" 2>/dev/null >>"${!3}" || cfgerr "$3"
+}
+
+vareval () {
+	local a e n f="$1"
+	if [[ "$f" =~ [$] ]]; then
+		a=( $(echo "$f"|cut --output-delimiter=" " -d"/" -f1-) )
+		for n in ${!a[@]}; do
+			if [ "${a[n]:0:1}" = "$" ]; then
+				e=${a[n]#$} ; a[n]=${!e}
+			fi
+		done
+		f=$(echo ${a[@]} | sed "s| |/|g")
+	fi
+	fixpath "$f"
+}
+
+getsvn () {
+	# $1 is svn or altsvn
+	local v="$1" svn=$(getpath "$1" "$svnsave")
+	if [ -z "$svn" ]; then
+		if [ -z "$default" ]; then
+			read -p "$(__ "Please enter full path to %s base folder: " "${1/alt/alternate }")" svn
+			if [ -z "$svn" ]; then
+				__ "Nothing entered, quitting...\n"
+				exit 1
+			fi
+		else
+			__ "Please change the %s base folder with the -s option\nQuitting...\n" "${1/alt/alternate }"
+			exit 1
+		fi
+	fi
+	# If svn contains "$" evaluate it as a variable
+	svn=$(vareval "$svn")
+	savepath "$1" "$svn" "svnsave"
+	[ "$v" = "svn" ] && v="svndir"
+	eval $v="$svn"
+	__ "Using %s base folder '%s'\n" "${1/alt/alternate }" "$svn"; echo
+}
+
+makesvn () {
+	[ -n "$verbose" ] && local v="v"
+	mkdir -p${v} $svndir/${subdir}${1}/{F,P,S} 2>/dev/null
+}
+
+dowget () {
+	wgot="" ; op="" ; pkg=""
+	if [ -r "$1" ]; then
+		pkg="$1"
+		return 0
+	fi
+
+	local bname=$(basename "$1")
+	if [ -z "$default" ]; then
+		if [ "$(yorn y "$(__ "Do you want to download '%s'? %s" "$bname" "[Y/n] ")")" = "N" ]; then
+			__ "OK, skipping '%s'\n" "$bname"
+			return 1
+		fi
+	fi
+
+	[ -z "$verbose" ] && op="-nv"
+	wget $op -P $tmp "$1"
+	local e=$?
+	local aname="$tmp/$bname"
+	if [ -s "$aname" ]; then
+		pkg="$aname"
+		wgot=1
+		return 0
+	else
+		[ -z "$verbose" -o $e -eq 4 ] && echo
+		__ "Error getting '%s', skipping\n" "$1"
+		rm -f "$aname"
+		return 1
+	fi
+}
+
+chkspec () {
+	[[ "$spec" =~ $1$NL ]] && spec=${spec/$1$NL/}
+	[[ "$spec" =~ $NL$1 ]] && spec=${spec/$NL$1/}
+}
+
+fixname () {
+	echo "$1"|sed -re "s~%\{*name\}*~$name~g" -e "s~%\{*version\}*~$version~g"
+}
+
+rmgot () {
+	[ -n "$wgot" ] && rm -f "$pkg"
+	[ -n "$pdir" ] && rm -rf "$pdir"
+}
+
+getoldfiles () {
+	specs=($(find $svndir/${subdir}${1}/F -type f -maxdepth 1 2>/dev/null|sed "s|.*/||"))
+	patches=($(find $svndir/${subdir}${1}/P -type f -maxdepth 1 2>/dev/null|sed "s|.*/||"))
+	sources=($(find $svndir/${subdir}${1}/S -type f -maxdepth 1 2>/dev/null|sed "s|.*/||"))
+}
+
+drop () {
+	local c
+	case "$2" in
+		specs)		for (( c=0; c<${#specs[@]}; c++ )); do
+						[ "${specs[c]}" = "$1" ] && specs[c]=""
+					done;;
+		patches)	for (( c=0; c<${#patches[@]}; c++ )); do
+						[ "${patches[c]}" = "$1" ] && patches[c]=""
+					done;;
+		sources)	for (( c=0; c<${#sources[@]}; c++ )); do
+						[ "${sources[c]}" = "$1" ] && sources[c]=""
+					done;;
+	esac
+}
+
+delstr () {
+	local e s f="${subdir}${name}/$1"
+	shift
+	for e in $@; do
+		s="$s $f/$e"
+	done
+	echo $s
+}
+
+doinst () {
+	dowget "$1"
+	[ $? -ne 0 ] && return
+
+	[ "${pkg:0:1}" = "/" ] || pkg="$PWD/$pkg"
+	pkgname=$(basename "$pkg")
+	name=$(rpm -qp --qf '%{name}' "$pkg" 2>/dev/null)
+	if [ $? -ne 0 ]; then
+		__ "Error getting '%s' package name, skipping\n" "$pkgname"
+		rmgot
+		return
+	fi
+
+	local exists=false
+	if [ -d "$svndir/${subdir}${name}" ]; then
+		exists=true
+		local msg="$(__ "'%s' is already in svn," "${subdir}${name}")"
+		if [ -z "$default" ]; then
+			# TRANSLATORS: First %s stands for something like: 'Package X' is already in svn,
+			if [ "$(yorn n "$(__ "%s overwrite? %s" "$msg" "[y/N] ")")" = "N" ]; then
+				[ -n "$verbose" ] && __ "OK, skipping '%s'\n" "$pkgname"
+				rmgot
+				return
+			fi
+		else
+			# TRANSLATORS: First %s stands for something like: 'Package X' is already in svn,
+			__ "%s skipping '%s'\n" "$msg" "$pkgname"
+			rmgot
+			return
+		fi
+	fi
+
+	__ "\nExtracting files from '%s' " "$pkgname"
+	local pdir="$tmp/$name/"
+	rm -rf "$pdir" ; mkdir -p "$pdir"
+	pushd "$pdir" &>/dev/null
+	rpm2cpio "$pkg" | cpio -idumV --no-absolute-filenames --quiet
+	local e=$?
+	popd &>/dev/null
+	if [ $e -ne 0 ]; then
+		__ "Error extracting files, skipping '%s'\n" "$pkgname"
+		rmgot
+		return
+	fi
+
+	IFS=$NL ; local f p s
+	spec="$(rpm -qpl "$pkg" 2>/dev/null | grep -i "\.spec$")"
+	spec=${spec##*/}
+	__ "\nPackage name='%s'\n" "$name"
+	version=$(rpm -qp --qf '%{version}' "$pkg" 2>/dev/null)
+	
+	svnF="$svndir/${subdir}${name}/F/"
+	svnP="$svndir/${subdir}${name}/P/"
+	svnS="$svndir/${subdir}${name}/S/"
+	makesvn "$name"
+	$exists && getoldfiles "$name"
+
+	src=( $(rpm -qp --qf '[%{source}\n]' "$pkg" 2>/dev/null) )
+	if [ ${#src[@]} -ne 0 ];then
+		__ "\nMoving sources...\n"
+		[ -n "$verbose" ] && __ "Number of sources=%s\n" "${#src[@]}"
+		for s in ${src[@]}
+		do
+			s=$(fixname "$s")
+			[ -n "$verbose" ] && echo "$s"
+			chkspec "$s"
+			$exists && drop "$s" "sources"
+			mv -f ${pdir}${s} $svnS
+		done
+	else
+		__ "No sources...\n"
+		rm -rf $svnS
+	fi
+
+	pat=( $(rpm -qp --qf '[%{patch}\n]' "$pkg" 2>/dev/null) )
+	if [ ${#pat[@]} -ne 0 ];then
+		__ "\nMoving patches...\n"
+		[ -n "$verbose" ] && __ "Number of patches=%s\n" "${#pat[@]}"
+		for p in ${pat[@]}
+		do
+			p=$(fixname "$p")
+			[ -n "$verbose" ] && echo "$p"
+			chkspec "$p"
+			$exists && drop "$p" "patches"
+			mv -f ${pdir}${p} $svnP
+		done
+	else
+		__ "No patches...\n"
+		rm -rf $svnP
+	fi
+
+	IFS=$OFS
+	__ "\nMoving specfile...\n"
+	[ -n "$verbose" ] && echo "$spec"
+	$exists && drop "$spec" "specs"
+	mv -f ${pdir}${spec} $svnF
+
+	if [ -n "$wgot" -o -n "$remove" ]; then
+		[ -z "$wgot" -a -n "$verbose" ] && __ "\nDeleting src rpm '%s'\n" "$pkgname"
+		rm -f "$pkg"
+	fi
+
+
+	f=$(ls -A "$pdir")
+	if [ -n "$f" ]; then
+		__ "\nExtra files in '%s':\n" "$pkg"
+		echo "$f"
+		__ "\nLeaving temp dir '%s'\n" "$pdir"
+	else
+		rm -rf "$pdir"
+	fi
+
+	if $exists; then
+		local c="$(delstr "F" ${specs[@]}) $(delstr "P" ${patches[@]}) $(delstr "S" ${sources[@]})"
+		if [ ${#c} -gt 2 ]; then
+			pushd "$svndir" &>/dev/null
+			echo ; svn del --force $c
+			popd &>/dev/null
+		fi
+	fi
+}
+
+# # # # # # # # # # # # # #
+#  Execution starts here  #
+# # # # # # # # # # # # # #
+
+OFS=$IFS ; NL=$'\012'
+
+set - $(echo "$*" | sed -e "s|--default|-d|g" -e "s|--remove|-r|g" -e "s|--svndir=|-s|g" \
+	-e "s|--folder=|f|g" -e "s|--verbose|-v|g" -e "s|--usage|-u|g" -e "s|--help|-h|g")
+
+while getopts drf:s:vuh op
+do
+	case "$op" in
+		d) default=1;;
+		r) remove=1;;
+		f) subdir="$(fixpath "$OPTARG")/";;
+		s) svndir=$(fixpath "$OPTARG");;
+		v) verbose=1;;
+		u) dousage=1;;
+		h) dohelp=1;;
+		?) exit 1;;
+	esac
+done
+shift $(( $OPTIND-1 ))
+
+[ -n "$dousage" ] && usage
+[ -n "$dohelp" ] && showhelp 0
+
+if [ -n "$svndir" ]; then
+	savepath "svn" "$svndir" "svnsave"
+	__ "Svn base folder changed to '%s'\n" "$svndir"
+else
+	getsvn "svn"
+fi
+
+checkdeps
+
+while [ $# -gt 0 ]; do
+	if [ "${1:(-8)}" == ".src.rpm" ]; then
+		doinst "$1"
+	else
+		makesvn "$1"
+	fi
+	shift
+	[ $# -gt 0 ] && echo
+done

@@ -1,0 +1,72 @@
+#Make sure newlines are correct
+s|\n\r|\n|g
+s|\r\n|\n|g
+s|\r|\n|g
+#No trailing whitespace
+s|[ \t]*\n|\n|g
+#Clean up the macros
+s|%define[ \t]*|%define\t|g
+s|%name|%{name}|g
+s|%oname|%{oname}|g
+s|%title|%{title}|g
+s|%release|%{release}|g
+s|%summary|%{summary}|g
+s|%version|%{version}|g
+s|%libname|%{libname}|g
+s|%develname|%{develname}|g
+s|%buildroot|%{buildroot}|g
+s|%group|%{group}|g
+s|${*RPM_BUILD_ROOT}*|%{buildroot}|g
+s|%SOURCE\([0-9][0-9]*\)|%{SOURCE\1}|g
+s|%_tmppath|%{_tmppath}|g
+s|%_prefix|%{_prefix}|g
+s|%_bindir|%{_bindir}|g
+s|%_sbindir|%{_sbindir}|g
+s|%multiarch_bindir|%{multiarch_bindir}|g
+s|%_datadir|%{_datadir}|g
+s|%_libdir|%{_libdir}|g
+s|%_mandir|%{_mandir}|g
+s|%_infodir|%{_infodir}|g
+s|%_sysconfdir|%{_sysconfdir}|g
+s|%_includedir|%{_includedir}|g
+s|%_gamesdir|%{_gamesdir}|g
+s|%_gamesbindir|%{_gamesbindir}|g
+s|%_gamesdatadir|%{_gamesdatadir}|g
+s|%_menudir|%{_menudir}|g
+s|%_iconsdir|%{_iconsdir}|g
+s|%_miconsdir|%{_miconsdir}|g
+s|%_liconsdir|%{_liconsdir}|g
+s|%_xfontdir|%{_xfontdir}|g
+s|%_webconfdir|%{_webconfdir}|g
+s|%_webappconfdir|%{_webappconfdir}|g
+s|%py_platsitedir|%{py_platsitedir}|g
+s|%py_puresitedir|%{py_puresitedir}|g
+#We don't need Epoch or BuildRoot
+s|%{epoch}:||g
+s|%epoch:||g
+/^Epoch:/ d
+/^Build[rR]oot/ d
+#Now clean up the definitions
+s|Name:[ \t]*|Name:\t\t|g
+s|Summary:[ \t]*|Summary:\t|g
+s|Version:[ \t]*|Version:\t|g
+s|Release:[ \t]*|Release:\t|g
+s|License:[ \t]*|License:\t|g
+s|Group:[ \t]*|Group:\t\t|g
+s|U[rR][lL]:[ \t]*|URL:\t\t|g
+s|Packager:[ \t]*|Packager:\t|g
+s|Build[aA]rch:[ \t]*|BuildArch:\t|g
+s|[rR]equires:[ \t]*|Requires:\t|g
+s|Requires(post):[ \t]*|Requires(post):\t|g
+s|Requires(postun):[ \t]*|Requires(postun): |g
+s|Provides:[ \t]*|Provides:\t|g
+s|Obsoletes:[ \t]*|Obsoletes:\t|g
+s|Conflicts:[ \t]*|Conflicts:\t|g
+s|Source:[ \t]*|Source0:\t|g
+s|Patch:[ \t]*|Patch0:\t\t|g
+s|Source\([0-9][0-9]*\)\:[ \t]*|Source\1:\t|g
+s|Patch\([0-9]\)\:[ \t]*|Patch\1:\t\t|g
+s|Patch\([0-9][0-9][0-9]*\)\:[ \t]*|Patch\1:\t|g
+#Put each BuildRequires, Requires, Provides, Obsoletes, and Conflicts on its own line
+#s|BuildRequires:\t\([0-9A-Za-z_+-]*\)\(.*\)\n|BuildRequires:\t\1\nBuildRequires:\2\n|g
+s|ExclusiveArch:[ \t]*|ExclusiveArch:\t|g

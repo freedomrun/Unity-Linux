@@ -1,0 +1,784 @@
+#!/bin/sh
+#
+#  buildchroot
+#
+#  Copyright (C) 2009  Matthew Dawkins <mattydaw@gmail.com>
+#                      Steven J Stover <stumpy@unity-linux.org>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#
+# # # # # # # # # # # # # # # # # # # # # #
+#  Build packages from command line args  #
+#  in the svn inside specified chroot     #
+# # # # # # # # # # # # # # # # # # # # # #
+
+# name of this script
+myname=$(basename $0)
+#
+# name of the .mo file for translations
+moname="pkgutils"
+#
+# Change svnsave if you want to save the
+# svn config in a different file
+svnsave="$HOME/.svndir"
+#
+# Change chrsave if you want to save the
+# chroot config in a different file
+chrsave="$HOME/.chrootdir"
+#
+# Change reposave if you want to save the
+# local repo config in a different file
+reposave="$HOME/.repodir"
+#
+# Change tmp to use a different tmp folder
+tmp="/tmp"
+#
+# Change user if the name of the
+# chroot env user changes from unity
+user="unity"
+#
+# Home folder in chroot env
+userhome="/home/$user"
+#
+# Change repomntdir to use a different
+# folder for the chroot local repo
+repomntdir="/repo"
+#
+# Change lockfile to use a different
+# lock file in the chroot(s)
+lockfile="${userhome}/${myname}.lock"
+#
+# Change lockage to use a different
+# default lock file age (in seconds)
+lockage="86400"
+#
+# Change cachedir to use a different
+# cache folder in the host system
+#cachedir="/var/lib/${myname}"
+#
+# Change sourcedir to use a different
+# name for the source dir in altsvn
+#sourcedir="SOURCES"
+#
+# Default build options for bldpkg
+defbpopts="-rk"
+#
+
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+showhelp () {
+	local sdir=$(getpath "svn" "$svnsave")
+	local adir=$(getpath "altsvn" "$svnsave")
+	[ $lockage -eq 86400 ] && local aday="$(__ " (one day)")"
+	cat<<-EOF
+$(__ "Usage: %s [OPTION]... [PKGNAME]...
+Build packages from command line args in the svn inside specified chroot
+
+Mandatory arguments to long options are mandatory for short options too.
+  -a, --arch=[32|64]        Build packages in svn for specified arch
+  -b, --bpopts=OPTS         bldpkg options (see \"bldpkg -h\" for help)
+  -c, --command=COMMAND     Pass a command to the chroot environment(s)
+  -m, --min                 Minimize both 32 & 64 chroot environments
+                            to equalize packages installed
+  -p, --pwd                 Use \$PWD instead of svn dir
+  -B, --bldlog              Write build status log %s
+  -A, --age=SECONDS         Age of lockfile in seconds [default=%s]
+  -s, --svndir=PATH         Path to svn base folder %s
+  -S, --altsvn=PATH         Path to alternate svn base folder %s  
+      --path32=PATH         Path to 32bit chroot folder
+      --path64=PATH         Path to 64bit chroot folder
+      --pathplf32=PATH      Path to PLF 32bit chroot folder
+      --pathplf64=PATH      Path to PLF 64bit chroot folder
+      --repo32=PATH         Path to 32bit local repo
+      --repo64=PATH         Path to 64bit local repo
+      --repoplf32=PATH      Path to PLF 32bit local repo
+      --repoplf64=PATH      Path to PLF 64bit local repo
+  -x, --exit                Exit when any build fails
+  -q, --quiet               Provide less detailed output
+  -h, --help                Display this help and exit
+  -u, --usage               Display typical usage and exit" "$myname" "[$tmp/PKGNAME.log]" "${lockage}${aday}" "${sdir:+[$sdir]}" "${adir:+[$adir]}")
+	EOF
+	[ -n "$1" ] && exit $1
+}
+
+usage () {
+	showhelp
+	cat<<-EOF
+$(__ "
+Examples:
+bldchrt -a 32               Builds package in svn 32bit chroot
+bldchrt -a 64               Builds package in svn 64bit chroot
+bldchrt .                   Builds package in svn for both 32bit & 64bit chroots
+bldchrt -c \"rmp -a\"         Execute command in chroot, use quotes to
+                            include commands containing spaces
+                            command will execute before any
+                            packages are built)
+bldchrt -b \"-klrewy -ba\"    Options for bldpkg script, use quotes to
+                            include multiple options containing spaces
+bldchrt -m                  Remove all unique pkgs from both 32bit & 64bit chroots
+                            i.e. minimize both chroot environments
+bldchrt -p                  Consider current dir as top dir of svn
+                            (good for testing pkgs outside svn)
+
+Note: default lock file is /path/to/chroot%s" "${lockfile}")
+	EOF
+	exit
+}
+
+blog () {
+	if $bldlog; then
+		echo "${1}-status=\"$2\";" >> "$bldlogfile"
+		[ -n "$3" ] && echo "${1}-message=\"$3\";" >> "$bldlogfile"
+	fi
+}
+
+fixpath () {
+	echo "$1" | sed -re "s|/+|/|g" -e "s|/$||"
+}
+
+getpath () {
+	# $1 is key, $2 is filename to read from
+	[ -r "$2" ] && sed -n "s|^$1[ \t]*||p" "$2"
+}
+
+cfgerr () {
+	cat<<-EOF
+$(__ "Can't write to config file '%s'!
+Please edit this script and change the value of
+variable '%s' to a file which you have
+write permissions to, e.g. '%s'
+(Script is located at '%s')" "${!1}" "$1" "$HOME/${!1##*/}" "$0")
+		EOF
+		exit 1
+}
+
+savepath () {
+	# $1 is key, $2 is value, $3 is  var name of filename to write to
+	sed -i "\|^$1|d" "${!3}" 2>/dev/null
+	echo "$1	$2" 2>/dev/null >>"${!3}" || cfgerr "$3"
+}
+
+vareval () {
+	local a e n f="$1"
+	if [[ "$f" =~ [$] ]]; then
+		a=( $(echo "$f"|cut --output-delimiter=" " -d"/" -f1-) )
+		for n in ${!a[@]}; do
+			if [ "${a[n]:0:1}" = "$" ]; then
+				e=${a[n]#$} ; a[n]=${!e}
+			fi
+		done
+		f=$(echo ${a[@]} | sed "s| |/|g")
+	fi
+	fixpath "$f"
+}
+
+getsvn () {
+	# $1 is svn or altsvn
+	local v="$1" svn=$(getpath "$1" "$svnsave")
+	if [ -z "$svn" ]; then
+		if ! $quiet; then
+			read -p "$(__ "Please enter full path to %s base folder: " "${1/alt/alternate }")" svn
+			if [ -z "$svn" ]; then
+				__ "Nothing entered, quitting...\n"
+				exit 1
+			fi
+		else
+			__ "Please change the %s base folder with the -s option\nQuitting...\n" "${1/alt/alternate }"
+			exit 1
+		fi
+	fi
+	# If svn contains "$" evaluate it as a variable
+	svn=$(vareval "$svn")
+	savepath "$1" "$svn" "svnsave"
+	[ "$v" = "svn" ] && v="svndir"
+	eval $v="$svn"
+	! $quiet && __ "Using %s base folder '%s'\n" "${1/alt/alternate }" "$svn" && echo
+}
+
+getchroot () {
+	# $1 is 32, 64, plf32 or plf64
+	local chr=$(getpath "$1" "$chrsave")
+	if [ -z "$chr" ]; then
+		if ! $quiet; then
+			read -p "$(__ "Please enter full path to chroot %s base folder: " "${1/plf/PLF }bit")" chr
+			if [ -z "$chr" ]; then
+				__ "Nothing entered, quitting...\n"
+				exit 1
+			fi
+		else
+			__ "Please change the chroot %s base folder with the %s option\nQuitting...\n" "${1/plf/PLF }bit" "--path${1}"
+			exit 1
+		fi
+	fi
+	# If chr contains "$" evaluate it as a variable
+	chr=$(vareval "$chr")
+	savepath $1 "$chr" "chrsave"
+	eval chroot${1}="$chr"
+	! $quiet && __ "Using chroot %s base folder '%s'\n" "${1/plf/PLF }bit" "$chr" && echo
+}
+
+getrepo () {
+	# $1 is 32, 64, plf32 or plf64
+	local repo
+	repo=$(getpath "$1" "$reposave")
+	if [ -n "$repo" ]; then
+		# If repo contains "$" evaluate it as a variable
+		repo=$(vareval "$repo")
+		savepath $1 "$repo" "reposave"
+		eval repo${1}="$repo"
+		! $quiet && __ "Using repo %s base folder '%s'\n" "${1/plf/PLF }bit" "$repo" && echo
+	fi
+}
+
+chrootpath () {
+	local c="chroot${1}" ; echo -n "${!c}"
+}
+
+repopath () {
+	local r="repo${1}" ; echo -n "${!r}"
+}
+
+chktmp () {
+	touch "$tmp/tmp.$$" 2>/dev/null
+	local err=$? ; rm -f "$tmp/tmp.$$"
+	if [ $err -ne 0 ]; then
+		__ "### Can't write to dir '%s', quitting ###\n" "$tmp"
+		exit 1
+	fi
+}
+
+sanity () {
+	if [ -n "$mirror" ] || $bldlog; then
+		chktmp
+	fi
+
+	bldlogfile="${tmp}/${myname}.$$.log"
+	rm -f "$bldlogfile"
+
+	if $host32; then
+		cat<<-EOF
+$(__ "You are using a 32bit host, all 64bit
+chroot operations will be disabled
+")
+		EOF
+
+		if [ -n "$mirror" ]; then
+			cat<<-EOF
+$(__ "--min option not allowed in 32bit host
+Quitting...")
+			EOF
+			blog fatal fail "$(__ "--min option not allowed in 32bit host")"
+			exit 1
+		fi
+
+		if [ "$bldarch" != "32" ]; then
+			cat<<-EOF
+$(__ "You must add --arch=32 (or -a32) to your
+command line arguments for a 32bit host
+Quitting...")
+			EOF
+			blog fatal fail "$(__ "Missing option --arch=32")"
+			exit 1
+		fi
+	fi
+
+	chksvn () {
+		local s=$1
+		[ "$1" = "svn" ] && s="svndir"
+		if ! [ -d "${!s}" ]; then
+			cat<<-EOF
+$(__ "Can't find %s base directory:
+'%s'
+Please change the path with the %s option" "${1/alt/alternate }" "${!s}" "--${s}")
+			EOF
+			blog fatal fail "$(__ "Can't find %s base directory: %s" "${1/alt/alternate }" "${!s}")"
+			exit 1
+		fi
+	}
+
+# 	if ! $usepwd; then
+# 		local v ; for v in svn altsvn; do chksvn $v; done
+# 	fi
+	! $usepwd && chksvn "svn"
+	chksvn "altsvn"
+
+	samepath () {
+		local pth="$2"
+		[ "$2" = "chroot" ] && pth="path"
+		cat<<-EOF
+$(__ "Both %s and PLF %s chroot paths are set to:
+'%s'
+You must use different paths for these
+Please change one of them using either
+the %s or %s option" "${1}bit" "${1}bit" "$3" "--${pth}${1}" "--${pth}plf${1}")
+		EOF
+		blog fatal fail "$(__ "Same path for %s and PLF %s chroot: %s" "${1}bit" "${1}bit" "$3")"
+		exit 1
+	}
+
+	if [ "$bldarch" != "64" ]; then
+		# check for same paths in both 32bit envs
+		[ "${chroot32%/}" = "${chrootplf32%/}" ] && samepath 32 "chroot" "$chroot32" 
+		# [ -n "$repo32" -a -n "$repoplf32" -a "${repo32%/}" = "${repoplf32%/}" ] && samepath 32 repo "$repo32"
+	fi
+	if [ "$bldarch" != "32" ]; then
+		# check for same paths in both 64bit envs
+		[ "${chroot64%/}" = "${chrootplf64%/}" ] && samepath 64 "chroot" "$chroot64"
+		# [ -n "$repo64" -a -n "$repoplf64" -a "${repo64%/}" = "${repoplf64%/}" ] && samepath 64 repo "$repo64"
+	fi
+
+	# set global var "plf" if we are building with plf
+	# from here on out, the $chroot/$repo vars are set to either
+	# normal OR plf paths, and $chrootplf/$repoplf vars are not used
+	plf=$(echo "$bpopts" | sed -nr 's|(.*[[:space:]]+\|^)--with[=[:space:]]+plf([[:space:]]+.*\|$)|plf|p')
+	if [ -n "$plf" ]; then
+		chroot32="$chrootplf32"
+		chroot64="$chrootplf64"
+		repo32="$repoplf32"
+		repo64="$repoplf64"
+	fi
+
+	errpath () {
+		if ! [ -d "$3" ]; then
+			local pth="$2"
+			[ "$2" = "chroot" ] && pth="path"
+			cat<<-EOF
+$(__ "Can't find %s chroot directory:
+'%s'
+Please change the path with the %s option" "${1/plf/PLF }bit" "$3" "--${pth}${1}")
+			EOF
+			blog fatal fail "$(__ "Can't find %s chroot directory: %s" "${1/plf/PLF }bit" "$3")"
+			exit 1
+		fi
+	}
+
+	# check for valid chroot & repo paths
+	if [ "$bldarch" != "64" ]; then
+		errpath ${plf}32 "chroot" "$chroot32"
+		[ -n "$repo32" ] && errpath ${plf}32 repo "$repo32"
+	fi
+	if [ "$bldarch" != "32" ]; then
+		errpath ${plf}64 "chroot" "$chroot64"
+		[ -n "$repo64" ] && errpath ${plf}64 repo "$repo64"
+	fi
+
+
+# 	if [ "$bldarch" != "64" ]; then
+# 		# hack for uname in 32bit chroot
+# 		local s=$(du -b "$chroot32/bin/uname" 2>/dev/null | gawk '{ print $1 }')
+# 		if [ -z "$s" ]; then
+# 			cat<<-EOF
+# 			Can't find 'uname' command in '$chroot32/bin'
+# 			Some packages may fail to build without this command
+# 
+# 			EOF
+# 			continue
+# 		fi
+# 		[ $s -gt 100 ] && mv -f "$chroot32/bin/uname" "$chroot32/bin/uname.real"
+# 		cat>"$chroot32/bin/uname"<<-EOF
+# 		#!/bin/sh
+# 		uname.real \$* | sed 's|x86_64|i586|'
+# 		EOF
+# 		chmod +x "$chroot32/bin/uname"
+# 	fi
+
+	# we made it past the sanity checks so remove tmp log file
+	rm -f "$bldlogfile"
+} # end sanity
+
+mirrorme () {
+	local list32="$tmp/rpm32.lst"
+	local list64="$tmp/rpm64.lst"
+	local diffil="$tmp/diff.lst"
+	local bl="kernel\|python-psyco"
+
+	echo -n "Wait..."
+	rpm -r "$chroot32" -qa --qf "%{name}\n" 2>/dev/null | sed -e "/^$bl/d" | sort > "$list32"
+	rpm -r "$chroot64" -qa --qf "%{name}\n" 2>/dev/null | sed -e "/^$bl/d" -e "s|lib64|lib|" -e "s|-x86_64||" | sort > "$list64"
+	diff -aN -U 0 "$list64" "$list32" | sed -e "/^---\|+++\|@/d" > "$diffil"
+
+	local u32=($(sed -n "s|^+||p" "$diffil"))
+	local u64=($(sed -n "s|^-||p" "$diffil" | sed -e "s|^lib|lib*|"))
+
+	echo -ne "\r       \r"
+
+#~ cp $diffil . ; cp $list32 . ; cp $list64 .
+#~ rm -f u32 u64
+#~ for e in "${u32[@]}"; do echo "$e" >>u32; done
+#~ for e in "${u64[@]}"; do echo "$e" >>u64; done
+
+
+	case "$mirror" in
+		32)		smart install -o rpm-root="$chroot64" -y ${u32[@]}
+				smart remove -o rpm-root="$chroot64" -y ${u64[@]};;
+		64)		smart install -o rpm-root="$chroot32" -y ${u64[@]}
+				smart remove -o rpm-root="$chroot32" -y ${u32[@]};;
+		min)	! $quiet && echo "### Removing ${#u64[@]} packages from 64 bit chroot ###"
+				[ ${#u64[@]} -gt 0 ] && chroot $chroot64 /bin/su root -c "smart remove -y ${u64[*]} 2>/dev/null"
+				# chroot $chroot64 /bin/su root -c "smart remove --dump ${u64[*]} 2>/dev/null"
+				! $quiet && echo "### Removing ${#u32[@]} packages from 32 bit chroot ###"
+				[ ${#u32[@]} -gt 0 ] && chroot $chroot32 /bin/su root -c "smart remove -y ${u32[*]} 2>/dev/null";;
+				# chroot $chroot32 /bin/su root -c "smart remove --dump ${u32[*]} 2>/dev/null";;
+	esac
+
+	rm -f "$list32" "$list64" "$diffil"
+}
+
+jailme () {
+	domount () { # $1 is what, $2 is where
+		if ! echo "$mnt" | grep -q "$2"; then
+			if [ "$1" = "/proc" ]; then
+				mount -t proc none "$2" ; (( e+=$? ))
+			else
+				mount --bind "$1" "$2" ; (( e+=$? ))
+			fi
+		fi
+	}
+
+	lockme () {
+		if [ -f "$2" ]; then
+			local tnow=$(date +%s)
+			local tlck=$(date +%s -r "$2")
+			local age=$(($tnow-$tlck))
+			if [ "$age" -le "$lockage" ]; then
+				msg="$(__ "Lockfile %s valid until %s" $2 "$(awk 'BEGIN{print strftime("%c", '$(($tlck+$lockage))')}')")"
+				! $quiet && __ "### %s, quitting ###\n" "${msg}"
+				blog chroot_enter_${1} fail "$msg"
+				exit 1
+			fi
+		fi
+		rm -f "$2"
+		touch "$2"
+	}
+
+	setfiles () {
+		pushd ${1}${userhome} &>/dev/null
+		mv -f .rpmmacros rpmmacros.$$ 2>/dev/null
+		mv -f .rpmrc rpmrc.$$ 2>/dev/null
+		mv -f .svndir svndir.$$ 2>/dev/null
+
+		cat>.rpmmacros<<-EOF
+		%_topdir	${userhome}/src/rpm
+		%_tmppath	${userhome}/src/tmp
+		%distribution   Unity
+		%vendor         Unity
+		%packager	unitybuild <unity@unity-linux.org>
+		%debug_package	%{nil}
+		EOF
+
+		cat>.rpmrc<<-EOF
+		buildarchtranslate: i386: i586
+		buildarchtranslate: i486: i586
+		buildarchtranslate: i586: i586
+		buildarchtranslate: i686: i586
+		EOF
+
+		echo -e "svn	${userhome}/src/svn\naltsvn	${userhome}/src/altsvn" > .svndir
+		popd &>/dev/null
+		chroot $1 chown ${user}:${user} $userhome/{.rpmmacros,.rpmrc,.svndir}
+	}
+
+	setplf () {
+		local v="plfok${1}"
+		${!v} && return || eval $v=true
+		local scp="smart-channels-plf-i586" ; local up="unity-i586-plf"
+		if [ "$1" = "64" ]; then
+			scp=${scp/%i586/x86_64} ; up=${up/i586/x86_64}
+		fi
+		if [ -n "$plf" ]; then
+			chroot $2 rpm -q $scp &>/dev/null
+			[ $? -ne 0 ] && chroot $2 smart install -y $scp
+			echo -n "$(__ "Wait...")"
+			chroot $2 su -c "smart channel --enable $up &>/dev/null ; smart update $up &>/dev/null"
+			echo -ne "\r       \r"
+		else
+			chroot $2 smart channel --disable $up &>/dev/null
+		fi
+	}
+
+	# $1 is 32 or 64 (bldarch)
+	local dir86 msg s e=0
+	local chroot=$(chrootpath $1)
+	lockme "$1" "${chroot}${lockfile}"
+	local uhome=${chroot}${userhome}
+	[[ "$1" =~ 32 ]] && dir86="i586" || dir86="x86_64"
+	mkdir -p ${uhome}/src/{svn,altsvn,tmp,rpm/{BUILD,RPMS/$dir86,SOURCES,SPECS,SRPMS}}
+	pushd ${uhome}/src/rpm/RPMS &>/dev/null
+	[ -d "noarch" ] || ln -sf ${userhome}/src/rpm/RPMS/$dir86 noarch
+	popd &>/dev/null
+	#mkdir -p ${cachedir}/${dir86}
+	chroot $chroot chown -R ${user}:${user} ${userhome}/src
+
+	local mnt=$(mount)
+	domount /tmp ${chroot}/tmp
+	if $usepwd; then
+		domount $PWD ${uhome}/src/svn
+	else
+		domount $svndir ${uhome}/src/svn
+	fi
+	domount $altsvn ${uhome}/src/altsvn
+	local repo=$(repopath $1)
+	if [ -n "$repo" ]; then
+		mkdir -p ${chroot}${repomntdir}
+		domount $repo ${chroot}${repomntdir}
+	fi
+	#domount ${cachedir}/${dir86} ${chroot}/var/lib/smart/packages
+	domount /dev ${chroot}/dev
+	domount /proc ${chroot}/proc
+	domount /sys ${chroot}/sys
+	domount /dev/pts ${chroot}/dev/pts
+	cp -f /etc/resolv.conf ${chroot}/etc/resolv.conf ; (( e+=$? ))
+	if [ $e -ne 0 ]; then
+		msg="$(__ "An error occurred while mounting the filesystems")"
+		! $quiet && echo "### $msg ###"
+		s="$(__ "fail")"
+	else
+		s="ok" ; msg="$(__ "Filesystems successfully mounted")"
+	fi
+	blog chroot_enter_${1} $s "$msg"
+	[ $e -ne 0 ] && exit 1
+	setfiles "$chroot"
+	setplf "$1" "$chroot"
+} # end jailme
+
+freeme () {
+	resetfiles () {
+		pushd ${1}${userhome} &>/dev/null
+		mv -f rpmmacros.$$ .rpmmacros 2>/dev/null
+		mv -f rpmrc.$$ .rpmrc 2>/dev/null
+		mv -f svndir.$$ .svndir 2>/dev/null
+		popd &>/dev/null
+	}
+
+	# $1 is bldarch
+	local msg s chroot=$(chrootpath $1) e=0
+	resetfiles "$chroot"
+	umount ${chroot}/dev/pts ; (( e+=$? ))
+	umount ${chroot}/sys ; (( e+=$? ))
+	umount ${chroot}/proc ; (( e+=$? ))
+	umount ${chroot}/dev ; (( e+=$? ))
+	#umount ${chroot}/var/lib/smart/packages ; (( e+=$? ))
+	local repo=$(repopath $1)
+	if [ -n "$repo" ]; then
+		umount ${chroot}${repomntdir} ; (( e+=$? ))
+	fi
+	umount ${chroot}${userhome}/src/altsvn ; (( e+=$? ))
+	umount ${chroot}${userhome}/src/svn ; (( e+=$? ))
+	umount ${chroot}/tmp ; (( e+=$? ))
+	if [ $e -ne 0 ]; then
+		msg="$(__ "An error occurred while unmounting the filesystems")"
+		! $quiet && echo "### $msg ###"
+		s="$(__ "fail")"
+	else
+		s="ok" ; msg="$(__ "Filesystems successfully unmounted")"
+	fi
+	blog chroot_exit_${1} $s "$msg"
+	rm -f ${chroot}${lockfile} 2>/dev/null
+	[ $e -ne 0 ] && exit 1
+}
+
+runcmd () {
+	if [ -z $bldarch ]; then
+		! $quiet && __ "### Entering %s chroot ###\n" "${plf/plf/PLF }64bit"
+		jailme 64
+		chroot $chroot64 /bin/su root -c "$*"
+		freeme 64
+
+		! $quiet && __ "### Entering %s chroot ###\n" "${plf/plf/PLF }32bit"
+		jailme 32
+		linux32 chroot $chroot32 /bin/su root -c "$*"
+		freeme 32
+	else
+		local chroot=$(chrootpath $bldarch)
+		! $quiet && __ "### Entering %s chroot ###\n" "${plf/plf/PLF }${bldarch}bit"
+		jailme $bldarch
+		linux${bldarch} chroot $chroot /bin/su root -c "$*"
+		freeme $bldarch
+	fi
+}
+
+chkfail () {
+	# $1 is bldarch, $2 is package
+	if $usepwd; then
+		[ -f "${2}/.failed${plf}${1}" ]
+	else
+		[ -f "${svndir}/${2}/.failed${plf}${1}" ]
+	fi
+
+	if [ $? -eq 0 ] && $xiterr; then
+		__ "### Quitting due to failed build ###\n"
+		exit 1
+	fi
+}
+
+getlockage () {
+	echo "$1" | grep -Eq "^[0-9]+$" && lockage="$1" || __ "### --age parameter '%s' ignored, not a number ###\n" "$1"
+}
+
+# # # # # # # # # # # # # #
+#  Execution starts here  #
+# # # # # # # # # # # # # #
+
+NL=$'\012'
+usepwd=false ; xiterr=false ; quiet=false ; dousage=false ; dohelp=false ; bldlog=false
+plfok32=false ; plfok64=false
+
+OFS=$IFS ; IFS=$NL
+set - $(echo "$*" | sed -e "s|==*|=|g" -e "s|--arch=|-a|g" -e "s|--age=|-A|g" -e "s|--bpopts=|-b|g" -e "s|--bldlog|-B|g" \
+	-e "s|--min|-m|g" -e "s|--pwd|-p|g" -e "s|--path32=|-1|g" -e "s|--path64=|-2|g" -e "s|--pathplf32=|-3|g" -e "s|--pathplf64=|-4|g" \
+	-e "s|--repo32=|-5|g" -e "s|--repo64=|-6|g" -e "s|--repoplf32=|-7|g" -e "s|--repoplf64=|-8|g" -e "s|--command=|-c|g" \
+	-e "s|--svndir=|-s|g" -e "s|--altsvn=|-S|g" -e "s|--exit|-x|g" -e "s|--quiet|-q|g" -e "s|--usage|-u|g" -e "s|--help|-h|g")
+IFS=$OFS
+
+while getopts a:A:b:Bc:mp1:2:3:4:5:6:7:8:xqs:S:uh op
+do
+	case "$op" in
+		a)		case "$OPTARG" in
+					32|64)	bldarch="$OPTARG";;
+					*)		__ "Invalid arch option '%s', quitting.\n" "$OPTARG"
+							exit 1;;
+				esac;;
+		A)		getlockage "$OPTARG";;
+		b)		bpopts="$OPTARG";;
+		B)		bldlog=true;;
+		c)		cmd="$OPTARG";;
+		m)		mirror="min";;
+		p)		usepwd=true;;
+		1)		chroot32=$(fixpath "$OPTARG");;
+		2)		chroot64=$(fixpath "$OPTARG");;
+		3)		chrootplf32=$(fixpath "$OPTARG");;
+		4)		chrootplf64=$(fixpath "$OPTARG");;
+		5)		repo32=$(fixpath "$OPTARG");;
+		6)		repo64=$(fixpath "$OPTARG");;
+		7)		repoplf32=$(fixpath "$OPTARG");;
+		8)		repoplf64=$(fixpath "$OPTARG");;
+		x)		xiterr=true;;
+		q)		quiet=true;;
+		s)		svndir=$(fixpath "$OPTARG");;
+		S)		altsvn=$(fixpath "$OPTARG");;
+		u)		dousage=true;;
+		h)		dohelp=true;;
+		\?)		exit 1;;
+	esac
+done
+shift $(( $OPTIND-1 ))
+
+$dousage && usage
+$dohelp && showhelp 0
+
+host32=$(uname -m | grep -q "i[3-6]86" && echo true || echo false)
+host64=$(uname -m | grep -q "x86_64" && echo true || echo false)
+
+if [ -n "$svndir" ]; then
+	savepath "svn" "$svndir" "svnsave"
+	__ "svn base folder changed to '%s'\n" "$svndir"; echo
+else
+	! $usepwd && getsvn "svn"
+fi
+
+if [ -n "$altsvn" ]; then
+	savepath "altsvn" "$altsvn" "svnsave"
+	__ "Alternate svn base folder changed to '%s'\n" "$altsvn"; echo
+else
+#	! $usepwd && getsvn "altsvn"
+	getsvn "altsvn"
+fi
+
+for a in 32 64 plf32 plf64; do
+	chroot=$(chrootpath $a)
+	if [ -n "$chroot" ]; then
+		savepath $a "$chroot" "chrsave"
+		! $quiet && __ "Chroot %s base folder changed to '%s'\n" "${a/plf/PLF }bit" "$chroot"; echo
+	elif $host32 && [[ "$a" =~ 64 ]]; then
+		: # skip 64bit envs when 32bit host
+	else
+		getchroot $a
+	fi
+
+	repo=$(repopath $a)
+	if [ -n "$repo" ]; then
+		savepath $a "$repo" "reposave"
+		! $quiet && __ "Repo %s base folder changed to '%s'\n" "${a/plf/PLF }bit" "$repo"; echo
+	elif $host32 && [[ "$a" =~ 64 ]]; then
+		: # skip 64bit envs when 32bit host
+	else
+		getrepo $a
+	fi
+done
+
+if [ $UID -ne 0 ]; then
+	__ "Run %s as root or with sudo, quitting.\n" "$myname"
+	exit 1
+fi
+
+sanity
+[ -n "$cmd" ] && runcmd $cmd
+[ -n "$mirror" ] && mirrorme
+[ -z "$bpopts" ] && bpopts="$defbpopts"
+
+
+while [ $# -gt 0 ]; do
+	p=$1
+	if [ "$p" = "." ]; then
+		p=$(basename $PWD)
+		if $usepwd; then
+			cat<<-EOF
+$(__ "The --pwd option and the \".\" argument
+are exclusive, skipping '%s'
+" "$p")
+			EOF
+			shift
+			continue
+		fi
+	fi
+
+	bldlogfile="${tmp}/${p}.log"
+	rm -f "$bldlogfile"
+
+	if [ -z $bldarch ]; then
+		! $quiet && __ "### Entering %s chroot ###\n" "${plf/plf/PLF }64bit"
+		jailme 64
+		chroot $chroot64 /bin/su -p - $user -c "echo $user | sudo -S bldpkg $bpopts $userhome/src/svn/$p"
+		freeme 64
+		chkfail 64 $p
+		! $quiet && __ "### Entering %s chroot ###\n" "${plf/plf/PLF }32bit"
+		jailme 32
+		linux32 chroot $chroot32 /bin/su -p - $user -c "echo $user | sudo -S bldpkg $bpopts $userhome/src/svn/$p"
+		freeme 32
+		chkfail 32 $p
+	else
+		chroot=$(chrootpath $bldarch)
+		! $quiet && __ "### Entering %s chroot ###\n" "${plf/plf/PLF }${bldarch}bit"
+		jailme $bldarch
+		linux${bldarch} chroot $chroot /bin/su -p - $user -c "echo $user | sudo -S bldpkg $bpopts $userhome/src/svn/$p"
+		freeme $bldarch
+		chkfail $bldarch $p
+	fi
+	shift
+done
+
+exit 0

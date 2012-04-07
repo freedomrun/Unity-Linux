@@ -1,0 +1,254 @@
+#!/bin/bash
+#
+#  saddpkg
+#
+#  Copyright (C) 2009 Steven J Stover <stumpy@unity-linux.org>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+
+# name of this script
+myname=$(basename $0)
+#
+# name of the .mo file for translations
+moname="pkgutils"
+#
+
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+# At some points, the script relies on the output of other programs such as smart and rpm.
+# We can't rely on the English version of their messages, because, depending on the system, those
+# messages might be translated into the system locale. This function retrieves the translated 
+# version of a given message $2 (if such translation exists) for the program $1.
+fetchmsg() {
+	local gettextopts="-d $1 -e --"
+	shift
+        local TEXT=`gettext $gettextopts "$1"`
+	shift
+	printf -- "$TEXT" "$@" | head -n 1 # Always extract the first line from multi-line messages
+}
+
+showhelp () {
+	cat<<-EOF
+$(__ "Usage: %s SPECFILE | RPMFILE
+
+Uses smart to install missing dependencies in SPECFILE or RPMFILE" $myname)
+	EOF
+}
+
+yorn () {
+	local s
+	while ! [[ "$s" =~ [ynYN] ]]; do
+		read -p"$2" s
+		s=${s:-$1}
+		[ ${#s} -gt 1 ] && s=
+	done
+	echo -n $s|tr yn YN
+}
+
+savelist () {
+	if [ "$(yorn n "$(__ "Save list of files? %s" "[y/N] ")")" = "Y" ]; then
+		x=0
+		aname="${1%.*}.remove"
+		while [ -f "$aname" ]; do
+			let "x+=1"
+			aname="${1%.*}.remove$x"
+		done
+	fi
+}
+
+chr() {
+	printf \$(printf '%03o' $1)
+}
+
+ord() {
+	printf '%d' "'$1"
+}
+
+
+chkver () {
+	pv=( $@ )
+	case "${pv[1]}" in
+		=|\<=|\>=|\<|\>) v=1;;
+		*) v=0;;
+	esac
+	__ "Wait..."
+	IFS=$NL
+	av=( $(smart query --provides ${pv[0]} 2>/dev/null|grep -Ev "^$msg1|^$msg2|^$msg3|^[ ]"|sed "s/^\(.*\)@.*$/\1/") )
+	IFS=$OFS
+	echo -ne "\r       \r"
+	ac=${#av[@]}
+	case "$ac" in
+		0)	__ "\nPackage %s not found... quitting.\n" "${pv[0]}"
+			exit 1;;
+		1)	case "$v" in
+				0)	ar[k]=${av[0]};;
+				1)	__ "Requires %s and found %s - " "${pv[@]}" "${av[0]}"
+					if [ "$(yorn y "$(__ "Continue? %s" "[Y/n] ")")" = "N" ]; then
+						echo -e $canc
+						exit 1
+					fi
+					ar[k]=${av[0]};;
+			esac;;
+		*)	case "$v" in
+				0)	req=${pv[0]};;
+				1)	req=${pv[@]};;
+			esac
+			__ "Requires %s and found:\n" "$req"
+			n=97
+			for e in ${!av[@]}; do
+				echo "  $(chr $n)) ${av[e]}"
+				(( n++ ))
+			done
+			__ "%s) Quit\n" "  $(chr $n)"
+			r="0" ; n=$(chr $n)
+			while [[ "$r" < "a" || "$r" > "$n" ]]; do
+				read -p "$(__ "Select a package [a-%s] " "$n")" r
+			done
+			if [ "$r" = "$n" ]; then
+				echo -e $canc
+				exit 1
+			fi
+			r=$(ord ${r:0:1}) ; (( r-=97 ))
+			ar[k]=${av[r]};;
+	esac
+}
+
+	
+#############################################
+##          Execution starts here          ##
+#############################################
+OFS=$IFS ; NL=$'\012'
+
+# if ! ps -e|grep $PPID|grep -q $(basename $SHELL); then
+# 	e="Run $myname from a console please."
+# 	which kdialog && exec kdialog --title $myname --caption "" --error "$e"
+# 	which zenity && exec zenity --title $myname --error --text="$e"
+# 	which konsole && exec konsole -T $myname --caption "" --noclose -e echo "$e"
+# 	which xterm && exec xterm -T $myname -fn *-fixed-*-*-*-20-* -hold -e echo "$e"
+# 	exit 0
+# fi
+
+[ "$HOME" = "/root" ] && msg=", not as root"
+if ! set|grep -q "SUDO_COMMAND" || [ -n "$msg" ] ; then
+	showhelp
+	__ "\nPlease run this command with sudo, not as root... quitting.\n"
+	exit 1
+fi
+
+if [ -z "$1" ]; then
+	showhelp
+	exit 0
+elif [ ! -f "$1" ]; then
+	__ "\n%s - File not found.\n" "$1"; echo
+	showhelp
+	exit 1
+fi
+
+if [ "${1:(-5)}" == ".spec" ]; then
+	co="rpmbuild"; op="-bl"
+	es=$(fetchmsg rpm "Failed build dependencies")
+elif [ "${1:(-4)}" == ".rpm" ]; then
+	co="rpm"; op="-i"; ot="--test"
+	es=$(fetchmsg rpm "Failed dependencies")
+else
+	__ "\n%s - Not a .spec or .rpm file.\n" "$1"; echo
+	showhelp
+	exit 1
+fi
+
+IFS=$NL
+ap=($($co $op $ot "$@" 2>&1))
+#echo -e "$co output:\n${ap[*]}\n-----------\n"
+IFS=$OFS
+
+fnf1=$(fetchmsg rpm "File not found: %s\n" "")
+fnf2=$(fetchmsg rpm "File not found by glob: %s\n" "")
+
+if ! echo "${ap[0]}" | grep -iq "$es"; then
+	fl=false
+	for i in "${ap[@]}"; do
+		if echo "$i" | grep -i "^$(fetchmsg rpm "error:")" | grep -iqv "${es}\|${fnf1}\|${fnf2}"; then
+			! $fl && echo
+			echo "$i"
+			fl=true
+		fi
+	done
+	if $fl; then
+		__ "\nFix the error(s) and try again\n"; echo
+		exit 1
+	else
+		__ "\nNothing to do for %s\n" "$1"; echo
+		exit 0
+	fi
+fi
+
+if [ "$(yorn n "$(__ "Do \"smart update\" first? %s" "[y/N] ")")" = "Y" ]; then
+	__ "\nRunning smart update\n"; echo ; smart update
+fi
+
+echo ; k=0 ; canc="$(__ "\nOperation cancelled.")"
+
+msg1=$(fetchmsg smart "Loading cache...")
+msg2=$(fetchmsg smart "Saving cache...")
+msg3=$(fetchmsg smart "Updating cache...")
+
+
+for ((i=1; i<${#ap[@]}; i++, k++)); do
+	aq=($(echo ${ap[$i]} | cut -d" " -f1-3))
+	chkver ${aq[@]} # Returns ar[k]
+	echo ${ar[k]}
+done
+
+
+
+
+__ "\nThe following %s packages will be installed:\n" "${#ar[@]}"; echo
+echo -e "${ar[@]}\n"
+if [ "$(yorn y "$(__ "Are you sure? %s" "[Y/n] ")")" = "Y" ]; then
+	aname=""
+	savelist "$1"
+	__ "\nPlease wait while packages are processed...\n"
+	__ "\nRunning smart install\n"; echo
+	if [ -n "$aname" ]; then
+		{ for i in ${ar[@]}; do echo "$i"; done } | xargs smart install -y 2>&1 | tee $aname
+	else
+		{ for i in ${ar[@]}; do echo "$i"; done } | xargs smart install -y
+	fi
+
+	err=$?
+	if [ "$err" -ne "0" ]; then
+		__ "\nOperation aborted.\n"; echo
+		exit $err
+	fi
+	if [ -n "$aname" ]; then
+		__ "List saved as %s\n" "$aname"; echo
+	else
+		__ "List not saved.\n"; echo
+	fi
+else
+	echo -e $canc
+fi

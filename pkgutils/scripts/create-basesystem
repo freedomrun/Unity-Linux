@@ -1,0 +1,493 @@
+#!/bin/sh
+#
+#  create-basesystem
+#
+#  Copyright (C) 2009  Matthew Dawkins <mattydaw@gmail.com>
+#                      JMiahMan <jmiahman@gmail.com>
+#                      Steven J Stover <stumpy@unity-linux.org>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#
+# # # # # # # # # # # # # # # # # # # # #
+#  Build a chroot environment or create #
+#  a basic CLI or full iso from rpms    #
+# # # # # # # # # # # # # # # # # # # # #
+
+# name of this script
+myname=$(basename "$0")
+#
+# name of the .mo file for translations
+moname="create-basesystem"
+#
+# the core OS is unity
+CORENAME="unity"
+#
+# distros could be like synergy that have fullblown branding
+DISTRONAME="Unity"
+#UDISTRONAME=$(echo $DISTRONAME | sed -e 's|.*|\u&|g')
+LDISTRONAME=$(echo $DISTRONAME | sed -e 's|[A-Z.*]|\l&|g')
+#
+# branch could be like HUMANity SAMity Unite17 etc or desktop environment
+# this will control BRANCHNAME-desktop, basically the control DE metapkg
+BRANCHNAME="unity"
+#
+# build, cli or iso
+bldtype="iso"
+#
+# default target folder for output
+BASEDIR=`pwd`
+#
+# default UID for unity or guest user
+defuid=500
+
+showhelp () {
+	cat<<-EOF
+$(__ "Usage: %s [OPTION]...
+Build a chroot environment or create a basic CLI or full iso from rpms
+
+Mandatory arguments to long options are mandatory for short options too.
+  -b, --branch=BRANCHNAME              branch name (DE metapkg BRANCHNAME-desktop)
+  -c, --core=CORENAME                  core OS (metapkgs CORENAME-core, CORENAME-iso-minimal,
+                                         CORENAME-devel and smart channels CORENAME-%s-*)
+  -d, --distro=DISTRONAME              distro name (DISTRONAME-gfxboot-theme and DISTRONAME-release.sh)
+  -o, --output-directory=DIRECTORY     base directory for output [default is \$PWD]
+  -t, --type=BLDTYPE                   build type (build, cli or iso) [default is iso]
+  -u, --uid=UID                        numerical value of unity or guest ID [default is %s]
+  -h, --help                           Display this help and exit
+
+Note: BRANCHNAME-desktop should pull in CORENAME-iso and any other CORENAME metapkgs" "$myname" "$ARCH" "$defuid")
+	EOF
+	exit 0
+}
+
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+umnt () {
+	if [ -n "$IDIR" -a -d "$IDIR" ]; then
+		pushd $IDIR &>/dev/null
+		for d in dev proc sys
+		do	[ -d "$d" ] && umount $d
+		done
+		popd &>/dev/null
+	fi
+}
+
+restore () {
+	umnt
+### smart config --remove rpm-root rpm-nodigest #detect-sys-channels data-dir channel-sync-dir
+	smart config --remove rpm-root rpm-nodigest &>/dev/null
+	smart config --set force-channelsync=true &>/dev/null
+	if $SIS; then
+	__ "### Restoring install suggests to True ###\n"
+		smart config --set install-suggests=yes &>/dev/null
+		rm -f /var/lib/smart/cache
+	fi
+}
+
+chkabort () {
+	if [ $1 -ne 0 ]; then
+		restore
+		exit 1
+	fi
+}
+
+chkbldtype () {
+	local t
+	for t in build cli iso
+	do	[ "$bldtype" == "$t" ] && return ; done
+	__ "Unknown BLDTYPE %s, quitting.\n" "$bldtype"
+	exit 1
+}
+
+chkuid () {
+	if [[ "$userid" =~ [^0-9] ]] || [ $userid -lt $defuid ]; then
+		__ "Invalid UID %s (must be integer >= %s), quitting.\n" "$userid" "$defuid"
+		exit 1
+	fi
+}
+
+# # # # # # # # # # # # # #
+#  Execution starts here  #
+# # # # # # # # # # # # # #
+
+HOSTARCH=$(uname -m)
+ARCH=$(rpm -E "%product_arch")
+if [[ "$ARCH" == "x86_64" ]]; then
+	LIB="lib64"
+else
+	LIB="lib"
+fi
+
+NL=$'\012' ; dohelp=false ; userid=$defuid
+OFS=$IFS ; IFS=$NL
+set - $(echo "$*" | sed -e "s|==*|=|g" -e "s|--output-directory=|-o|g" -e "s|--core=|-c|g" -e "s|--distro=|-d|g" \
+	-e "s|--branch=|-b|g" -e "s|--type=|-t|g" -e "s|--uid=|-u|g" -e "s|--help|-h|g")
+IFS=$OFS
+
+while getopts b:c:d:o:t:u:h op
+do
+	case "$op" in
+		b)		BRANCHNAME="$OPTARG";;
+		c)		CORENAME="$OPTARG";;
+		d)		DISTRONAME="$OPTARG";;
+		o)		BASEDIR="$OPTARG";;
+		t)		bldtype="$OPTARG";;
+		u)		userid="$OPTARG";;
+		h)		dohelp=true;;
+		\?)		exit 1;;
+	esac
+done
+shift $(( $OPTIND-1 ))
+
+$dohelp && showhelp
+
+if [ $UID -ne 0 ]; then
+	__ "Please run %s as root or with sudo, quitting.\n" "$myname"
+	exit 1
+fi
+
+if [ "$HOSTARCH" != "x86_64" -a "$ARCH" = "x86_64" ]; then
+	__ "Cannot build arch %s on host %s, quitting.\n" "$ARCH" "$HOSTARCH"
+	exit 1
+fi
+
+chkbldtype
+chkuid
+
+SIS=$(smart config --show install-suggests | tr [:upper:] [:lower:])
+if $SIS; then
+	__ "### Install suggests set to True ###\n"
+	__ "### Changing to False for build  ###\n"
+	smart config --set install-suggests=no
+	rm -f /var/lib/smart/cache
+else
+	__ "### Install suggests already set to False ###\n"
+fi
+
+# convert BASEDIR to absolute pathname
+BASEDIR=$(readlink -m "$BASEDIR")
+DIRNAME=$BRANCHNAME$bldtype-$ARCH
+IDIR=$BASEDIR/$DIRNAME
+CHRTRPMSDIR="/home/unity/src/rpm/RPMS"
+configopt="config --set"
+configopt="$configopt rpm-root=$IDIR"
+configopt="$configopt rpm-nodigest=true"
+configopt="$configopt rpm-excludedocs=true"
+#configopt=$configopt" data-dir=$IDIR/var/lib/smart"
+installopt=" install -y -o remove-packages=False "
+chrtopt="./ /bin/su root -c"
+DATESTAMP=$(date +%Y%m%d)
+
+#echo "\$configopt='$configopt'"
+
+# make sure dev proc sys are not mounted
+umnt
+
+rm -fr $IDIR
+mkdir -p ${IDIR}/{etc/smart/channels,var/lib/smart/packages,tmp}
+if [ $? -ne 0 ]; then
+	__ "Failed to create install directories, quitting.\n"
+	restore
+	exit 1
+fi
+
+
+cd $IDIR
+__ "\nBuilding %s for %s, host is %s\n" "$DIRNAME" "$bldtype" "$HOSTARCH"
+
+# set chroot smart config options
+smart $configopt
+chkabort $?
+
+smart update
+
+# download minimal rpms needed for flattening
+smart download \
+	indexhtml \
+	setup \
+	grep \
+	rpm-helper \
+	${LIB}freebl3 \
+	${LIB}pcre1 \
+	locales \
+	locales-en
+
+# smart download gives error 1 in chroot so skip this check for now   :(
+# chkabort $?
+
+for tmp in $(ls *rpm); do rpm2cpio $tmp | cpio -ivd; done
+
+# remove all docs
+rm -fr $IDIR/usr/share
+
+# put back in place the indexhtml that doesn't get installed
+# because of exclude docs config
+rpm2cpio indexhtml*rpm | cpio -ivd
+rpm2cpio locales-*rpm | cpio -ivd
+rm -f *rpm
+
+# mount necessary system requirements
+mkdir dev proc sys
+mount -o bind /dev dev && mount -o bind /proc proc && mount -o bind /sys sys
+
+# needed for shadow
+touch etc/shadow
+
+# keep for another option, jbj needs snapshots of rpms for regression testing
+#sudo smart -o rpm-root=`pwd` install --urls basesystem -y
+
+# do these two first so we get fewer %post script errors
+smart $installopt \
+	drakxtools-backend \
+	util-linux \
+	${LIB}stdc++6
+
+#smart $installopt basesystem-minimal
+chkabort $?
+
+# installing unity-core is all that is needed to install basesystem-minimal, 
+# basesystem, and the basic unity utils
+LC_ALL=C smart $installopt \
+	$CORENAME-core \
+	acpi
+	
+chkabort $?
+
+# if not build, meaning iso or cli
+if [ $bldtype != "build" ]; then
+	# unity-iso-minimal is all that is needed to create the cli iso
+	# or the base to the normal isos.
+	if [ $bldtype == "cli" ]; then
+		smart $installopt \
+			$CORENAME-iso-minimal
+
+	elif [ $bldtype == "iso" ]; then
+		### BRANCHNAME-desktop should pull in CORENAME-iso and any other CORENAME metapkgs 
+		smart $installopt \
+			$BRANCHNAME-desktop 
+
+		# Fix to Live GDM Background
+		mv -f $IDIR/usr/share/gdm/themes/$DISTRONAME/background.jpg $IDIR/usr/share/gdm/themes/$DISTRONAME/background2.jpg
+		mv -f $IDIR/usr/share/gdm/themes/$DISTRONAME/background_live.jpg $IDIR/usr/share/gdm/themes/$DISTRONAME/background.jpg
+		sed -i "s/=mdk/=$DISTRONAME/g" $IDIR/usr/share/gdm/defaults.conf ## updated in GDM package ##
+		sed -i 's/startopenbox/openbox-session/g' $IDIR/etc/X11/wmsession.d/25openbox
+
+	# end if what type of iso
+	fi
+	
+	# to be run with chroot
+	### __ "Please select the root and guest passwords.\n"
+	chroot $chrtopt "echo root | passwd --stdin root"
+	chroot $chrtopt "groupadd -g $userid guest"
+	chroot $chrtopt "useradd -m -u $userid -N -g guest -c guest -s /bin/bash guest"
+	chroot $chrtopt "echo guest | passwd --stdin guest"
+	chroot $chrtopt "smart-setup-auto unity-$ARCH"
+	chroot $chrtopt "smart-setup-auto cooker-$ARCH"
+
+	# Fix gfxboot install error in drakxtools
+	# This changes the package name to gfxboot-theme to the distro name
+	# It also looks for the message file in any theme folder instead of just the unity theme folder
+	#sed -i s%/usr/share/gfxboot/themes/unity/boot/message%/usr/share/gfxboot/themes/"'*'"/boot/message%g $IDIR/usr/lib/libDrakX/bootloader.pm
+	#sed -i s%unity-gfxboot-theme%$DISTRONAME-gfxboot-theme%g $IDIR/usr/lib/libDrakX/bootloader.pm
+	# Fix drakx-finish-install issue calling a unity script. If this is not fixed finish install 
+	# will not run causing the matchbox window manager to not close properly and conflict with kwin
+	# missing from cli for obvious reasons
+	if [ $bldtype == "iso" ]; then
+		sed -i s%10unity-release.sh%10$DISTRONAME-release.sh%g $IDIR/etc/X11/xsetup.d/40finish-install.xsetup
+	fi
+
+	### change /etc/unity-release /etc/product.id /etc/rpm/macros.d/unity-release.macros
+	### other possible files to parse /usr/lib/libDrake/*.pm
+	if [ "$DISTRONAME" != "Unity" ]; then
+		MATCH=linux
+		UMATCH=$(echo $MATCH | sed -e 's|.*|\u&|g')
+		if [[ "$LDISTRONAME" =~ .*$MATCH.* ]]; then
+			FULLDISTRONAME=$DISTRONAME
+		else
+			FULLDISTRONAME="$DISTRONAME $UMATCH"
+		fi
+		for etcfiles in /etc/unity-release /etc/product.id /etc/rpm/macros.d/unity-release.macros; do
+			sed -i -e "s|Unity Linux|$FULLDISTRONAME|g" \
+				-e "s|Unity|$DISTRONAME|g" \
+				-e "s|unity|$LDISTRONAME|g" \
+				$etcfile
+		done
+	fi
+
+elif [ $bldtype == "build" ]; then ### to build a buildchroot
+	smart $installopt $CORENAME-devel
+	
+	# to be run with chroot
+	### __ "Please select the root and guest passwords.\n"
+	chroot $chrtopt "echo root | passwd --stdin root"
+	chroot $chrtopt "groupadd -g $userid unity"
+	chroot $chrtopt "useradd -m -u $userid -N -g unity -c unity -s /bin/bash unity"
+	chroot $chrtopt "echo unity | passwd --stdin unity"
+
+	# for build chroots only
+	chroot $chrtopt 'echo "unity	ALL=(ALL)	ALL"' >> etc/sudoers
+	chroot $chrtopt 'echo "Defaults visiblepw"' >> etc/sudoers
+
+	# setup rpm-dir
+	chroot $chrtopt "mkdir -p ./$CHRTRPMSDIR/$ARCH"
+	chroot $chrtopt "pushd ./$CHRTRPMSDIR &>/dev/null && ln -s $ARCH noarch && popd &>/dev/null"
+	chroot $chrtopt "smart channel --add rpm-dir type=rpm-dir name=rpm-dir priority=11 path=$CHRTRPMSDIR/$ARCH -y"
+	# disable unneeded unity channels
+	DISCHANNELS="contrib e17 games gnome kde4 main nonfree unstable xfce"
+	for DISCHANNEL in $DISCHANNELS; do
+		chroot $chrtopt "smart channel \
+				--disable $CORENAME-$ARCH-$DISCHANNEL \
+				--set $CORENAME-$ARCH-$DISCHANNEL priority=5"
+	done
+	# enable needed unity channels and raise their priority
+	ENCHANNELS="branded test"
+	for ENCHANNEL in $ENCHANNELS; do
+		chroot $chrtopt "smart channel \
+				--enable $CORENAME-$ARCH-$ENCHANNEL \
+				--set $CORENAME-$ARCH-$ENCHANNEL priority=11"
+	done
+	#for CHANNEL in $CHANNELS; do
+		#chroot $chrtopt "smart channel \
+		#		--add $CORENAME-$ARCH-$CHANNEL \
+		#		type=rpm-md name='$CORENAME $ARCH $CHANNEL'  \
+		#		priority=10 baseurl=/repo/$CHANNEL \
+		#		-y 1>/dev/null"
+	#done
+	# Make sure perms are set correctly for unity home folder otherwise bldchrt will fail - JMiahMan
+	chroot $chrtopt "chown -R unity:unity /home/unity/"
+fi
+
+rm -fv $IDIR/etc/sysconfig/hardrake2/kernels \
+	$IDIR/usr/share/icons/*/*.cache \
+	$IDIR/root/.bash_history \
+	$IDIR/home/guest/.bash_history \
+	$IDIR/var/spool/repackage/* \
+	$IDIR/var/lib/smart/packages/* \
+	$IDIR/var/lib/speedboot/status \
+	$IDIR/root/.thumbnails
+
+echo
+
+find $IDIR/var/log -type f -print0 | xargs -t -0 rm -f
+
+echo
+
+for tmp in rpmnew rpmorig rpmsave; do
+	find -type f -iname "*.$tmp" -print0 | xargs -t -0 rm -f
+	echo
+done
+
+if [ $bldtype != "build" ]; then
+	__ "mklivecd %s iso generator\n" "$bldtype"
+	echo
+	ISO_NAME=$BRANCHNAME$bldtype-$ARCH-$DATESTAMP.iso
+	__ "Creating %s\n" "$ISO_NAME"
+	echo
+
+	if [ $bldtype  == "iso" ]; then
+		echo ""
+	elif [ $bldtype  == "cli" ]; then
+		#new for systemd
+		#default in systemd is set to init level 5
+		chroot $chrtopt "rm -f /etc/systemd/system/default.target"
+		chroot $chrtopt "ln -sf /lib/systemd/system/multi-user.target /etc/systemd/system/default.target"
+		
+		SERVICES="remount-rootfs tmpfiles-setup gpm"
+		for service in $SERVICES; do
+			echo "setup for systemd service: $service"
+			chroot $chrtopt "systemctl disable $service.service"
+			chroot $chrtopt "systemctl stop $service.service"
+			chroot $chrtopt "systemctl daemon-reload"
+		done
+
+		#this is to patch the default setting for them grub menu
+		GRUBMENUPATCH="./usr/share/unity-installer/bootloader_grubtxt.patch"
+		pushd $IDIR
+		patch -p1 -b < $GRUBMENUPATCH
+		popd
+	fi
+
+	cat >> $IDIR/etc/sysconfig/network <<-EOF
+	NETWORKING=yes
+	CRDA_DOMAIN=US
+	EOF
+
+	chmod +x $IDIR/etc/sysconfig/network
+#-#	echo
+#-#	if [ $bldtype == "iso" ]; then
+#-#		cp -f $IDIR/usr/share/applications/Unity-Installer.desktop $IDIR/home/guest/Desktop
+#-#	fi
+
+	# initialize smart config, remove once updated smart works	
+	chroot $chrtopt "smart query smart"
+
+	# locale en_US.UTF-8
+	chroot $chrtopt "export LC_ALL=\"en_US.UTF-8\""
+	chroot $chrtopt "locale > /etc/sysconfig/i18n"
+
+	#Jeff:  no: logs are the sequence of operations used to produce the rpmdb
+	#what you can do is this
+	# db${BDB}-utils needs to be installed
+	BDB=52
+	pushd $IDIR/var/lib/rpm
+	db${BDB}_checkpoint -1
+	db${BDB}_archive -dv
+	popd
+
+	# create root etcskel for root config	
+	# some sed parsing for root defaults will be needed
+	cp -a $IDIR/etc/skel/.config $IDIR/root/
+	cp -a $IDIR/etc/skel/Desktop $IDIR/root/
+
+	# cp unity-installer to cli-installer
+	# for our non US keyboards
+	pushd $IDIR/usr/sbin/
+	ln -s unity-installer cli-installer
+	popd
+
+	STDOPTS="--root=/ --tmp=/tmp --fstab=rw,noauto --nosyslog "
+	if [ $bldtype == "cli" ]; then
+		STDOPTS="$STDOPTS --nosplash"
+	elif [ $bldtype == "iso" ]; then
+		#STDOPTS="$STDOPTS --boottheme $DISTRONAME"
+		STDOPTS="$STDOPTS --md5sum --memtest"
+	fi
+	#NOFILEOPTS="--nofile=^/etc/sysconfig/hardrake2/kernels \
+	#--nodir=^/root/.thumbnails "
+
+	echo "cmd: mklivecd $STDOPTS $NOFILEOPTS $ISO_NAME"	
+	chroot $chrtopt "mklivecd $STDOPTS $NOFILEOPTS $ISO_NAME"
+
+	md5sum $IDIR/$ISO_NAME > $IDIR/$ISO_NAME.md5
+	sed -i "s| .*/| *|" $IDIR/$ISO_NAME.md5
+	__ "livecd creation completed successfully.\n"
+fi
+
+# unmount system dirs & reset original smart config values
+restore
+
+exit 0

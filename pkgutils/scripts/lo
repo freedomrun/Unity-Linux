@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# name of this script
+myname=$(basename $0)
+#
+# name of the .mo file for translations
+moname="pkgutils"
+#
+
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+if [ $# -ne 1 ]; then
+	cat<<-EOF
+$(__ "Usage: %s LINKFILE
+Change dir to corresponding /S dir of LINKFILE,
+where LINKFILE is a link to a spec file in /F source dir" "$myname")
+	EOF
+fi
+
+l="$1" ; [ "${l:(-5)}" != ".spec" ] && l="${l}.spec"
+
+if ! [ -f "$l" ]; then
+	__ "Can't find file '%s'\n" "$l"
+	exit 1
+fi
+
+while [ -L "$l" ]; do l=$(readlink "$l"); done
+
+d="$(dirname $(dirname "$l"))/S"
+
+if ! [ -d "$d" ]; then
+	__ "Can't find folder\n"
+	exit 1
+fi
+
+cd $d
+pwd
+sh --login

@@ -1,0 +1,195 @@
+#!/bin/sh
+
+myname=$(basename "$0")
+
+# Change svnsave if you want to save the
+# settings in a different folder/file
+svnsave="$HOME/.svndir"
+#
+# Change pkginfo if you want to use a
+# different file extention for the info files
+pkginfo=".pkginfo"
+#
+
+cecho () {
+	echo "$*" >&2
+}
+
+# FIXME added for testing
+techo () {
+	# echo only in testing mode
+	if $testing; then
+		[ -n "$2" ] && echo >&2
+		echo @@@ $1 >&2
+	fi
+}
+
+fixpath () {
+	echo "$1" | sed -re "s|/+|/|g" -e "s|/$||"
+}
+
+getpath () {
+	# $1 is key, $2 is filename to read from
+	[ -r "$2" ] && sed -n "s|^$1[ \t]*||p" "$2"
+}
+
+cfgerr () {
+	cat<<-EOF
+	Can't write to config file '${!1}'!
+	Please edit this script and change the value of
+	variable '$1' to a file which you have
+	write permissions to, e.g. '$HOME/${!1##*/}'
+	(Script is located at '$0')
+	EOF
+	exit 1
+}
+
+savepath () {
+	# $1 is key, $2 is value, $3 is  var name of filename to write to
+	sed -i "\|^$1|d" "${!3}" 2>/dev/null
+	echo "$1	$2" 2>/dev/null >>"${!3}" || cfgerr "$3"
+}
+
+vareval () {
+	local a e n f="$1"
+	if [[ "$f" =~ [$] ]]; then
+		a=( $(echo "$f"|cut --output-delimiter=" " -d"/" -f1-) )
+		for n in ${!a[@]}; do
+			if [ "${a[n]:0:1}" = "$" ]; then
+				e=${a[n]#$} ; a[n]=${!e}
+			fi
+		done
+		f=$(echo ${a[@]} | sed "s| |/|g")
+	fi
+	fixpath "$f"
+}
+
+getsvn () {
+	# $1 is svn or altsvn
+	local v="$1" svn=$(getpath "$1" "$svnsave")
+	if [ -z "$svn" ]; then
+		read -p "Please enter full path to ${1/alt/alternate } base folder: " svn
+		if [ -z "$svn" ]; then
+			echo "Nothing entered, quitting..."
+			exit 1
+		fi
+	fi
+	# If svn contains "$" evaluate it as a variable
+	svn=$(vareval "$svn")
+	savepath "$1" "$svn" "svnsave"
+	[ "$v" = "svn" ] && v="svndir"
+	eval $v="$svn"
+	#cecho -e "Using ${1/alt/alternate } base folder '$svn'\n"
+}
+
+findspec () {
+	local a e m
+	a=($(find $2 -maxdepth 1 -type f -iname "*.spec" 2>/dev/null | sed "s|^\./||"))
+	if [ ${#a[@]} -gt 1 ]; then
+		m="Multiple specfiles"
+		cecho "$m found:"
+		cecho "${a[*]}"
+		cecho "###### Skipping: $1 ######"
+		e=2
+	elif [ ${#a[@]} -eq 0 ]; then
+		cecho "No specfile found in '$1/$2'"
+		e=1
+	else
+		# cecho "Using specfile '$1/${a[0]}'"
+		echo "${a[0]}"
+		e=0
+	fi
+	return $e
+}
+
+getspec () {
+	# $2 is F or SPECS
+	findspec "$1" "$2" ; local e=$?
+	[ $e -ne 1 ] && return $e
+	findspec "$1" "." ; e=$?
+	if [ $e -ne 0 ]; then
+		msg="###### Missing spec file: $1 ######"
+		cecho "$msg"
+		echo "$msg" >> $outf
+	fi
+	return $e
+}
+
+# # # # # # # # # # # # # #
+#  Execution starts here  #
+# # # # # # # # # # # # # #
+
+testing=false
+[ "$1" = "-T" ] && testing=true
+getsvn "svn"
+getsvn "altsvn"
+cd "$svndir"
+if [ $? -ne 0 ]; then
+	cecho "Can't change dir to '$svndir', quitting."
+	exit 1
+fi
+
+outf="$(readlink -mn "$PWD/..")/${myname}-$(date +%F)"
+cecho "Writing to file $outf"
+: > $outf
+
+for d in $(ls -d */); do
+	d=${d%/}
+	n="$d" ; di="$d"
+	# look for pkginfo file
+	#techo "\$d is '$d'  \$n is '$n'"
+	info="${d}/${n}${pkginfo}"
+	#techo "Looking for pkginfo file '$info'"
+	if [ -s "$info" ]; then
+		techo "Found pkginfo file '$info'"
+		f="$n" ; n=$(getpath "name" "$info") ; n="${n:-$f}"
+		d=$(getpath "path" "$info")
+		if [ -z "$d" ]; then
+			msg="Missing path in '$info', skipping '$n'"
+			cecho "### $msg ###"
+			continue
+		else
+			d="${altsvn}/$d"
+			if [ ! -d "$d" ]; then
+				# get spec file from mdv svn
+				e=0
+				pushd $altsvn &>/dev/null ; (( e+=$? ))
+				svn up $di -N ; (( e+=$? ))
+				cd $di ; (( e+=$? ))
+				svn up ./current -N ; (( e+=$? ))
+				cd current ; (( e+=$? ))
+				svn up SPECS/ ; (( e+=$? ))
+				popd &>/dev/null
+				if [ $e -ne 0 ]; then
+					cecho "Problem getting spec file from cooker, skipping '$d'"
+					continue
+				fi
+			fi
+		fi
+		f="SPECS"
+	else
+		#techo "Can't find pkginfo file '$info'"
+		f="F"
+	fi
+
+
+	pushd "$d" &>/dev/null
+	spec=$(getspec "$d" $f)
+	if [ $? -ne 0 ]; then
+		popd &>/dev/null
+		continue
+	fi
+
+	pname=$(rpm -q --specfile --qf '%{name}\n' "$spec" 2>/dev/null | head -1)
+
+	if [ -z "$pname" ]; then
+		msg="###### Can't parse name from Folder: $d	Spec: $spec ######"
+		cecho "$msg"
+		echo "$msg" >> $outf
+	elif [ "$pname" != "$di" ]; then
+		msg="Folder: $di	Name: $pname"
+		cecho "###### $msg ######"
+		echo "$msg" >> $outf
+	fi
+	popd &>/dev/null
+done

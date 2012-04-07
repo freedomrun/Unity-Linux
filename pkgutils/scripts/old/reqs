@@ -1,0 +1,18 @@
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+die "Usage : $0 pkg1 [pkg2 [pkg3 [...]]]\n" unless scalar(@ARGV);
+
+foreach (@ARGV) {
+  foreach (`smart query --show-provides $_`) {
+    if (/^\s\s\s\s(\S*)/) {
+      foreach (`smart query --requires=$1`) {
+        next if (/^\s/);
+        next if (/^Loading cache/);
+        next if (/^Updating cache/);
+        print $_;
+      }
+    }
+  }
+}

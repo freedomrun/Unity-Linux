@@ -1,0 +1,132 @@
+#!/bin/sh
+#
+#  unmet
+#
+#  Copyright (C) 2009 Steven J Stover <stumpy@unity-linux.org>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#
+# # # # # # # # # # # # # # # # # #
+#  List unsatisfied dependencies  #
+# # # # # # # # # # # # # # # # # #
+
+# name of this script
+myname=$(basename $0)
+#
+# name of the .mo file for translations
+moname="pkgutils"
+#
+
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+# At some points, the script relies on the output of other programs such as smart.
+# We can't rely on the English version of their messages, because, depending on the system, those
+# messages might be translated into the system locale. This function retrieves the translated 
+# version of a given message $2 (if such translation exists) for the program $1.
+fetchmsg() {
+	local gettextopts="-d $1 -e --"
+	shift
+        local TEXT=`gettext $gettextopts "$1"`
+	shift
+	printf -- "$TEXT" "$@" | head -n 1 # Always extract the first line from multi-line messages
+}
+
+showhelp () {
+	cat <<-EOF
+$(__ "Usage: %s [OPTION]... [PKGNAME]...
+List unsatisfied dependencies for PKGNAME, or entire repo
+
+  -a, --all       List all unsatisfied dependencies
+  -p, --pkgonly   List only package names (overrides --all)
+  -h, --help      Display this help and exit" "$myname")
+	EOF
+	exit 0
+}
+
+showall () {
+	smart check --all 2>&1 1>/dev/null | sed "s|^$unmetmsg||"
+}
+
+showpkg () {
+	local a b
+	IFS=$NL
+	echo -n "Wait..." >&2
+	a=($(smart check --all 2>&1 1>/dev/null | sed "s|^$unmetmsg||" | gawk -F"@" '{ print $1 }'))
+	b=($(echo "${a[*]}" | sort -u))
+	echo -ne "\r       \r" >&2
+	smart query --hide-version "${b[@]}" | sed -r "\|^$msg1\|^$msg2\|^$msg3\|^$|d"
+	IFS=OFS
+}
+
+showone () {
+	smart check "$1" --all 2>&1 1>/dev/null | sed "s|$unmetmsg||"
+}
+
+# # # # # # # # # # # # # #
+#  Execution starts here  #
+# # # # # # # # # # # # # #
+
+doall=false ; dopkg=false ; dohelp=false
+NL=$'\012'
+
+OFS=$IFS ; IFS=$NL
+set - $(echo "$*" | sed -e "s|--all|-a|g" -e "s|--pkgonly|-p|g" -e "s|--help|-h|g")
+IFS=$OFS
+
+while getopts aph op
+do	case "$op" in
+		a)		doall=true;;
+		p)		dopkg=true;;
+		h|?)	dohelp=true;;
+	esac
+done
+shift $(( $OPTIND-1 ))
+
+$dohelp && showhelp
+
+unmetmsg="$(fetchmsg smart "Unsatisfied dependency: %s requires %s" "" "" | cut -f1 -d :): "
+msg1=$(fetchmsg smart "Loading cache...")
+msg2=$(fetchmsg smart "Saving cache...")
+msg3=$(fetchmsg smart "Updating cache...")
+
+if $dopkg; then
+	showpkg
+	doall=false
+fi
+
+$doall && showall
+
+if $doall || $dopkg; then
+	[ $# -gt 0 ] && echo
+fi
+
+while [ $# -gt 0 ]; do
+	showone "$1"
+	shift
+	[ $# -gt 0 ] && echo
+done
+exit 0

@@ -1,0 +1,164 @@
+#!/bin/sh
+
+findrequires4rpm () {	
+	smart query --show-requires --show-providedby --hide-version `rpm -qp --qf '%{name}\n' $1` | \
+	grep "^        " | \
+	gawk '{ print $1 }' | \
+	sort | \
+	uniq
+}
+
+findprovides4rpm () {
+	smart query --show-provides --show-requiredby --hide-version $1 | \
+       	grep "^        "  | \
+	gawk '{ print $1 }' | \
+	sort | \
+	uniq
+}
+
+getpath () {
+	# returns <channel> <exact rpm name>
+	smart info --urls $1 | \
+	grep gri6507 | \
+	gawk -F" " '{ print $1 }' | \
+	gawk -F"/" '{ print $5"\t"$6 }' 
+}
+
+commonize () {
+	x=($(process $1))
+	for y in ${x[@]}; do
+		z=$(find $REPOPATH/$PKGARCH -name $y)
+		echo "mv $z* $REPOPATH/$PKGARCH/$2"
+	done
+}
+
+getsiblings () {
+	# $1 is pkg name in svn
+	# try to find ONE specfile
+	local b c spec
+	spec=$(ls $svndir/$1/F/*.spec 2>/dev/null)
+	c=$(echo "$spec" | wc -w)
+	case $c in
+		0)	spec=$(ls $svndir/$1/*.spec 2>/dev/null)
+			c=$(echo "$spec" | wc -w)
+			case $c in
+				0)	echo "###### ERROR: Missing specfile for '$1' ######"
+					return;;
+				1)	:;;
+				*)	echo "###### ERROR: Multiple specfiles in '$1' ######"
+					return;;
+			esac;;
+		1)	:;;
+		*)	echo "###### ERROR: Multiple specfiles in '$1/F' ######"
+			return;;
+	esac
+
+	IFS=$NL
+	# replace the space between name version release in the next line with - if you just want them together
+	b=($(rpm -q --qf "%{name} %{version} %{release}\n" --specfile --undefine=patch "$spec" 2>/dev/null | grep -v "_restore_"))
+
+	if [ ${#b[@]} -eq 0 ]; then
+		echo "###### ERROR: No packages in '$1' ######"
+	else
+		for c in ${b[@]}; do
+			# if you used - instead of space in the rpm line above, you can remove the | tr part
+			echo "$c" | tr " " -
+		done
+	fi
+}
+
+process () {
+	local a e f
+	IFS=$NL
+	a=($(rpm -qpi "$1" | grep -E "^Version|^Release|^Group"))
+	ver=$(echo "${a[0]}" | sed -r "s|^.*: ([^ \t]+).*:.*$|\1|")
+	rel=$(echo "${a[1]}" | sed -r "s|^.*: *([^ \t]+)[ \t]*Build.*$|\1|")
+	pkg=$(echo "${a[2]}" | sed -r "s|^.*: (.*)-${ver}-${rel}.*$|\1|")
+	src=$(echo "${a[2]}" | sed -r "s|^.*: (.*)\.src.*$|\1|")
+	IFS=$OFS
+	if [ "${pkg}-${ver}-${rel}" != "$src" ]; then
+		# mismatched version-release
+		# try to hack the pkg name from the src name
+		echo "Trying to guess pks name..."
+		a=($(echo "$src" | cut -d- --output-delimiter=" " -f1-))
+		pkg="" ; f=false
+		for (( e=0; e<${#a[@]}; e++ )); do
+			pkg="${pkg}${a[e]}"
+			if [ -d "${svndir}/${pkg}" ]; then
+				f=true ; break
+			fi
+		done
+		if ! $f; then
+			echo "###### ERROR: Can't get source package name ######"
+			return
+		fi
+	fi
+
+	echo "PkgName '$pkg'  SrcName '$src'  Version '$ver'  Release '$rel'"
+	getsiblings "$pkg"
+	echo
+}
+
+COMMONCHANNEL=unity
+REPOPATH=/mnt/disk/repos
+PKGARCH=x86_64
+CURRENTCHANNEL=$(basename `pwd`)  ### should be changed to check channel input
+svndir=/mnt/disk/unity-linux/packages
+
+OFS=$IFS ; NL=$'\012'
+echo "### loop every rpm in CURRENTCHANNEL"
+for pkgtmp in $(ls *rpm); do 
+	echo "### find what Requires each rpm has and their locations"
+	for tmp in $(findrequires4rpm $pkgtmp); do
+		echo "### get the CHANNEL and PKGNAME"
+		a=($(getpath $tmp)) 
+		CHANNEL=${a[0]} ; PKGNAME=${a[1]}
+		echo "### ignore Requires in CHANNELS unity, branded, test and the CURRENTCHANNEL"
+		if [ "$CHANNEL" != "unity" -o "$CHANNEL" != "branded" \
+		-o "$CHANNEL" != "test" -o "$CHANNEL" != "$CURRENTCHANNEL" ]; then
+			echo "### if a Requires is found in a CHANNEL ie kde4, xfce, e17 etc"
+			cd $REPOPATH/$PKGARCH/$CHANNEL
+			echo "### find what rpms Requires PKGNAME"
+			ecount=0 ; necount=0; ccount=0
+			for providestmp in $(findprovides4rpm $PKGNAME); do
+				echo "### get the CONFLICTCHANNEL and CONFLICKPKGNAME"
+				b=($(getpath $providetmp))
+				CONFLICTCHANNEL=${b[0]} ; CONFLICTPKGNAME=${b[0]}
+				echo "### if rpms have Requires in CHANNELS unity, branded only"
+				if [ "$CHANNEL" == "unity" -o "$CHANNEL" == "branded" ]; then
+					ecount=1
+				echo "### if rpms have Requires in Non Essential CHANNELS ie kde4 gnome etc"
+				elif [ "$CHANNEL" != "unity" -o "$CHANNEL" != "branded" \
+					-o "$CHANNEL" != "test" -o "$CHANNEL" != "$CURRENTCHANNEL" ]; then
+					necount=1
+				### if rpms have Requires in CHANNELS test
+				#elif [ "$CHANNEL" == "test" ]; then
+					### this could signal a problem or be nothing
+					### might ignore this idk atm
+				echo "### if it is only Required by rpms in the CURRENTCHANNEL"
+				else
+					ccount=1
+				fi
+			done
+			echo "### if needed by rpms in the common CHANNELS
+			### no need to for the common CHANNELS to have Requires
+		       	### in the non-essential CHANNELS"
+			if [ $ecount -eq 1 ]; then
+				commonize $CONFLICTPKGNAME
+			echo "### this could change
+			### if needed by rpms in other non-essential CHANNELS
+			### two probable possibilites
+			### it and it's siblings are missing placed
+			### or
+			### the rpm should be in the common CHANNEL"
+			elif [ $necount -eq 1 ]; then
+				commonize $CONFLICTPKGNAME $COMMONCHANNEL
+			echo "### this should always 1 b/c the original pkg should have
+			### is as a Requires"
+			elif [ $ccount -eq 1 ]; then
+				commonize $CONFLICTPKGNAME $CURRENTCHANNEL
+			fi
+			cd -
+		fi
+	done
+done

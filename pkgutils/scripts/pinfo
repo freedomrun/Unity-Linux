@@ -1,0 +1,186 @@
+#!/bin/bash
+
+# name of this script
+myname=$(basename $0)
+#
+# name of the .mo file for translations
+moname="pkgutils"
+#
+# Extension used for info files
+info=".pkginfo"
+#
+# Path in mdv svn under pkgname
+path="current"
+#
+# URL of mdv cooker svn
+url="http://svn.mandriva.com/svn/packages/cooker"
+#
+# Change svnsave if you want to save the
+# svn config in a different file
+svnsave="$HOME/.svndir"
+#
+
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+showhelp () {
+	cat<<-EOF
+$(__ "Usage: %s [OPTION]... [PKGNAME]...
+Create PKGNAME%s file for building packages imported from cooker.
+
+Mandatory arguments to long options are mandatory for short options too.
+  -a, --ask           Ask to svn up each package
+  -f, --force         Force svn up, even if package present
+  -s, --skip          Skip svn up, even if package missing
+  -p, --path=PATH     Path in mdv svn [default=%s]
+      --url=URL       Url for mdv cooker svn
+  -u, --usage         Display typical usage and exit
+  -h, --help          Display this help and exit" "$myname" "${info}" "$path")
+	EOF
+
+	[ "$1" = "u" ] && cat<<-EOF
+$(__ "
+Examples:
+  $myname .    Use \$PWD for PKGNAME
+
+Note: Default is update only missing packages from svn.
+      Only the last of -a, -f or -s will be used.")
+	EOF
+	exit 0
+}
+
+yorn () {
+	local s
+	while ! [[ "$s" =~ [ynYN] ]]; do
+		read -p"$2" s
+		s=${s:-$1}
+		[ ${#s} -gt 1 ] && s=
+	done
+	echo -n $s|tr yn YN
+}
+
+die () {
+	echo ; echo "$*" ; exit 1
+}
+
+getpath () {
+	# $1 is key, $2 is filename to read from
+	[ -r "$2" ] && sed -n "s|^$1[ \t]*||p" "$2"
+}
+
+setpaths () {
+	svn=$(getpath "svn" "$svnsave")
+	[ -z "$svn" ] && die "$(__ "Can't read svn path from '%s', quitting" "$svnsave")"
+	[ -d "$svn" ] || die "$(__ "Folder '%s' not found, quitting" "$svn")"
+
+	cooker=$(getpath "altsvn" "$svnsave")
+	[ -z "$cooker" ] && die "$(__ "Can't read altsvn path from '%s', quitting" "$svnsave")"
+	[ -d "$cooker" ] || die "$(__ "Folder '%s' not found, quitting" "$cooker")"
+}
+
+fixpath () {
+	echo $1 | sed -re "s~^/*~~" -e "s~/*$~~" -e "s~/+~/~g"
+}
+
+fixurl () {
+	echo $1 | sed "s~/*$~~"
+}
+
+mkinfo () {
+	local name=$1
+	mkdir -p $name
+	pushd $name &>/dev/null
+	if [ $? -ne 0 ]; then
+		__ "Can't change dir to '%s', skipping\n" "$name"
+		return
+	fi
+	local iname="${name}${info}"
+	if [ -s "$iname" ]; then
+		__ "'%s' already present\n" "$iname"
+	else
+		__ "creating '%s'\n" "$iname"
+		echo "name	$name" > $iname
+		echo "url	$url" >> $iname
+		echo "path	$name/$path" >> $iname
+	fi
+	popd &>/dev/null
+
+	local exists=false
+	[ -d "$cooker/$name" ] && exists=true
+
+	case $mode in
+		a)	ans="y"
+			local msg="$(__ "Update '%s' in '%s' now? %s" "$name" "$cooker" "[Y/n] ")"
+			if $exists ; then
+				ans="n"
+				msg="$(__ "'%s' already exists in '%s', update anyway? %s" "$name" "$cooker" "[y/N] ")"
+			fi
+			[ "$(yorn $ans "$msg")" = "Y" ] || return;;
+		d)	if $exists; then
+				__ "'%s' already exists in '%s', skipping svn up\n" "$name" "$cooker"
+				return
+			fi;;
+		f)	if $exists; then
+				__ "'%s' already exists in '%s', forcing svn up\n" "$name" "$cooker"
+			fi;;
+		s)	return;;
+	esac
+	#echo "Updating '$name'" ; return
+
+	pushd "$cooker" &>/dev/null || die "$(__ "Can't change dir to '%s', quitting" "$cooker")"
+	svn up $name -N || die "$(__ "Update of '%s' failed, quitting" "$name")"
+	cd $name 2>/dev/null || die "$(__ "Can't change dir to '%s', quitting" "$name")"
+	svn up ./current || die "$(__ "Update of '%s' failed, quitting" "$name/current")"
+	__ "Update of '%s' complete\n" "$name"
+	popd &>/dev/null
+}
+
+
+# # # # # # # # # # # # # # # # # # # # # #
+#          Execution starts here          #
+# # # # # # # # # # # # # # # # # # # # # #
+OFS=$IFS ; NL=$'\012'
+usage=false ; helpme=false ; mode=d
+
+IFS=$NL
+set - $(echo "$*" | sed -e "s~--ask~-a~g" -e "s~--force~-f~g" -e "s~--skip~-s~g"\
+	-e "s~--path=*~-p~g" -e "s~--url=*~-U~g" -e "s~--usage~-u~g" -e "s~--help~-h~g")
+IFS=$OFS
+
+while getopts afsp:U:uh op
+do	case "$op" in
+		a|s|f)	mode="$op";;
+		p)		path=$(fixpath "$OPTARG");;
+		U)		url=$(fixurl "$OPTARG");;
+		h)		helpme=true;;
+		u)		usage=true;;
+		?)		exit 1;;
+	esac
+done
+
+$usage && showhelp u
+$helpme && showhelp
+
+shift $(( $OPTIND-1 ))
+
+setpaths
+
+while [ $# -gt 0 ]; do
+	pkg=$(basename $(readlink -m $1))
+	pushd "$svn" &>/dev/null
+	mkinfo $pkg
+	popd &>/dev/null
+	shift
+	[ $# -gt 0 ] && echo
+done
+exit 0

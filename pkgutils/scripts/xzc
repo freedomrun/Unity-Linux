@@ -1,0 +1,122 @@
+#!/bin/sh
+
+# name of this script
+myname=$(basename $0)
+#
+# name of the .mo file for translations
+moname="pkgutils"
+#
+
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+showhelp () {
+	cat<<-EOF
+$(__ "Usage: %s [FILE]...
+Recompress .gz & .bz2 files in the .xz format
+
+Mandatory arguments to long options are mandatory for short options too.
+
+  -f, --force       Force overwrite of output file
+  -n, --noprompt    No prompts, don't overwrite output file
+                      (unless -f used also)
+  -r, --remove      Remove original file after conversion
+  -q, --quiet       Suppress informative messages
+  -h, --help        Display this help message and quit
+
+Note: %s is NOT meant for tarballs and will not
+process files with .tar.gz or .tar.bz2 extensions" "$myname" "$myname")
+	EOF
+	exit
+}
+
+yorn () {
+	local s
+	while ! [[ "$s" =~ [ynYN] ]]; do
+		read -p"$2" s
+		s=${s:-$1}
+		[ ${#s} -gt 1 ] && s=
+	done
+	echo -n $s|tr yn YN
+}
+
+errmsg () {
+	[ -z "$quiet" ] && __ "Skipping '%s' because it's a tarball\n" "$1"
+}
+
+xzit () {
+	local o="${1%.*}.xz"
+	if [ -d "$1" ]; then
+		[ -z "$quiet" ] && __ "Skipping directory '%s'\n" "$1"
+		return
+	elif [ -d "$o" ]; then
+		[ -z "$quiet" ] && __ "'%s' already exists and is a directory, skipping '%s'\n" "$o" "$1"
+		return
+	elif [ -f "$o" ]; then
+		if [ -z "$force" ]; then
+			if [ -n "$noprmt" ]; then
+				return
+			elif [ "$(yorn y "$(__ "File '%s' already exists, overwrite? %s" "$o" "[Y/n] ")")" = "N" ]; then
+				[ -z "$quiet" ] && __ "Skipping '%s'\n" "$1"
+				return
+			fi
+		fi
+	fi
+
+	[ -z "$quiet" ] && __ "Creating '%s'\n" "$o"
+	bzcat "$1" 2>/dev/null | xz -zc > "$o"
+	[ -n "$remove" ] && rm $rmforce "$1"
+}
+
+# # # # # # # # # # # # # #
+#  Execution starts here  #
+# # # # # # # # # # # # # #
+
+[ $# -eq 0 ] && showhelp
+
+set - $(echo "$*" | sed -e "s|--force|-f|g" -e "s|--noprompt|-n|g" \
+	-e "s|--remove|-r|g" -e "s|--quiet|-q|g" -e "s|--help|-h|g")
+
+while getopts fnrqh op; do
+	case "$op" in
+		f) force=1;;
+		n) noprmt=1;;
+		r) remove=1;;
+		q) quiet=1;;
+		h|?) dohelp=1;;
+	esac
+done
+shift $(( $OPTIND-1 ))
+
+[ -n "$dohelp" ] && showhelp
+
+[ -n "noprmt" ] && rmforce="-f"
+
+while [ "$#" -gt 0 ]; do
+	if [ "${1:(-3)}" == ".gz" ]; then
+		if [ "${1:(-7)}" == ".tar.gz" ]; then
+			errmsg "$1"
+		else
+			xzit "$1"
+		fi
+	elif [ "${1:(-4)}" == ".bz2" ]; then
+		if [ "${1:(-8)}" == ".tar.bz2" ]; then
+			errmsg "$1"
+		else
+			xzit "$1"
+		fi
+	else
+		[ -z "$quiet" ] && __ "'%s' is not a .gz or .bz2 file... skipping\n" "$1"
+	fi
+	shift
+done

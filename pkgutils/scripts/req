@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# name of this script
+myname=$(basename $0)
+#
+#
+# name of the .mo file for translations
+moname="pkgutils"
+#
+
+# This function is for giving the script i18n support.
+__ () {
+	local gettextopts="-d $moname -e --"
+        local TEXT=`gettext $gettextopts "$1"`		# Unfortunately `` and $() remove any trailing newlines
+							# so, if one is present, it must be restored.
+							# Please, note that if more newlines are present
+							# they will be reduced to one.
+	[ "$(echo $1|grep "\\n$")" ] && TEXT="$TEXT\n"	# If $1 ends with \n append \n to TEXT
+	[[ $1 = *$'\n' ]] && TEXT="$TEXT\n"		# If $1 ends with newline append \n to TEXT
+	shift
+	printf -- "$TEXT" "$@"
+}
+
+# At some points, the script relies on the output of other programs such as smart.
+# We can't rely on the English version of their messages, because, depending on the system, those
+# messages might be translated into the system locale. This function retrieves the translated 
+# version of a given message $2 (if such translation exists) for the program $1.
+fetchmsg() {
+	local gettextopts="-d $1 -e --"
+	shift
+        local TEXT=`gettext $gettextopts "$1"`
+	shift
+	printf -- "$TEXT" "$@" | head -n 1 # Always extract the first line from multi-line messages
+}
+
+if [ $# -eq 0 ]; then
+	cat <<-EOF
+$(__"Usage: %s [PKG]...
+Displays packages requiring PKG" "$myname")
+	EOF
+	exit
+fi
+
+IFS=$'\012'
+
+for a in "$@"; do
+	for p in $(smart query --show-provides "$a" 2>&1); do
+		if [ "${p:0:4}" = "    " ]; then
+			p=${p#    } ; p=${p%% *} ; echo "[$p]"
+			msg1=$(fetchmsg smart "Loading cache...")
+			msg2=$(fetchmsg smart "Updating cache...")
+			for r in $(smart query --requires "$p"); do
+				echo "$r"|grep -Eq "^$msg1|^$msg2" && continue
+				echo "$r"|grep -q "^ " && continue
+				echo "$r"
+			done
+			echo
+		elif [[ $p =~ $(fetchmsg smart "error: %s\n") ]]; then
+			echo -e "$p\n"
+		fi
+	done
+done
