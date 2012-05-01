@@ -305,6 +305,7 @@ if [ $bldtype != "build" ]; then
 	chroot $chrtopt "groupadd -g $userid guest"
 	chroot $chrtopt "useradd -m -u $userid -N -g guest -c guest -s /bin/bash guest"
 	chroot $chrtopt "echo guest | passwd --stdin guest"
+	chroot $chrtopt "usermod -a -G audio,video,lp,cdrom,cdwriter,dialout,floppy,users,polkituser guest"
 	chroot $chrtopt "smart-setup-auto unity-$ARCH"
 	chroot $chrtopt "smart-setup-auto cooker-$ARCH"
 
