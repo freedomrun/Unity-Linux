@@ -51,52 +51,52 @@ my $COPYRIGHT      = "Copyright (C) 2002-2004, Jaco Greeff <jaco\@puxedo.org>";
 my $starttime      = time;
 my $workdir        = undef;
 my $kernel26       = undef;
-my $kernelver      = "3.2.6";
+my $kernelver      = "3.4.0";
 my $depmod         = "/sbin/depmod";
 my $modfile        = "/etc/modules.conf";
 my $modext         = ".ko";
 my $nodirs         = '^/[.].* ^/dev$ ^/initrd$ ^/live$ ^/lost+found$ ^/mnt$ ^/media$ ^/proc$ ^/sys$ ^/tmp$ ^/var/tmp$ ^/root/tmp$ ^/proc/asound';
 my $nofiles        = '^/[.].* ^/fastboot$ /core[.][0-9][0-9]*$ .*~$ .*[.]rpmnew$ .*[.]rpmsave$ [.]bash_history$ [.]fonts[.]cache-[0-9]$ [.]xauth.* [.]wh[.]* [.]xsession-errors$ ^/var/run/ ^/var/lock/subsys/ ^/var/lib/dhcp/ ^/etc/modprobe.conf ^/etc/sysconfig/network-scripts/ifcfg-eth* ^/etc/udev/rules.d/61-* ^/etc/udev/rules.d/70-persistent* ^/etc/asound.state ^/etc/X11/xorg.conf ^/etc/lilo.conf ^/boot/grub/menu.lst ^/etc/modprobe.preload.d/cpufreq ^/etc/sysconfig/harddrake2/previous_hw ^/var/lib/rpm/__db.* ^/etc/sysconfig/finish-install ^/etc/sysconfig/clock ^/etc/localtime ^/etc/sysconfig/hardrake2/kernels ^/var/lib/speedboot/status ^/run/* ^/var/run/* ^/var/log/* ^/var/log/ConsoleKit/* ^/var/log/cups/* ^/var/log/daemons/* ^/var/log/gdm/* ^/var/log/kernels/* ^/var/log/lpr/* ^/var/log/mail/* ^/var/log/ppp/* ^/root/.bash_history ^/home/guest/.bash_history ^/var/spool/repackage/* ^/var/lib/smart/packages/* ^/var/lib/smart/channels/* ^/var/lib/speedboot/status ^/root/.thumbnails';
-my $loopmod			= undef;
-my $loopcmp			= undef;
+my $loopmod		= undef;
+my $loopcmp		= undef;
 my $o_stage2		= undef;
 my $finaliso		= "livecd.iso";
-my $loader			= "isolinux/isolinux.bin";
-my $md5sum			= undef;
-my $memtest			= undef;
+my $loader		= "isolinux/isolinux.bin";
+my $md5sum		= undef;
+my $memtest		= undef;
 my $genisoimage_opts	= "";	# Fix for concat of undef in iso looptype
 my @services		= ();
 
 ### command-line options
 my $o_verbose;
 my $o_workdir;
-my $o_root			= "/";
-my $o_tmp			= "/tmp";
+my $o_root		= "/";
+my $o_tmp		= "/tmp";
 my $o_looptype		= "sqfs";
 my $o_keyboard		= '@DEF_KEYBOARD@';
 my $o_resolution	= '@DEF_RESOLUTION@';
-my $o_theme			= 'Unity';
+my $o_theme		= 'Unity';
 my $o_vgamode		= '@DEF_VGAMODE@';
 my $o_splash		= "silent";
 my $o_bootloader	= "iso";
-my $o_ufs			= '@DEF_UNION@';
+my $o_ufs		= '@DEF_UNION@';
 my $o_kernel		= get_exec("ls -1r $o_root/lib/modules/| head -n1 | sed -e 's|/||g'");
 my $o_mbkopt		= "";
 my $o_gzip;
 my $o_xz;
 my $o_nosplash;
 my $o_timeout		= 150;
-my %opts			= ( # these are all the options with defaults
-	'root'			=> \$o_root,
-	'tmp'			=> \$o_tmp,
-	'keyboard'		=> \$o_keyboard,
+my %opts		= ( # these are all the options with defaults
+	'root'		=> \$o_root,
+	'tmp'		=> \$o_tmp,
+	'keyboard'	=> \$o_keyboard,
 	'resolution'	=> \$o_resolution,
-	'splash'		=> \$o_splash,
-	'kernel'		=> \$o_kernel,
-	'timeout'		=> \$o_timeout,
+	'splash'	=> \$o_splash,
+	'kernel'	=> \$o_kernel,
+	'timeout'	=> \$o_timeout,
 	'bootloader'	=> \$o_bootloader,
-	'mbkopt'		=> \$o_mbkopt,
-	'ufs'			=> \$o_ufs
+	'mbkopt'	=> \$o_mbkopt,
+	'ufs'		=> \$o_ufs
 );
 
 ### startup banner
@@ -639,23 +639,23 @@ sub create_initrd {
 	do_copy($o_root."sbin/init",                                       755, "$dir/sbin/init.dynamic",          ++$pos);
 	do_copy($o_root."lib/module-init-tools/ldetect-lst-modules.alias",   0, "$dir/lib/module-init-tools",      ++$pos);
 
-	do_copy($o_root."$kernel_dir/modules.dep",               0, "$dir/lib/modules",                ++$pos);
-	#do_copy($o_root."$kernel_dir/modules.description",       0, "$dir/lib/modules",                ++$pos);
-	do_copy($o_root."$kernel_dir/modules.alias",             0, "$dir/lib/modules",                ++$pos);
+	do_copy($o_root."$kernel_dir/modules.dep",		0, "$dir/lib/modules",		++$pos);
+	#do_copy($o_root."$kernel_dir/modules.description",	0, "$dir/lib/modules",		++$pos);
+	do_copy($o_root."$kernel_dir/modules.alias",		0, "$dir/lib/modules",		++$pos);
 
 	do_copy($o_root."$kmod_dir/drivers/$_",			0, "$dir/$kmod_dir/drivers/$_",	++$pos) foreach @kernel_drivers;
-	do_copy($o_root."$kmod_dir/fs/$_",				0, "$dir/$kmod_dir/fs/$_",		++$pos) foreach @kernel_fs;
-	do_copy($o_root."$kmod_dir/lib/crc-t10dif*",	0, "$dir/$kmod_dir/lib",		++$pos);
+	do_copy($o_root."$kmod_dir/fs/$_",			0, "$dir/$kmod_dir/fs/$_",	++$pos) foreach @kernel_fs;
+	do_copy($o_root."$kmod_dir/lib/crc-t10dif*",		0, "$dir/$kmod_dir/lib",	++$pos);
 	
 	my $moduletest = $o_root."$kernel_dir/kernel/fs/overlayfs/overlayfs.ko";
    	# overlayfs kernel is essential for the mklivecd to boot, no kernel overlay??? you should exit
 	die_("\nFATAL: The overlayfs kernel module  $moduletest is missing, please check your kernel\n") unless (-f $moduletest);
 	
-	do_copy($o_root."usr/share/pci.ids",			0, "$dir/usr/share",			++$pos);
-	do_copy($o_root."usr/share/usb.ids",			0, "$dir/usr/share",			++$pos);
-	do_copy($o_root."usr/share/ldetect-lst/fallback-modules.alias",      0, "$dir/usr/share/ldetect-lst",      ++$pos);
-	do_copy($o_root."usr/share/ldetect-lst/pcitable.gz",               644, "$dir/usr/share/ldetect-lst",      ++$pos);
-	do_copy($o_root."usr/share/ldetect-lst/usbtable.gz",               644, "$dir/usr/share/ldetect-lst",      ++$pos);
+	do_copy($o_root."usr/share/pci.ids",			0, "$dir/usr/share",		++$pos);
+	do_copy($o_root."usr/share/usb.ids",			0, "$dir/usr/share",		++$pos);
+	do_copy($o_root."usr/share/ldetect-lst/fallback-modules.alias",	0, "$dir/usr/share/ldetect-lst",	++$pos);
+	do_copy($o_root."usr/share/ldetect-lst/pcitable.gz",	644, "$dir/usr/share/ldetect-lst",	++$pos);
+	do_copy($o_root."usr/share/ldetect-lst/usbtable.gz",	644, "$dir/usr/share/ldetect-lst",	++$pos);
 	
 	my $LIBDIR = undef;
 	my $ARCHNUM = undef;
@@ -663,57 +663,58 @@ sub create_initrd {
 	if (-e "$o_root/usr/lib64/drakx-installer-binaries/probe-modules") {
 		$LIBDIR = "lib64";
 		$ARCHNUM = "x86-64";
-		do_copy($o_root.$LIBDIR."/ld-linux-$ARCHNUM.so.2",               0, "$dir/$LIBDIR",                    ++$pos);
+		do_copy($o_root.$LIBDIR."/ld-linux-$ARCHNUM.so.2",	0, "$dir/$LIBDIR",	++$pos);
 	}
 	# i586 support
 	if (-e "$o_root/usr/lib/drakx-installer-binaries/probe-modules") {
 		$LIBDIR = "lib";
 		$ARCHNUM = "i586";
-		do_copy($o_root.$LIBDIR."/ld-linux.so.2",               		 0, "$dir/$LIBDIR",                    ++$pos);
+		do_copy($o_root.$LIBDIR."/ld-linux.so.2",	0, "$dir/$LIBDIR",		++$pos);
 	}
-	do_copy($o_root."usr/${LIBDIR}/drakx-installer-binaries/probe-modules", 755, "$dir/bin/probe-modules",             ++$pos);
-	do_copy($o_root."${LIBDIR}/libc.so.6",                                    0, "$dir/${LIBDIR}",                     ++$pos);
+	do_copy($o_root."usr/${LIBDIR}/drakx-installer-binaries/probe-modules", 755, "$dir/bin/probe-modules",	++$pos);
+	do_copy($o_root."${LIBDIR}/libc.so.6",			0, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."${LIBDIR}/libkmod.so.2",		0, "$dir/${LIBDIR}",		++$pos);
 
 	# not sure why these were pulled in
-	#do_copy($o_root."${LIBDIR}/libext2fs.so.2",                             644, "$dir/${LIBDIR}",                     ++$pos);
-	#do_copy($o_root."${LIBDIR}/libpopt.so.0",                                 0, "$dir/${LIBDIR}",                     ++$pos);
-	#do_copy($o_root."${LIBDIR}/libncurses.so.5",                            644, "$dir/${LIBDIR}",                     ++$pos);
-	#do_copy($o_root."${LIBDIR}/libreadline.so.6",                             0, "$dir/${LIBDIR}",                     ++$pos);
+	#do_copy($o_root."${LIBDIR}/libext2fs.so.2",		644, "$dir/${LIBDIR}",		++$pos);
+	#do_copy($o_root."${LIBDIR}/libpopt.so.0",		0, "$dir/${LIBDIR}",		++$pos);
+	#do_copy($o_root."${LIBDIR}/libncurses.so.5",		644, "$dir/${LIBDIR}",		++$pos);
+	#do_copy($o_root."${LIBDIR}/libreadline.so.6",		0, "$dir/${LIBDIR}",		++$pos);
 
 	# Plymouth support
 	if (!defined($opts{nosplash})) {
-	do_copy($o_root."${LIBDIR}/libm.so.6",                                    0, "$dir/${LIBDIR}",                     ++$pos);
-	do_copy($o_root."usr/${LIBDIR}/libpng15.so.15",                           0, "$dir/${LIBDIR}",                     ++$pos);
-	do_copy($o_root."${LIBDIR}/libply.so.2",                                  0, "$dir/${LIBDIR}",                     ++$pos);
-	do_copy($o_root."${LIBDIR}/libply-splash-core.so.2",                      0, "$dir/${LIBDIR}",                     ++$pos);
-	do_copy($o_root."usr/${LIBDIR}/libply-boot-client.so.2",                  0, "$dir/${LIBDIR}",                     ++$pos);	
-	do_copy($o_root."usr/${LIBDIR}/libply-splash-graphics.so.2",              0, "$dir/${LIBDIR}",                     ++$pos);	
-	do_copy($o_root."usr/${LIBDIR}/plymouth/text.so",                         0, "$dir/${LIBDIR}/plymouth",            ++$pos);
-	do_copy($o_root."usr/${LIBDIR}/plymouth/script.so",                       0, "$dir/${LIBDIR}/plymouth",            ++$pos);
-	do_copy($o_root."usr/${LIBDIR}/plymouth/details.so",                      0, "$dir/${LIBDIR}/plymouth",            ++$pos);
-	do_copy($o_root."usr/share/plymouth/*",                                   0, "$dir/usr/share/plymouth",            ++$pos);
-	do_copy($o_root."bin/plymouth",                                         755, "$dir/bin/plymouth",                  ++$pos);
-	do_copy($o_root."sbin/plymouthd",                                       755, "$dir/bin/plymouthd",                 ++$pos);
-	do_copy($o_root."sbin/nash",                                            755, "$dir/bin/nash",                      ++$pos);
+	do_copy($o_root."${LIBDIR}/libm.so.6",			0, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."usr/${LIBDIR}/libpng15.so.15",		0, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."${LIBDIR}/libply.so.2",		0, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."${LIBDIR}/libply-splash-core.so.2",	0, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."usr/${LIBDIR}/libply-boot-client.so.2",	0, "$dir/${LIBDIR}",	++$pos);	
+	do_copy($o_root."usr/${LIBDIR}/libply-splash-graphics.so.2",	0, "$dir/${LIBDIR}",	++$pos);	
+	do_copy($o_root."usr/${LIBDIR}/plymouth/text.so",	0, "$dir/${LIBDIR}/plymouth",	++$pos);
+	do_copy($o_root."usr/${LIBDIR}/plymouth/script.so",	0, "$dir/${LIBDIR}/plymouth",	++$pos);
+	do_copy($o_root."usr/${LIBDIR}/plymouth/details.so",	0, "$dir/${LIBDIR}/plymouth",	++$pos);
+	do_copy($o_root."usr/share/plymouth/*",			0, "$dir/usr/share/plymouth",	++$pos);
+	do_copy($o_root."bin/plymouth",				755, "$dir/bin/plymouth",	++$pos);
+	do_copy($o_root."sbin/plymouthd",			755, "$dir/bin/plymouthd",	++$pos);
+	do_copy($o_root."sbin/nash",				755, "$dir/bin/nash"		++$pos);
 	# required by nash
-	do_copy($o_root."${LIBDIR}/libblkid.so.1",                              644, "$dir/${LIBDIR}",                     ++$pos);
-	do_copy($o_root."${LIBDIR}/libdevmapper.so.1.02",                         0, "$dir/${LIBDIR}",                     ++$pos);
-	do_copy($o_root."${LIBDIR}/libdl.so.2",                                   0, "$dir/${LIBDIR}",                     ++$pos);
-	do_copy($o_root."${LIBDIR}/libpthread.so.0",                              0, "$dir/${LIBDIR}",                     ++$pos);
-	do_copy($o_root."${LIBDIR}/libresolv.so.2",                               0, "$dir/${LIBDIR}",                     ++$pos);
-	do_copy($o_root."${LIBDIR}/librt.so.1",                                   0, "$dir/${LIBDIR}",                     ++$pos);
-	do_copy($o_root."${LIBDIR}/libudev.so.0",                               644, "$dir/${LIBDIR}",                     ++$pos);
-	do_copy($o_root."${LIBDIR}/libuuid.so.1",                               644, "$dir/${LIBDIR}",                     ++$pos);
-	do_copy($o_root."usr/${LIBDIR}/libbdevid.so.6.0.93",                      0, "$dir/${LIBDIR}",                     ++$pos);
-	do_copy($o_root."usr/${LIBDIR}/libelf.so.1",                              0, "$dir/${LIBDIR}",                     ++$pos);
-	do_copy($o_root."usr/${LIBDIR}/libgcc_s.so.1",                            0, "$dir/${LIBDIR}",                     ++$pos);
-	do_copy($o_root."usr/${LIBDIR}/libnash.so.6.0.93",                        0, "$dir/${LIBDIR}",                     ++$pos);
-	do_copy($o_root."usr/${LIBDIR}/libparted.so.1",                           0, "$dir/${LIBDIR}",                     ++$pos);
+	do_copy($o_root."${LIBDIR}/libblkid.so.1",		644, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."${LIBDIR}/libdevmapper.so.1.02",	0, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."${LIBDIR}/libdl.so.2",			0, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."${LIBDIR}/libpthread.so.0",		0, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."${LIBDIR}/libresolv.so.2",		0, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."${LIBDIR}/librt.so.1",			0, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."${LIBDIR}/libudev.so.0",		644, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."${LIBDIR}/libuuid.so.1",		644, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."usr/${LIBDIR}/libbdevid.so.6.0.93",	0, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."usr/${LIBDIR}/libelf.so.1",		0, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."usr/${LIBDIR}/libgcc_s.so.1",		0, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."usr/${LIBDIR}/libnash.so.6.0.93",	0, "$dir/${LIBDIR}",		++$pos);
+	do_copy($o_root."usr/${LIBDIR}/libparted.so.2",		0, "$dir/${LIBDIR}",		++$pos);
 	}
 
-	do_cmd("cp -a $o_root/etc/sysconfig $dir/etc",  ++$pos);
+	do_cmd("cp -a $o_root/etc/sysconfig $dir/etc",		++$pos);
 	if (!defined($opts{nofinishinstall})){
-		do_copy($o_root."usr/share/mklivecd/finish-install", 755, "$dir/etc/sysconfig",     ++$pos);
+		do_copy($o_root."usr/share/mklivecd/finish-install",	755, "$dir/etc/sysconfig",	++$pos);
 	}
 	else {
 	open CFG, '>', "$dir/etc/sysconfig/finish-install";
@@ -920,7 +921,7 @@ sub create_isolinux {
 		if (!defined($opts{nosplash})) {
 	   		my $bootsplashtest = $o_root."usr/share/bootsplash/themes/$opts{boottheme}/images/bootsplash-1024x768.jpg";
 	   		die_("\nWARNING: The boot theme is missing, please install a bootsplash theme\n") unless (-f $bootsplashtest);
-			do_copy($o_root."usr/share/bootsplash/themes/$opts{boottheme}/images/bootsplash-1024x768.jpg", 644, "$workdir/livecd/isolinux/splash.jpg", ++$pos);
+			do_copy($o_root."usr/share/bootsplash/themes/$opts{boottheme}/images/bootsplash-800x600.jpg", 644, "$workdir/livecd/isolinux/splash.jpg", ++$pos);
 		}
 	} else {
 	   	do_copy($o_stage2, 644, "$workdir/livecd/boot/grub/stage2_eltorito", ++$pos);

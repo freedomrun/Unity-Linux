@@ -40,7 +40,6 @@ almost no performance impact.
 %make
 
 %install
-rm -rf %{buildroot}
 %makeinstall
 
 %find_lang mklivecd
@@ -65,6 +64,9 @@ cat mklivecd.lang mkremaster.lang >> %{name}.list
 %{_datadir}/pixmaps/mkremaster.png
 
 %changelog
+* Tue May 22 2012 Matthew Dawkins <mattydaw@gmail.com> 0.9.4-1
+- update for libkmod, libparted
+
 * Wed Feb 08 2012 Matthew Dawkins <mattydaw@gmail.com> 0.9.2-1
 - new version for a new kernel
 - kmod overlayfs is built in the kernel now
