@@ -695,7 +695,7 @@ sub create_initrd {
 	do_copy($o_root."usr/share/plymouth/*",			0, "$dir/usr/share/plymouth",	++$pos);
 	do_copy($o_root."bin/plymouth",				755, "$dir/bin/plymouth",	++$pos);
 	do_copy($o_root."sbin/plymouthd",			755, "$dir/bin/plymouthd",	++$pos);
-	do_copy($o_root."sbin/nash",				755, "$dir/bin/nash"		++$pos);
+	do_copy($o_root."sbin/nash",				755, "$dir/bin/nash",		++$pos);
 	# required by nash
 	do_copy($o_root."${LIBDIR}/libblkid.so.1",		644, "$dir/${LIBDIR}",		++$pos);
 	do_copy($o_root."${LIBDIR}/libdevmapper.so.1.02",	0, "$dir/${LIBDIR}",		++$pos);
