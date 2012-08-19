@@ -660,18 +660,18 @@ sub create_initrd {
 	my $LIBDIR = undef;
 	my $ARCHNUM = undef;
 	# x86_64 support
-	if (-e "$o_root/usr/lib64/drakx-installer-binaries/probe-modules") {
+	if (-e "$o_root/usr/lib64/drakx-installer/binaries/probe-modules") {
 		$LIBDIR = "lib64";
 		$ARCHNUM = "x86-64";
 		do_copy($o_root.$LIBDIR."/ld-linux-$ARCHNUM.so.2",	0, "$dir/$LIBDIR",	++$pos);
 	}
 	# i586 support
-	if (-e "$o_root/usr/lib/drakx-installer-binaries/probe-modules") {
+	if (-e "$o_root/usr/lib/drakx-installer/binaries/probe-modules") {
 		$LIBDIR = "lib";
 		$ARCHNUM = "i586";
 		do_copy($o_root.$LIBDIR."/ld-linux.so.2",	0, "$dir/$LIBDIR",		++$pos);
 	}
-	do_copy($o_root."usr/${LIBDIR}/drakx-installer-binaries/probe-modules", 755, "$dir/bin/probe-modules",	++$pos);
+	do_copy($o_root."usr/${LIBDIR}/drakx-installer/binaries/probe-modules", 755, "$dir/bin/probe-modules",	++$pos);
 	do_copy($o_root."${LIBDIR}/libc.so.6",			0, "$dir/${LIBDIR}",		++$pos);
 	do_copy($o_root."${LIBDIR}/libkmod.so.2",		0, "$dir/${LIBDIR}",		++$pos);
 
